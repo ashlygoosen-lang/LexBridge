@@ -1,7 +1,7 @@
 // End-to-end API test: walks every role through its workflow against a running server.
 const BASE = process.env.BASE || 'http://localhost:4100'
 const PW = 'Demo@2025!'
-const D = 'demo.callmylawyer.co.za'
+const D = 'demo.lexbridge.co.za'
 let failures = 0
 const ok = (cond, label, extra = '') => {
   if (cond) console.log('  ✓', label)
@@ -180,7 +180,7 @@ ok(r.ok, 'admin creates official account')
 
 console.log('\n== Police report + statement versions')
 r = await naledi.post('/police-reports', { title: 'Car broken into', incidentType: 'Property damage', incidentDate: new Date(Date.now() - 864e5).toISOString(), incidentLocation: 'Main Rd, Wynberg', summary: 'My car window was smashed overnight.', statement: 'I parked at 22:00 and found the window smashed at 06:30 with my laptop bag missing.', sapsHandover: true, lawyerMatching: true, sensitiveDataProcessing: true, policeStation: 151 })
-ok(r.ok && /^CMR-/.test(r.reference), 'report created with platform reference', r.error)
+ok(r.ok && /^LXR-/.test(r.reference), 'report created with platform reference', r.error)
 const repId = r.reportId
 r = await naledi.post(`/police-reports/${repId}/amend`, { content: 'I parked at 22:00 and found the window smashed at 06:30 with my laptop bag missing. A neighbour heard glass break at 03:00.', changeSummary: 'Added neighbour detail' })
 ok(r.ok, 'amendment recorded')

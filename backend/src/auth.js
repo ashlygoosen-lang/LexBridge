@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 import crypto from 'node:crypto'
 import { db } from './db.js'
 
-const SESSION_COOKIE = 'cml_session'
+const SESSION_COOKIE = 'lexbridge_session'
 const isProd = process.env.NODE_ENV === 'production'
 
 let secret = process.env.JWT_SECRET

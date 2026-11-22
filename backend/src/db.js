@@ -6,7 +6,7 @@ export const DATA_DIR = path.resolve(process.env.DATA_DIR || path.join(process.c
 export const UPLOAD_DIR = path.join(DATA_DIR, 'uploads')
 fs.mkdirSync(UPLOAD_DIR, { recursive: true })
 
-export const db = new Database(path.join(DATA_DIR, 'callmylawyer.db'))
+export const db = new Database(path.join(DATA_DIR, 'lexbridge.db'))
 db.pragma('journal_mode = WAL')
 db.pragma('foreign_keys = ON')
 

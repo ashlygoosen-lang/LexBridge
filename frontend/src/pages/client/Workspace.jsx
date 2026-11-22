@@ -24,9 +24,9 @@ function icsFor(ev, title) {
   const body = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
-    'PRODID:-//Call My Lawyer//EN',
+    'PRODID:-//LexBridge//EN',
     'BEGIN:VEVENT',
-    `UID:${ev.eventDate}-${Math.random().toString(36).slice(2)}@callmylawyer`,
+    `UID:${ev.eventDate}-${Math.random().toString(36).slice(2)}@lexbridge`,
     `DTSTAMP:${stamp(new Date().toISOString())}`,
     `DTSTART:${stamp(ev.eventDate)}`,
     `DTEND:${stamp(end)}`,
@@ -38,7 +38,7 @@ function icsFor(ev, title) {
   const url = URL.createObjectURL(new Blob([body], { type: 'text/calendar' }))
   const a = document.createElement('a')
   a.href = url
-  a.download = 'call-my-lawyer-event.ics'
+  a.download = 'lexbridge-event.ics'
   a.click()
   URL.revokeObjectURL(url)
 }
@@ -617,7 +617,7 @@ export function Checkout() {
               ))}
             </div>
             <p className="secure-note mt-5">
-              <Icon name="lock" size={15} /> You’ll complete payment on our payment provider’s secure page. Call My Lawyer never sees or stores your card or
+              <Icon name="lock" size={15} /> You’ll complete payment on our payment provider’s secure page. LexBridge never sees or stores your card or
               bank details.
             </p>
           </section>

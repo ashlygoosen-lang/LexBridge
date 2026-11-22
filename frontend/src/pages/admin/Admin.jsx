@@ -5,6 +5,7 @@ import { PortalLayout } from '../../components/PortalLayout'
 import { Empty, Loading, Notice, PageTitle, Status, area, field, labelCls } from '../../components/ui'
 import { api } from '../../lib/api'
 import { useApi } from '../../lib/auth'
+import { Counter } from '../../motion/Counter'
 import { CATEGORY_LABEL, ROLE_LABEL, ago, date, initials, rand } from '../../lib/format'
 
 const TITLES = {
@@ -81,22 +82,30 @@ function Verification({ setFlash }) {
         <div className="admin-metrics">
           <div>
             <span>PENDING REVIEW</span>
-            <b>{m.pending}</b>
+            <b>
+              <Counter value={m.pending} />
+            </b>
             <small>{m.submittedToday} submitted today</small>
           </div>
           <div>
             <span>MORE INFO NEEDED</span>
-            <b>{m.moreInfo}</b>
+            <b>
+              <Counter value={m.moreInfo} />
+            </b>
             <small>Average age {m.moreInfoAgeDays} days</small>
           </div>
           <div>
             <span>APPROVED THIS WEEK</span>
-            <b>{m.approvedWeek}</b>
+            <b>
+              <Counter value={m.approvedWeek} />
+            </b>
             <small>{m.passRate}% pass rate</small>
           </div>
           <div>
             <span>EXPIRING SOON</span>
-            <b>{m.expiringSoon}</b>
+            <b>
+              <Counter value={m.expiringSoon} />
+            </b>
             <small>Practising certificates (60 days)</small>
           </div>
         </div>
@@ -144,7 +153,7 @@ function Verification({ setFlash }) {
             <div className="applicant-head">
               <span className="avatar-initials large">{initials(current.name)}</span>
               <div>
-                <span className="eyebrow">APPLICATION CML-LP-{String(current.id).padStart(4, '0')}</span>
+                <span className="eyebrow">APPLICATION LXB-LP-{String(current.id).padStart(4, '0')}</span>
                 <h2>{current.name}</h2>
                 <p>
                   {current.practitionerType} · {current.firm || 'Firm not provided'} · {current.email}

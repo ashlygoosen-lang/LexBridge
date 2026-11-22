@@ -4,6 +4,8 @@ import { Icon, Logo } from '../components/Icon'
 import { MatterModal } from '../components/MatterModal'
 import { useAuth } from '../lib/auth'
 import { homeFor, responseLabel } from '../lib/format'
+import { Counter } from '../motion/Counter'
+import { courts } from '../data/courts'
 
 const categories = [
   { key: 'criminal', title: 'Criminal matters', text: 'Bail, arrests, assault, fraud, theft and criminal appeals.', accent: 'CR' },
@@ -52,12 +54,13 @@ export function SiteFooter() {
       </div>
       <div className="shell disclaimer">
         <p>
-          Call My Lawyer is an independent legal marketplace, not a law firm, and does not provide legal advice. Lawyer information
+          LexBridge is a division of VINK Group (Pty) Ltd, registration number 2018/079316/07. LexBridge is an independent legal
+          marketplace, not a law firm, and does not provide legal advice. Lawyer information
           and fee estimates should be confirmed in a signed mandate.
         </p>
       </div>
       <div className="shell footer-bottom">
-        <span>© {new Date().getFullYear()} Call My Lawyer (Pty) Ltd</span>
+        <span>© {new Date().getFullYear()} LexBridge · VINK Group (Pty) Ltd · Cape Town</span>
         <div>
           <Link to="/legal/terms">Terms</Link>
           <Link to="/legal/privacy">Privacy & POPIA</Link>
@@ -143,13 +146,37 @@ export default function Landing() {
 
       <main>
         <section className="hero">
+          <div className="hero-aurora" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </div>
+          <div className="hero-orbit" aria-hidden="true" />
           <div className="shell hero-grid">
             <div className="hero-copy">
               <span className="eyebrow light">CONFIDENTIAL · VERIFIED · SOUTH AFRICAN</span>
-              <h1>
-                Legal help,
-                <br />
-                <em>when it matters.</em>
+              <h1 aria-label="Legal help, when it matters.">
+                <span className="line" aria-hidden="true">
+                  <span className="word" style={{ '--w': 0 }}>
+                    Legal
+                  </span>{' '}
+                  <span className="word" style={{ '--w': 1 }}>
+                    help,
+                  </span>
+                </span>
+                <span className="line" aria-hidden="true">
+                  <em>
+                    <span className="word" style={{ '--w': 2 }}>
+                      when
+                    </span>{' '}
+                    <span className="word" style={{ '--w': 3 }}>
+                      it
+                    </span>{' '}
+                    <span className="word" style={{ '--w': 4 }}>
+                      matters.
+                    </span>
+                  </em>
+                </span>
               </h1>
               <p>
                 Tell us what happened. Compare responses from verified South African lawyers and choose who feels right for you.
@@ -229,6 +256,35 @@ export default function Landing() {
                 <b>Secure mandates</b>
                 <small>Review before you sign</small>
               </span>
+            </div>
+          </div>
+        </section>
+
+        <section className="stats-band" aria-label="LexBridge in numbers">
+          <div className="shell stats-grid">
+            <div className="stat">
+              <b>
+                <Counter value={meta?.lawyers ?? 0} />
+              </b>
+              <span>Verified legal practitioners</span>
+            </div>
+            <div className="stat">
+              <b>
+                <Counter value={meta?.stations ?? 151} />
+              </b>
+              <span>Western Cape SAPS stations</span>
+            </div>
+            <div className="stat">
+              <b>
+                <Counter value={1800} />
+              </b>
+              <span>Magisterial areas mapped to courts</span>
+            </div>
+            <div className="stat">
+              <b>
+                <Counter value={courts.length} />
+              </b>
+              <span>Superior & specialist courts listed</span>
             </div>
           </div>
         </section>

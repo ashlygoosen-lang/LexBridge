@@ -6,7 +6,7 @@ import { useAuth } from '../lib/auth'
 import { api } from '../lib/api'
 import { CATEGORY_LABEL } from '../lib/format'
 
-const DRAFT_KEY = 'cml_matter_draft'
+const DRAFT_KEY = 'lexbridge_matter_draft'
 const OPTIONS = [
   { key: 'criminal|I am arrested or accused', category: 'criminal', label: 'Criminal', sub: 'I am arrested or accused' },
   { key: 'criminal|I am a complainant', category: 'criminal', label: 'Criminal', sub: 'I am a complainant' },
@@ -240,7 +240,7 @@ export function MatterModal({ onClose, initialCategory }) {
               <Icon name="lock" size={18} /> Your name and contact details remain hidden until you accept an offer.
             </p>
             <label className="consent">
-              <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} /> I understand Call My Lawyer is a
+              <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} /> I understand LexBridge is a
               marketplace and does not provide legal advice.
             </label>
           </div>

@@ -1,4 +1,6 @@
-# Call My Lawyer — South African Legal Marketplace
+# LexBridge — South African Legal Marketplace
+
+LexBridge is a division of VINK Group (Pty) Ltd, registration number 2018/079316/07.
 
 A full-stack rebuild of the Figma Make "South African Legal Marketplace" export as a standalone
 **React (Vite) frontend** and **Node/Express backend**. It runs as a single service: Express serves the
@@ -6,7 +8,7 @@ API under `/api` and the built React app for every other route.
 
 ## What's included
 
-**Legal marketplace (Call My Lawyer)**
+**Legal marketplace (LexBridge)**
 - Landing page, lawyer directory with filters, public practitioner profiles
 - Post a matter (anonymised): 3-step modal, drafts survive sign-up
 - Lawyer matter feed with match scores, filters, saved matters and availability toggle
@@ -25,7 +27,7 @@ API under `/api` and the built React app for every other route.
 - Open a digital justice intake from a report
 - Western Cape SAPS directory: 151 stations from the Dept. of Police Oversight & Community Safety directory (Feb 2022)
 
-**Digital justice workspace ("Justice Flow")**
+**Digital justice workspace (LexBridge Justice)**
 - Role-based tools for client, SAPS, prosecutor, court clerk, magistrate/judge, lawyer and Legal Aid
 - Official reference registration, immutable docket entries, prosecution decisions, court roll scheduling and status, sealed decisions, e-filing with clerk accept/reject/seal, secure participant messaging, Legal Aid screening queue, time records, detention and procedural deadlines
 - Immutable audit trail and in-app notifications to every case participant
@@ -59,7 +61,7 @@ npm run build && npm start   # http://localhost:4000
 While `SEED_DEMO` is not `false`, an empty database is seeded with demo data. Every account uses the
 password `Demo@2025!` (override with `DEMO_PASSWORD`). The login page has a "Demo accounts" picker.
 
-| Email (`@demo.callmylawyer.co.za`) | Role |
+| Email (`@demo.lexbridge.co.za`) | Role |
 |---|---|
 | naledi | Client (open matter with 3 offers, active matter, police report, justice case) |
 | sipho, anele | Clients |

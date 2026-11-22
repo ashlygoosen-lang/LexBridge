@@ -2,7 +2,7 @@
 from playwright.sync_api import sync_playwright, expect
 
 BASE = 'http://localhost:4100'
-D = 'demo.callmylawyer.co.za'
+D = 'demo.lexbridge.co.za'
 OUT = '/home/claude/tests/shots'
 
 

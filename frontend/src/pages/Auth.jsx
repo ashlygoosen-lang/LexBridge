@@ -55,7 +55,7 @@ export default function Auth() {
   return (
     <div className="auth-page">
       <section className="auth-aside">
-        <button onClick={() => navigate('/')} aria-label="Call My Lawyer home">
+        <button onClick={() => navigate('/')} aria-label="LexBridge home">
           <Logo as="span" />
         </button>
         <div>
@@ -74,13 +74,13 @@ export default function Auth() {
             </li>
           </ul>
         </div>
-        <small>Call My Lawyer is a marketplace, not a law firm, and is not SAPS.</small>
+        <small>LexBridge is a marketplace, not a law firm, and is not SAPS.</small>
       </section>
       <main className="auth-main">
         <div className="auth-card">
           <span className="eyebrow">{signup ? 'CREATE YOUR ACCOUNT' : 'SECURE SIGN IN'}</span>
           <h2>{signup ? 'Let’s get you started.' : 'Sign in to your account.'}</h2>
-          <p>{signup ? 'Choose how you’ll use Call My Lawyer.' : 'Enter your details to continue.'}</p>
+          <p>{signup ? 'Choose how you’ll use LexBridge.' : 'Enter your details to continue.'}</p>
           {signup && (
             <div className="role-choice">
               <button type="button" className={role === 'client' ? 'active' : ''} onClick={() => setRole('client')}>
@@ -142,7 +142,7 @@ export default function Auth() {
             </button>
           </form>
           <div className="auth-switch">
-            {signup ? 'Already have an account?' : 'New to Call My Lawyer?'}{' '}
+            {signup ? 'Already have an account?' : 'New to LexBridge?'}{' '}
             <button onClick={toggle}>{signup ? 'Sign in' : 'Create an account'}</button>
           </div>
           {!signup && meta?.demo && (

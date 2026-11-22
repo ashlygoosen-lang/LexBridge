@@ -1,8 +1,8 @@
 {
-  "name": "call-my-lawyer",
+  "name": "lexbridge",
   "private": true,
   "version": "1.0.0",
-  "description": "Call My Lawyer — South African legal marketplace, police report tracker and digital justice workspace",
+  "description": "LexBridge — South African legal marketplace, police report tracker and digital justice workspace",
   "engines": {
     "node": ">=20"
   },

@@ -8,7 +8,7 @@ import { useAuth } from '../lib/auth'
 import { ROLE_LABEL } from '../lib/format'
 import { SiteFooter } from './Landing'
 
-const SUPPORT_EMAIL = 'support@callmylawyer.co.za'
+const SUPPORT_EMAIL = 'support@lexbridge.co.za'
 
 export function Account() {
   const { user, refresh } = useAuth()
@@ -169,7 +169,7 @@ const LEGAL = {
   terms: [
     'Terms of use',
     [
-      'Call My Lawyer (Pty) Ltd operates an online marketplace that connects people with independent legal practitioners. We are not a law firm and do not provide legal advice.',
+      'LexBridge, a division of VINK Group (Pty) Ltd (registration number 2018/079316/07), operates an online marketplace that connects people with independent legal practitioners. We are not a law firm and do not provide legal advice.',
       'Agreements for legal services are concluded directly between you and the practitioner in the mandate you sign. The practitioner is responsible for the services they provide.',
       'You must give accurate information, keep your password confidential and not post content that is unlawful, abusive or that identifies other people without need.',
       'Consultation fees and invoices are paid through our payment provider. Disputes can be raised from your Payments page and are reviewed by our team.',

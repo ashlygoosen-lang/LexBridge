@@ -8,6 +8,7 @@ import { api } from '../../lib/api'
 import { useApi, useAuth } from '../../lib/auth'
 import { CATEGORY_LABEL, CATEGORY_MARK, ago, date, dateTime, dayNum, monthShort, rand, time } from '../../lib/format'
 import { LawyerOfferForm } from '../lawyer/LawyerPages'
+import { Counter } from '../../motion/Counter'
 
 const greeting = () => {
   const h = Number(new Date().toLocaleString('en-ZA', { timeZone: 'Africa/Johannesburg', hour: '2-digit', hour12: false }))
@@ -68,12 +69,16 @@ export function ClientDashboard() {
       <div className="metric-grid">
         <article>
           <span>OPEN MATTERS</span>
-          <b>{m.openMatters}</b>
+          <b>
+            <Counter value={m.openMatters} />
+          </b>
           <small>{m.needsAttention ? '1 needs your attention' : 'Nothing needs attention'}</small>
         </article>
         <article>
           <span>NEW OFFERS</span>
-          <b>{m.newOffers}</b>
+          <b>
+            <Counter value={m.newOffers} />
+          </b>
           <small>
             Across {m.offerMatters} matter{m.offerMatters === 1 ? '' : 's'}
           </small>
@@ -85,7 +90,9 @@ export function ClientDashboard() {
         </article>
         <article>
           <span>OUTSTANDING</span>
-          <b>{rand(m.outstanding, { decimals: false })}</b>
+          <b>
+            <Counter value={m.outstanding} format={(n) => rand(n, { decimals: false })} />
+          </b>
           <small>{m.outstandingLabel}</small>
         </article>
       </div>

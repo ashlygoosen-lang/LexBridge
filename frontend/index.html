@@ -5,13 +5,85 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#0b2635" />
-    <title>Call My Lawyer · South Africa’s legal marketplace</title>
+    <title>LexBridge · South Africa’s legal marketplace</title>
     <meta
       name="description"
       content="Compare responses from verified South African lawyers, prepare a police report, and follow your matter from SAPS to court."
     />
+    <style>
+/* ---------- First-load splash (markup lives in index.html) ---------- */
+#lb-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 50% 40%, #0e3543, #061923 70%);
+  transition:
+    opacity 0.6s cubic-bezier(0.16,1,0.3,1),
+    visibility 0.6s;
+}
+#lb-splash.is-done {
+  opacity: 0;
+  visibility: hidden;
+}
+#lb-splash .lb-mark {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #d7a84a;
+  font: italic 400 34px 'Newsreader', Georgia, serif;
+  background: linear-gradient(145deg, #12394b, #071e2a);
+  box-shadow:
+    0 0 0 1px rgba(215, 168, 74, 0.25),
+    0 20px 60px rgba(0, 0, 0, 0.4);
+  animation: lb-breathe 1.6s cubic-bezier(0.65,0,0.35,1) infinite;
+}
+#lb-splash .lb-line {
+  width: 120px;
+  height: 2px;
+  margin-top: 22px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.08);
+}
+#lb-splash .lb-line::after {
+  content: '';
+  display: block;
+  height: 100%;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, #d7a84a, transparent);
+  animation: lb-scan 1.1s cubic-bezier(0.65,0,0.35,1) infinite;
+}
+@keyframes lb-breathe {
+  50% {
+    transform: scale(1.06);
+    box-shadow:
+      0 0 0 10px rgba(215, 168, 74, 0.06),
+      0 20px 60px rgba(0, 0, 0, 0.4);
+  }
+}
+@keyframes lb-scan {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(250%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce){#lb-splash .lb-mark,#lb-splash .lb-line::after{animation:none}}
+    </style>
   </head>
   <body class="min-h-screen bg-white text-zinc-950 antialiased">
+    <div id="lb-splash" aria-hidden="true">
+      <div style="display:grid;justify-items:center">
+        <div class="lb-mark">L</div>
+        <div class="lb-line"></div>
+      </div>
+    </div>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

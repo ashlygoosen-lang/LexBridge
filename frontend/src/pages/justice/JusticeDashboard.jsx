@@ -4,6 +4,7 @@ import { Loading } from '../../components/ui'
 import { api } from '../../lib/api'
 import { useApi, useAuth } from '../../lib/auth'
 import { dateTime, date } from '../../lib/format'
+import { Counter } from '../../motion/Counter'
 
 const roleNames = {
   client: 'Individual / Client',
@@ -105,7 +106,7 @@ export default function JusticeDashboard() {
     <div className="min-h-screen bg-[#f4f6f5] text-[#17262d] lg:grid lg:grid-cols-[248px_1fr]">
       <aside className="border-r border-[#dce3df] bg-[#082632] px-5 py-6 text-white">
         <Link to="/" className="font-serif text-2xl">
-          Justice <b className="text-[#dfbd6e]">Flow</b>
+          Lex<b className="text-[#dfbd6e]">Bridge</b> <span className="text-xs font-sans tracking-[.2em] text-[#8fcac3]">JUSTICE</span>
         </Link>
         <div className="mt-8 rounded-xl border border-white/10 bg-white/5 p-4">
           <div className="grid h-10 w-10 place-items-center rounded-full bg-[#d9b45f] font-serif text-lg text-[#082632]">{user.name.charAt(0)}</div>
@@ -192,7 +193,9 @@ export default function JusticeDashboard() {
                 ].map(([label, count, description]) => (
                   <article key={label} className="rounded-xl border border-[#dce3df] bg-white p-5 shadow-[0_8px_30px_rgba(8,38,50,.04)]">
                     <span className="text-[10px] font-bold text-[#79898e]">{label.toUpperCase()}</span>
-                    <strong className="mt-3 block font-serif text-4xl text-[#082632]">{count}</strong>
+                    <strong className="mt-3 block font-serif text-4xl text-[#082632]">
+                      <Counter value={count} />
+                    </strong>
                     <p className="mt-2 text-xs text-[#7b898d]">{description}</p>
                   </article>
                 ))}

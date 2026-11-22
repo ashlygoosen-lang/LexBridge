@@ -49,7 +49,7 @@ app.use('/api', (req, res, next) => {
   next()
 })
 
-app.get('/api/health', (_req, res) => res.json({ ok: true, service: 'call-my-lawyer', paymentMode }))
+app.get('/api/health', (_req, res) => res.json({ ok: true, service: 'lexbridge', paymentMode }))
 app.use('/api/auth', authRoutes)
 app.use('/api', marketplaceRoutes)
 app.use('/api', policeRoutes)
@@ -74,4 +74,4 @@ app.use((err, _req, res, _next) => {
 
 await ensureSeed()
 const port = Number(process.env.PORT) || 4000
-app.listen(port, () => console.log(`Call My Lawyer API on :${port} · payments: ${paymentMode}`))
+app.listen(port, () => console.log(`LexBridge API on :${port} · payments: ${paymentMode}`))

@@ -4,6 +4,7 @@ import { Icon } from '../components/Icon'
 import { PublicHeader } from '../components/PublicHeader'
 import { PortalLayout } from '../components/PortalLayout'
 import { PageTitle, Status } from '../components/ui'
+import { Counter } from '../motion/Counter'
 import { useAuth } from '../lib/auth'
 import { courts } from '../data/courts'
 import { magisterialAreas, magisterialAreaSource, magisterialDistricts, magisterialSeats } from '../data/magistrateData'
@@ -49,7 +50,9 @@ export function CourtDirectory() {
         </div>
         <div className="court-hero-stat">
           <div>
-            <b>{courts.length}</b>
+            <b>
+              <Counter value={courts.length} />
+            </b>
             <span>COURTS LISTED</span>
           </div>
           <div>
@@ -237,7 +240,9 @@ export function MagistrateDirectory() {
           <Icon name="pin" size={24} />
           <b>How to use this directory</b>
           <p>Start with the area where the incident happened or where the parties live. Confirm jurisdiction with the relevant court before filing.</p>
-          <span className="source-count">{magisterialAreaSource.recordCount.toLocaleString()} official area records</span>
+          <span className="source-count">
+            <Counter value={magisterialAreaSource.recordCount} /> official area records
+          </span>
           <button onClick={() => navigate('/courts')}>
             View court contact details <Icon name="arrow" size={14} />
           </button>
@@ -541,7 +546,7 @@ export function Rules() {
                   </li>
                   <li>
                     <b>VAT</b>
-                    <span>VAT-registered practitioners add 15%. Fee estimates on Call My Lawyer include VAT.</span>
+                    <span>VAT-registered practitioners add 15%. Fee estimates on LexBridge include VAT.</span>
                   </li>
                   <li>
                     <b>Disputing a bill</b>

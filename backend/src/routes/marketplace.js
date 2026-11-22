@@ -227,8 +227,9 @@ router.get('/marketplace/meta', (_req, res) => {
     demo:
       process.env.SEED_DEMO === 'false'
         ? null
-        : { domain: 'demo.callmylawyer.co.za', password: process.env.DEMO_PASSWORD ? null : 'Demo@2025!' },
+        : { domain: 'demo.lexbridge.co.za', password: process.env.DEMO_PASSWORD ? null : 'Demo@2025!' },
     lawyers,
+    stations: db.prepare('SELECT COUNT(*) n FROM police_stations').get().n,
     featured,
     options: { categories: CATEGORIES, urgency: URGENCY, budgets: BUDGETS, provinces: PROVINCES, courtLevels: COURT_LEVELS },
   })
@@ -250,7 +251,7 @@ router.post('/matters', requireRole('client'), (req, res) => {
     .prepare(`INSERT INTO matters (reference, client_id, category, side, title, description, urgency, budget, court_level, province, city)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`)
     .run(
-      randRef('CML'),
+      randRef('LXB'),
       req.user.id,
       category,
       text(req.body.side, 80) || null,
@@ -648,7 +649,7 @@ function mandateText(m, offer, client, lawyer) {
     `3. Fees and disbursements\nConsultation fee: ${money(offer.consult_fee)}. Estimated total fee: ${money(offer.total_fee)} including VAT and estimated disbursements (${offer.fee_structure.toLowerCase()}). The Practitioner will give written notice before the estimate is exceeded.`,
     `4. Confidentiality and POPIA\nPersonal information will be processed only for this mandate, in accordance with the Protection of Personal Information Act 4 of 2013 and the Practitioner’s professional duties.`,
     `5. Termination\nEither party may terminate this mandate in writing. Fees for work properly done up to termination remain payable.`,
-    `6. Marketplace role\nCall My Lawyer is a marketplace and is not a party to this mandate. It does not provide legal advice.`,
+    `6. Marketplace role\nLexBridge is a marketplace and is not a party to this mandate. It does not provide legal advice.`,
   ].join('\n\n')
 }
 

@@ -125,7 +125,7 @@ router.post('/police-reports', requireAuth, (req, res) => {
     const info = db
       .prepare(`INSERT INTO police_reports (reference, owner_id, title, incident_type, incident_date, incident_location, summary,
         is_emergency, station_id, consent_saps, consent_lawyer, consent_sensitive) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1, 1, 1)`)
-      .run(randRef('CMR'), req.user.id, title, incidentType, incidentDate, incidentLocation, summary, b.isEmergency ? 1 : 0, stationId)
+      .run(randRef('LXR'), req.user.id, title, incidentType, incidentDate, incidentLocation, summary, b.isEmergency ? 1 : 0, stationId)
     const report = getReport.get(info.lastInsertRowid)
     addRevision(report, req.user, statement, 'Original statement recorded by the client.')
     addEvent.run(
@@ -221,7 +221,7 @@ router.post('/police-reports/:id/saps-reference', requireAuth, (req, res) => {
       r.id,
       req.user.id,
       'SAPS reference recorded',
-      `The client recorded SAPS reference ${ref}. This reference has not been independently verified by Call My Lawyer.`,
+      `The client recorded SAPS reference ${ref}. This reference has not been independently verified by LexBridge.`,
       now(),
       'saps',
     )

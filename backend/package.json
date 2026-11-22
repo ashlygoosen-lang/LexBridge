@@ -1,9 +1,9 @@
 {
-  "name": "call-my-lawyer-backend",
+  "name": "lexbridge-backend",
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Call My Lawyer — South African legal marketplace and digital justice API",
+  "description": "LexBridge — South African legal marketplace and digital justice API",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",

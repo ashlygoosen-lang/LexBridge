@@ -12,7 +12,7 @@ const input = 'mt-2 h-12 w-full rounded-lg border border-[#cdd6d2] bg-white px-4
 function Brand() {
   return (
     <Link to="/" className="font-serif text-2xl text-[#0b2635]">
-      Call My <b>Lawyer</b>
+      Lex<b>Bridge</b>
     </Link>
   )
 }
@@ -416,7 +416,7 @@ export function CaseTracker() {
             </div>
             <div className="max-w-sm rounded-xl border border-white/15 bg-white/5 p-4 text-xs leading-5 text-[#c5d3d4]">
               {report.casNumber
-                ? 'A SAPS reference has been recorded by the client. Call My Lawyer has not independently verified it.'
+                ? 'A SAPS reference has been recorded by the client. LexBridge has not independently verified it.'
                 : 'This is a platform report, not an official SAPS case. Take it to SAPS and record the reference they provide.'}
             </div>
           </div>

@@ -7,7 +7,7 @@ import { db, now, UPLOAD_DIR } from '../db.js'
 import { randRef, sha256, vatPortion } from '../util.js'
 import { stations, stationSource } from './police-stations.js'
 
-const DEMO_DOMAIN = 'demo.callmylawyer.co.za'
+const DEMO_DOMAIN = 'demo.lexbridge.co.za'
 const day = 864e5
 const at = (offsetDays, hourSAST = 9, minute = 0) => {
   const d = new Date(Date.now() + offsetDays * day)
@@ -140,7 +140,7 @@ async function seedDemo() {
     db
       .prepare(`INSERT INTO matters (reference, client_id, category, side, title, description, urgency, budget, court_level, province, city, status, lawyer_id, court_name, next_court_date, created_at, updated_at)
         VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`)
-      .run(randRef('CML'), client, p.category, p.side, p.title, p.description, p.urgency, p.budget, p.court, p.province, p.city, p.status ?? 'open', p.lawyer ?? null, p.courtName ?? null, p.nextCourt ?? null, p.created, p.created).lastInsertRowid
+      .run(randRef('LXB'), client, p.category, p.side, p.title, p.description, p.urgency, p.budget, p.court, p.province, p.city, p.status ?? 'open', p.lawyer ?? null, p.courtName ?? null, p.nextCourt ?? null, p.created, p.created).lastInsertRowid
   const offer = (m, l, p) =>
     db
       .prepare(`INSERT INTO offers (matter_id, lawyer_id, consult_fee, total_fee, fee_structure, note, breakdown, inclusions, status, created_at) VALUES (?,?,?,?,?,?,?,?,?,?)`)
@@ -216,7 +216,7 @@ async function seedDemo() {
   const rep = db
     .prepare(`INSERT INTO police_reports (reference, owner_id, title, incident_type, incident_date, incident_location, summary, station_id, official_status, cas_number, consent_saps, consent_lawyer, consent_sensitive, created_at, updated_at)
       VALUES (?,?,?,?,?,?,?,?, 'reported-to-saps', 'CAS 214/10/2025', 1,1,1, ?, ?)`)
-    .run(randRef('CMR'), naledi, 'Phone snatched outside station', 'Theft or robbery', new Date(Date.now() - 6 * day).toISOString(), 'Strand Street, Cape Town CBD', 'My phone was grabbed out of my hand by a man on a bicycle while I waited for a taxi at about 17:40.', station?.id ?? null, new Date(Date.now() - 6 * day).toISOString(), new Date(Date.now() - 4 * day).toISOString()).lastInsertRowid
+    .run(randRef('LXR'), naledi, 'Phone snatched outside station', 'Theft or robbery', new Date(Date.now() - 6 * day).toISOString(), 'Strand Street, Cape Town CBD', 'My phone was grabbed out of my hand by a man on a bicycle while I waited for a taxi at about 17:40.', station?.id ?? null, new Date(Date.now() - 6 * day).toISOString(), new Date(Date.now() - 4 * day).toISOString()).lastInsertRowid
   const s1 = 'At about 17:40 I was standing on Strand Street waiting for a taxi. A man on a black bicycle rode past, grabbed my phone out of my right hand and rode towards Adderley Street. He wore a grey hoodie.'
   const s2 = `${s1} A street vendor, who gave her name as Mrs Abrahams, saw what happened and is willing to give a statement.`
   const v1 = db.prepare(`INSERT INTO statement_revisions (report_id, owner_id, version_number, content, content_hash, change_type, change_summary, changed_by, created_at) VALUES (?,?,1,?,?, 'original', 'Original statement recorded by the client.', ?, ?)`).run(rep, naledi, s1, sha256(s1), naledi, new Date(Date.now() - 6 * day).toISOString()).lastInsertRowid
@@ -225,7 +225,7 @@ async function seedDemo() {
   const tl = db.prepare('INSERT INTO case_timeline_events (report_id, owner_id, title, details, event_date, source) VALUES (?,?,?,?,?,?)')
   tl.run(rep, naledi, 'Platform report created', 'The report and original statement were saved securely. This is not yet an official SAPS case.', new Date(Date.now() - 6 * day).toISOString(), 'platform')
   tl.run(rep, naledi, 'Statement amendment recorded', 'Added details of an eyewitness.', new Date(Date.now() - 5 * day).toISOString(), 'client')
-  tl.run(rep, naledi, 'SAPS reference recorded', 'The client recorded SAPS reference CAS 214/10/2025. This reference has not been independently verified by Call My Lawyer.', new Date(Date.now() - 4 * day).toISOString(), 'saps')
+  tl.run(rep, naledi, 'SAPS reference recorded', 'The client recorded SAPS reference CAS 214/10/2025. This reference has not been independently verified by LexBridge.', new Date(Date.now() - 4 * day).toISOString(), 'saps')
 
   // ---- digital justice case with a full team ----
   const jc = db

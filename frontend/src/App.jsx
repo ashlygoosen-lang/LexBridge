@@ -1,6 +1,7 @@
 import { Suspense, lazy, useEffect } from 'react'
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { useAuth } from './lib/auth'
+import { useMotion } from './motion/useMotion'
 import { homeFor } from './lib/format'
 import { Loading } from './components/ui'
 import Landing from './pages/Landing'
@@ -52,10 +53,15 @@ function LoginRoute() {
 }
 
 export default function App() {
+  useMotion()
+  const { pathname } = useLocation()
   return (
     <>
       <ScrollManager />
+      <div className="lb-progress" aria-hidden="true" />
+      <div className="lb-route-bar" key={`bar-${pathname}`} aria-hidden="true" />
       <Suspense fallback={<Loading />}>
+      <div className="route-stage" key={pathname}>
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<LoginRoute />} />
@@ -87,6 +93,7 @@ export default function App() {
         <Route path="/dashboard" element={<Guard><JusticeDashboard /></Guard>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      </div>
       </Suspense>
     </>
   )

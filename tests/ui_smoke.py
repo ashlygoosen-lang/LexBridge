@@ -4,7 +4,7 @@ from playwright.sync_api import sync_playwright
 
 BASE = sys.argv[1] if len(sys.argv) > 1 else 'http://localhost:4100'
 OUT = '/home/claude/tests/shots'
-D = 'demo.callmylawyer.co.za'
+D = 'demo.lexbridge.co.za'
 PW = 'Demo@2025!'
 
 ROUTES = {

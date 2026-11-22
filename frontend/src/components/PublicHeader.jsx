@@ -9,7 +9,7 @@ export function PublicHeader({ court = false, magistrate = false }) {
   const link = ({ isActive }) => (isActive ? 'active' : '')
   return (
     <header className={`directory-header ${court ? 'court-header' : ''}`}>
-      <button onClick={() => navigate('/')} aria-label="Call My Lawyer home">
+      <button onClick={() => navigate('/')} aria-label="LexBridge home">
         <Logo as="span" />
       </button>
       <nav>

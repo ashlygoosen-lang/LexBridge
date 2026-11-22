@@ -95,15 +95,15 @@ export function Icon({ name, size = 20 }) {
 export function Logo({ as = 'link' }) {
   const inner = (
     <>
-      <span className="logo-mark">C</span>
+      <span className="logo-mark">L</span>
       <span>
-        Call My <b>Lawyer</b>
+        Lex<b>Bridge</b>
       </span>
     </>
   )
   if (as === 'span') return <span className="logo">{inner}</span>
   return (
-    <Link className="logo" to="/" aria-label="Call My Lawyer home">
+    <Link className="logo" to="/" aria-label="LexBridge home">
       {inner}
     </Link>
   )
