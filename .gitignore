@@ -1,7 +1,7 @@
 node_modules/
 frontend/dist/
-backend/data/
-data/
+/backend/data/
+/data/
 .env
 *.log
 .DS_Store
