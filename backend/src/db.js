@@ -438,6 +438,18 @@ CREATE TRIGGER IF NOT EXISTS mandates_no_update BEFORE UPDATE ON mandates
 BEGIN SELECT RAISE(ABORT, 'Signed mandates cannot be changed'); END;
 `)
 
+// Lightweight migrations for columns added after the first release.
+const addColumn = (table, column, ddl) => {
+  const cols = db.prepare(`PRAGMA table_info(${table})`).all().map((c) => c.name)
+  if (!cols.includes(column)) db.exec(`ALTER TABLE ${table} ADD COLUMN ${column} ${ddl}`)
+}
+addColumn('payments', 'refund_amount', 'INTEGER NOT NULL DEFAULT 0')
+addColumn('payments', 'refund_reason', 'TEXT')
+addColumn('payments', 'refund_status', 'TEXT') // null | 'pending' | 'paid'
+addColumn('payments', 'refunded_at', 'TEXT')
+addColumn('consultations', 'cancelled_by', 'INTEGER')
+addColumn('consultations', 'cancel_reason', 'TEXT')
+
 export const now = () => new Date().toISOString()
 export const json = (value, fallback = []) => {
   try {

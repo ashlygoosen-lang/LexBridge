@@ -11,11 +11,13 @@ import { ClientDashboard, MatterPage, MattersList, WorkspaceIndex } from './page
 import { Checkout, Payments, Workspace } from './pages/client/Workspace'
 import { LawyerFeed, LawyerOffers, LawyerProfileEdit } from './pages/lawyer/LawyerPages'
 import { CaseTracker, PoliceReport, StationDirectory } from './pages/police/PolicePages'
-import { Account, Help, Legal, NotFound } from './pages/Misc'
+import { Account, NotFound } from './pages/Misc'
 
 const CourtDirectory = lazy(() => import('./pages/Reference').then((m) => ({ default: m.CourtDirectory })))
 const MagistrateDirectory = lazy(() => import('./pages/Reference').then((m) => ({ default: m.MagistrateDirectory })))
 const Rules = lazy(() => import('./pages/Reference').then((m) => ({ default: m.Rules })))
+const Help = lazy(() => import('./pages/Help'))
+const LegalRouter = lazy(() => import('./pages/legal/LegalRouter'))
 const Admin = lazy(() => import('./pages/admin/Admin'))
 const JusticeDashboard = lazy(() => import('./pages/justice/JusticeDashboard'))
 
@@ -74,7 +76,11 @@ export default function App() {
         <Route path="/police-report" element={<PoliceReport />} />
         <Route path="/police-report/:id" element={<CaseTracker />} />
         <Route path="/help" element={<Help />} />
-        <Route path="/legal/:page" element={<Legal />} />
+        <Route path="/legal" element={<Navigate replace to="/legal/terms" />} />
+        <Route path="/legal/:page" element={<LegalRouter />} />
+        <Route path="/terms" element={<Navigate replace to="/legal/terms" />} />
+        <Route path="/privacy" element={<Navigate replace to="/legal/privacy" />} />
+        <Route path="/refunds" element={<Navigate replace to="/legal/refunds" />} />
 
         <Route path="/client" element={<Guard roles={['client']}><ClientDashboard /></Guard>} />
         <Route path="/matters" element={<Guard roles={['client', 'lawyer']}><MattersList /></Guard>} />

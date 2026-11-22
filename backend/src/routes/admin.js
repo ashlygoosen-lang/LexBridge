@@ -33,6 +33,7 @@ router.get('/admin/overview', (_req, res) => {
       expiringSoon: count(`SELECT COUNT(*) n FROM lawyer_profiles WHERE verification_status = 'approved' AND practising_cert_expiry <= ?`, soon),
       identityPending: count(`SELECT COUNT(*) n FROM users WHERE identity_status = 'pending'`),
       disputes: count(`SELECT COUNT(*) n FROM payments WHERE status = 'disputed'`),
+      refundsPending: count(`SELECT COUNT(*) n FROM payments WHERE refund_status = 'pending'`),
       unassignedCases: count(`SELECT COUNT(*) n FROM justice_cases c WHERE NOT EXISTS (SELECT 1 FROM case_participants p WHERE p.case_id = c.id AND p.team != 'clients')`),
       users: count('SELECT COUNT(*) n FROM users'),
       openMatters: count(`SELECT COUNT(*) n FROM matters WHERE status = 'open'`),
@@ -155,9 +156,22 @@ router.get('/admin/payments', (_req, res) => {
   const rows = db
     .prepare(`SELECT p.*, m.title AS matter_title, m.reference AS matter_reference, c.name AS client_name, l.name AS lawyer_name
       FROM payments p JOIN matters m ON m.id = p.matter_id JOIN users c ON c.id = p.client_id JOIN users l ON l.id = p.lawyer_id
-      ORDER BY CASE p.status WHEN 'disputed' THEN 0 ELSE 1 END, p.created_at DESC LIMIT 300`)
+      ORDER BY CASE WHEN p.status = 'disputed' OR p.refund_status = 'pending' THEN 0 ELSE 1 END, p.created_at DESC LIMIT 300`)
     .all()
   res.json({ ok: true, payments: rows.map((p) => ({ ...paymentOut(p), clientName: p.client_name, lawyerName: p.lawyer_name })) })
+})
+
+router.post('/admin/payments/:id/refund-paid', (req, res) => {
+  const p = db.prepare(`SELECT * FROM payments WHERE id = ? AND refund_status = 'pending'`).get(int(req.params.id))
+  if (!p) return fail(res, 404, 'No pending refund for this payment.')
+  const ref = text(req.body.reference, 80)
+  db.prepare(`UPDATE payments SET refund_status = 'paid', refunded_at = ?, provider_ref = COALESCE(provider_ref, '') || ? WHERE id = ?`).run(
+    now(),
+    ref ? ` · refund ${ref}` : '',
+    p.id,
+  )
+  notify(p.client_id, { title: 'Refund processed', message: `R ${(p.refund_amount / 100).toFixed(2)} for “${p.description}” has been refunded to your payment method.`, link: '/payments' })
+  res.json({ ok: true })
 })
 
 router.post('/admin/payments/:id/resolve', (req, res) => {
@@ -166,7 +180,15 @@ router.post('/admin/payments/:id/resolve', (req, res) => {
   const status = req.body.outcome === 'refund' ? 'refunded' : 'paid'
   const note = text(req.body.note, 500)
   if (!note) return fail(res, 400, 'Record the resolution reason.')
-  db.prepare('UPDATE payments SET status = ?, dispute_note = ? WHERE id = ?').run(status, `${p.dispute_note || ''}\n— Resolution: ${note}`.trim(), p.id)
+  db.prepare('UPDATE payments SET status = ?, dispute_note = ?, refund_amount = ?, refund_reason = ?, refund_status = ?, refunded_at = ? WHERE id = ?').run(
+    status,
+    `${p.dispute_note || ''}\n— Resolution: ${note}`.trim(),
+    status === 'refunded' ? p.amount : p.refund_amount || 0,
+    status === 'refunded' ? note : p.refund_reason,
+    status === 'refunded' ? 'paid' : p.refund_status,
+    status === 'refunded' ? now() : p.refunded_at,
+    p.id,
+  )
   const msg = status === 'refunded' ? `A refund was approved for “${p.description}”. ${note}` : `The dispute on “${p.description}” was closed. ${note}`
   notify(p.client_id, { title: 'Dispute resolved', message: msg, link: '/payments' })
   notify(p.lawyer_id, { title: 'Dispute resolved', message: msg, link: '/payments' })

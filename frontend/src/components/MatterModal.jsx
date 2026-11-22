@@ -240,8 +240,14 @@ export function MatterModal({ onClose, initialCategory }) {
               <Icon name="lock" size={18} /> Your name and contact details remain hidden until you accept an offer.
             </p>
             <label className="consent">
-              <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} /> I understand LexBridge is a
-              marketplace and does not provide legal advice.
+              <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} />
+              <span>
+                I understand LexBridge is a marketplace and does not provide legal advice, and I agree to the{' '}
+                <a href="/legal/terms#matters" target="_blank" rel="noreferrer">
+                  rules for posting a matter
+                </a>
+                . Posting is free.
+              </span>
             </label>
           </div>
         )}

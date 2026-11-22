@@ -131,8 +131,26 @@ export default function Auth() {
             </label>
             {signup && (
               <label className="consent">
-                <input type="checkbox" required checked={form.consent} onChange={set('consent')} /> I agree to the Terms, POPIA Privacy
-                Notice and marketplace disclaimer.
+                <input type="checkbox" required checked={form.consent} onChange={set('consent')} />
+                <span>
+                  I have read and agree to the{' '}
+                  <a href="/legal/terms" target="_blank" rel="noreferrer">
+                    Terms of Use
+                  </a>
+                  {role === 'lawyer' && (
+                    <>
+                      ,{' '}
+                      <a href="/legal/practitioners" target="_blank" rel="noreferrer">
+                        Practitioner Terms
+                      </a>
+                    </>
+                  )}{' '}
+                  and{' '}
+                  <a href="/legal/privacy" target="_blank" rel="noreferrer">
+                    Privacy Policy (POPIA)
+                  </a>
+                  , and understand LexBridge is a marketplace, not a law firm.
+                </span>
               </label>
             )}
             <Notice>{error}</Notice>

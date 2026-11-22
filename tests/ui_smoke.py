@@ -8,7 +8,7 @@ D = 'demo.lexbridge.co.za'
 PW = 'Demo@2025!'
 
 ROUTES = {
-    None: ['/', '/lawyers', '/lawyers/5', '/courts', '/magistrates', '/fees', '/police-stations', '/help', '/legal/privacy', '/login', '/login?mode=signup', '/nope'],
+    None: ['/', '/lawyers', '/lawyers/5', '/courts', '/magistrates', '/fees', '/police-stations', '/help', '/legal/terms', '/legal/refunds', '/legal/privacy', '/legal/cookies', '/legal/paia', '/legal/practitioners', '/legal/disclaimer', '/legal/company', '/terms', '/refunds', '/login', '/login?mode=signup', '/nope'],
     'naledi': ['/client', '/matters', '/matters/1', '/matters/2/workspace', '/matters/2/workspace?tab=Messages', '/matters/2/workspace?tab=Documents',
                '/matters/2/workspace?tab=Fees+%26+invoices', '/matters/2/workspace?tab=Mandate', '/payments', '/police-report', '/police-report/1', '/dashboard', '/account', '/fees'],
     'thabo': ['/lawyer', '/matters/3', '/lawyer/offers', '/matters', '/matters/2/workspace', '/payments', '/lawyer/profile'],

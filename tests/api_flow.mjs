@@ -120,6 +120,47 @@ r = await naledi.post(`/matters/${matterId}/mandate/sign`, { agree: true, signed
 ok(r.ok, 'mandate signed')
 r = await thabo.get(`/matters/${matterId}/workspace`)
 ok(r.client.email === `naledi@${D}` && r.mandate.contentHash.length === 64, 'contact details revealed after mandate; mandate hashed')
+ok(r.mandate.content.includes('Cancellation and refunds') && r.mandate.content.includes('section 44'), 'mandate carries the cancellation and refund clause')
+
+console.log('\n== Cancel and reschedule (Refund Policy)')
+r = await naledi.post('/matters', {
+  category: 'criminal', side: 'I am a complainant', title: 'Second matter to cancel', description: 'Testing the cancellation and refund rules end to end.',
+  urgency: 'Within 48 hours', province: 'Gauteng', courtLevel: "Magistrates' Court", consent: true,
+})
+const m2 = r.matter.id
+await thabo.post(`/matters/${m2}/offers`, { consultFee: 60000, note: 'Happy to assist with this one.' })
+const o2 = (await naledi.get(`/matters/${m2}/offers`)).offers[0].id
+await naledi.post(`/matters/${m2}/offers/${o2}/accept`)
+const p2 = (await naledi.get(`/matters/${m2}/checkout`)).payment.id
+await naledi.post(`/payments/${p2}/pay`, { method: 'Card' })
+let ck = await naledi.get(`/matters/${m2}/checkout`)
+const slots2 = ck.slots.flatMap((d) => d.times.filter((t) => t.available).map((t) => t.startsAt))
+r = await naledi.post(`/matters/${m2}/consultation`, { startsAt: slots2.at(-1), format: 'phone' })
+ok(r.ok, 'second consultation booked', r.error)
+r = await naledi.get(`/matters/${m2}/workspace`)
+ok(r.cancellation?.allowed && r.cancellation.percent === 100 && r.cancellation.inCoolingOff, 'workspace shows a 100% cooling-off refund quote')
+r = await naledi.post(`/matters/${m2}/consultation/reschedule`)
+ok(r.ok, 'client reschedules for free', r.error)
+ck = await naledi.get(`/matters/${m2}/checkout`)
+ok(ck.step === 'schedule', 'rescheduling returns checkout to the schedule step (payment kept)')
+r = await naledi.post(`/matters/${m2}/consultation`, { startsAt: slots2.at(-2), format: 'phone' })
+ok(r.ok, 'new time booked after reschedule', r.error)
+r = await thabo.post(`/matters/${m2}/consultation/cancel`, { note: '' })
+ok(r.status === 400, 'practitioner must give a reason to cancel')
+r = await sippedQuote()
+async function sippedQuote() { return naledi.get(`/matters/${m2}/consultation/cancel-quote?reason=death-hospitalisation`) }
+ok(r.quote?.percent === 100 && /section 17/.test(r.quote.rule), 'death/hospitalisation quote cites CPA s17 with no charge')
+r = await lerato.post(`/matters/${m2}/consultation/cancel`, {})
+ok(r.status === 403 || r.status === 404, 'outsider cannot cancel')
+r = await naledi.post(`/matters/${m2}/consultation/cancel`, { reason: 'personal', note: 'Sorted it out myself.' })
+ok(r.ok && r.percent === 100 && r.refundAmount === 60000 && r.refundStatus === 'paid', 'client cancellation refunds 100% (test mode refunds immediately)', JSON.stringify(r))
+r = await naledi.get('/payments')
+const refunded = r.payments.find((p) => p.id === p2)
+ok(refunded?.status === 'refunded' && refunded.refundAmount === 60000, 'payment shows as refunded with amount')
+r = await naledi.get(`/matters/${m2}/workspace`)
+ok(r.matter.status === 'closed' && !r.cancellation, 'cancelling closes the matter')
+r = await naledi.post(`/matters/${m2}/consultation/cancel`, {})
+ok(r.status >= 400, 'cannot cancel twice')
 
 console.log('\n== Workspace')
 r = await thabo.post(`/matters/${matterId}/messages`, { body: 'Hello Naledi, I have your file.' })

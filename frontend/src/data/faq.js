@@ -1,0 +1,24 @@
+import { company } from './company'
+
+export const FAQ = [
+  ['General', 'Is LexBridge a law firm?', 'No. LexBridge is an online marketplace that connects you with independent, verified attorneys and advocates. Legal advice comes only from the practitioner you choose.'],
+  ['General', 'Who runs LexBridge?', `LexBridge is a division of ${company.legalName}, registration number ${company.registrationNumber}, with its head office in Cape Town.`],
+  ['General', 'Does it cost anything to post a matter?', 'No. Creating an account, posting a matter, receiving offers and using the police report tool are free. You pay only the consultation fee of the lawyer you choose, and any further fees you agree in the mandate.'],
+  ['General', 'Which areas does LexBridge cover?', 'Lawyers can respond to matters from all nine provinces. The police station directory and magistrate court finder currently cover the Western Cape; the superior court directory covers the whole country.'],
+  ['Lawyers', 'How do you verify lawyers?', 'Before a lawyer can respond to matters, our team checks their identity, Legal Practice Council enrolment, practising certificate, Fidelity Fund certificate (where required) and firm details. Credentials are re-checked when they change or expire.'],
+  ['Lawyers', 'Can lawyers see who I am?', 'Not while your matter is open. Lawyers see the description you wrote, the type of matter, urgency, province and budget. The lawyer you choose sees your name when you accept their offer, and your contact details once you sign the mandate.'],
+  ['Lawyers', 'What is an attorney, and what is an advocate?', 'Attorneys usually deal with clients directly, give advice, draft documents and appear in many courts. Advocates specialise in court appearances and opinions; many are briefed by an attorney rather than instructed directly. The lawyer’s profile shows which they are.'],
+  ['Fees', 'Are the fees in an offer final?', 'The consultation fee is fixed. Further stages are estimates, because legal work can change. Your lawyer must tell you in writing before going over the estimate. All amounts are in rand and include VAT where applicable.'],
+  ['Fees', 'How do I pay?', `Through ${company.paymentProvider}’s secure page by card, instant EFT or another supported method. LexBridge never sees your card or bank details.`],
+  ['Fees', 'Can I get a refund?', 'Yes, in many cases. You can cancel within 7 days of paying for a full refund if the consultation has not yet happened. After that, cancelling 24 hours or more before gives a full refund, 2–24 hours before gives 50%. You always get a full refund if the lawyer cancels.'],
+  ['Fees', 'I can’t afford a lawyer. What can I do?', 'Legal Aid South Africa provides free legal help to people who qualify — call the Legal Aid Advice Line on 0800 110 110. You can also request Legal Aid screening from a justice case on LexBridge, and set a lower budget range when you post a matter.'],
+  ['Police reports', 'Does a LexBridge report open a case with SAPS?', 'No. Only SAPS can open a criminal case. LexBridge helps you prepare and preserve your statement; then take it to SAPS and record the CAS or OB number they give you.'],
+  ['Police reports', 'Why can’t I delete my original statement?', 'Your original is locked so that you can show it was not changed later — this protects its value as evidence. You can add amendments at any time, and every version is shown with its date and fingerprint.'],
+  ['Police reports', 'What is the SHA-256 fingerprint?', 'A unique code calculated from the exact text of your statement or file. If even one character changed, the code would be different. LexBridge re-checks it every time you view the record.'],
+  ['Privacy', 'Is my information safe?', 'We protect it under POPIA: encrypted connections, hashed passwords, strict role-based access and tamper-evident records. We store only the last four digits of your ID number and never sell your information.'],
+  ['Privacy', 'Where is my data stored?', `On secure cloud servers in ${company.hostingRegion}, under agreements that give it protection similar to POPIA. Our Privacy Policy explains this in more detail.`],
+  ['Privacy', 'How do I see or delete my information?', `Email ${company.privacyEmail} from your account email address. We respond within 30 days. Some case records must be kept by law or to protect their evidential value; we will explain if that applies.`],
+  ['Account', 'I forgot my password.', `Email ${company.email} from your account email address and we will help you regain access securely. You can change your password any time on Profile & settings.`],
+  ['Account', 'How do I close my account?', `Email ${company.email}. Closing your account does not cancel a mandate you have signed with a lawyer — end that with the lawyer directly.`],
+]
+

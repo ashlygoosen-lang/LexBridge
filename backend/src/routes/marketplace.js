@@ -125,6 +125,10 @@ const paymentOut = (p) => ({
   provider: p.provider,
   providerRef: p.provider_ref,
   disputeNote: p.dispute_note,
+  refundAmount: p.refund_amount || 0,
+  refundStatus: p.refund_status,
+  refundReason: p.refund_reason,
+  refundedAt: p.refunded_at,
   createdAt: p.created_at,
   paidAt: p.paid_at,
   matterTitle: p.matter_title,
@@ -648,8 +652,10 @@ function mandateText(m, offer, client, lawyer) {
     `2. Scope of work\n${scope.length ? scope.map((s) => `• ${s}`).join('\n') : 'Consultation and advice on the matter described by the Client.'}\nAny work outside this scope requires the Client’s prior written approval.`,
     `3. Fees and disbursements\nConsultation fee: ${money(offer.consult_fee)}. Estimated total fee: ${money(offer.total_fee)} including VAT and estimated disbursements (${offer.fee_structure.toLowerCase()}). The Practitioner will give written notice before the estimate is exceeded.`,
     `4. Confidentiality and POPIA\nPersonal information will be processed only for this mandate, in accordance with the Protection of Personal Information Act 4 of 2013 and the Practitioner’s professional duties.`,
-    `5. Termination\nEither party may terminate this mandate in writing. Fees for work properly done up to termination remain payable.`,
-    `6. Marketplace role\nLexBridge is a marketplace and is not a party to this mandate. It does not provide legal advice.`,
+    `5. Cancellation and refunds\nThe Client may cancel the consultation within 7 days of payment for a full refund if it has not yet started (Electronic Communications and Transactions Act, section 44). After that: cancelling 24 hours or more before the consultation gives a full refund, between 2 and 24 hours gives a 50% refund, and less than 2 hours or not attending gives no refund. No charge applies for death or hospitalisation. If the Practitioner cancels, the Client receives a full refund. Refunds are paid to the original payment method within 30 days. The full policy is at /legal/refunds.`,
+    `6. Termination\nEither party may terminate this mandate in writing. Fees for work properly done up to termination remain payable, and money held in trust that has not been earned will be refunded in line with the Legal Practice Act 28 of 2014 and the rules of the Legal Practice Council.`,
+    `7. Complaints\nComplaints about the Practitioner's conduct may be made to the Legal Practice Council. Complaints about the platform may be made to LexBridge at ${'disputes@lexbridge.co.za'}.`,
+    `8. Marketplace role\nLexBridge, a division of VINK Group (Pty) Ltd, is a marketplace and is not a party to this mandate. It does not provide legal advice.`,
   ].join('\n\n')
 }
 
@@ -670,7 +676,9 @@ router.get('/matters/:id/workspace', requireAuth, (req, res) => {
     .all(m.id)
   const events = db.prepare(`SELECT * FROM matter_events WHERE matter_id = ? ORDER BY event_date`).all(m.id)
   const payments = db.prepare(`SELECT * FROM payments WHERE matter_id = ? ORDER BY created_at`).all(m.id)
-  const paid = payments.filter((p) => p.status === 'paid').reduce((s, p) => s + p.amount, 0)
+  const paid = payments
+    .filter((p) => ['paid', 'refunded', 'disputed'].includes(p.status))
+    .reduce((s, p) => s + p.amount - (p.refund_amount || 0), 0)
   const upcoming = events.filter((e) => ['hearing', 'consultation', 'deadline'].includes(e.kind) && e.event_date >= now())
   const hearing = events.filter((e) => e.kind === 'hearing' && e.event_date >= now())[0]
   const latestUpdate = [...events].reverse().find((e) => e.kind === 'update')
@@ -691,6 +699,7 @@ router.get('/matters/:id/workspace', requireAuth, (req, res) => {
     offer: offer ? offerOut(offer) : null,
     checkoutStep: state.step,
     consultation: state.booking ? { id: state.booking.id, startsAt: state.booking.starts_at, format: state.booking.format, status: state.booking.status } : null,
+    cancellation: state.booking && state.booking.status === 'booked' && m.status === 'assigned' ? req.user.id === m.lawyer_id || req.user.id === m.client_id ? cancellationQuote(state, req.user.id === m.lawyer_id ? 'lawyer' : 'client') : null : null,
     mandate: state.mandate ? { id: state.mandate.id, version: state.mandate.version, signedAt: state.mandate.signed_at, signedName: state.mandate.signed_name, contentHash: state.mandate.content_hash, content: state.mandate.content } : null,
     messages: messages.map((x) => ({ id: x.id, senderId: x.sender_id, senderName: x.sender_name, body: x.body, readAt: x.read_at, createdAt: x.created_at })),
     documents: documents.map((d) => ({ id: d.id, title: d.title, originalName: d.original_name, mime: d.mime, size: d.size, status: d.status, uploaderId: d.uploader_id, uploaderName: d.uploader_name, createdAt: d.created_at })),
@@ -777,6 +786,133 @@ router.post('/matters/:id/invoices', requireAuth, (req, res) => {
     VALUES (?, ?, ?, ?, 'invoice', ?, ?, ?)`).run(m.id, m.accepted_offer_id, m.client_id, m.lawyer_id, description, amount, vatPortion(amount))
   notify(m.client_id, { title: 'New invoice', message: `${description} · R ${(amount / 100).toFixed(2)}`, link: '/payments', matterId: m.id })
   res.status(201).json({ ok: true })
+})
+
+// ---------- cancelling and rescheduling consultations (Refund & Cancellation Policy) ----------
+const HOUR = 3600_000
+// Returns what the policy allows right now. Mirrors /legal/refunds exactly.
+function cancellationQuote(state, by, reason = 'personal') {
+  const booking = state.booking
+  const pay = state.consult
+  if (!booking || booking.status !== 'booked') return null
+  const start = new Date(booking.starts_at).getTime()
+  const nowMs = Date.now()
+  if (nowMs >= start) return { allowed: false, message: 'The consultation has already started. Use “Dispute” on your Payments page if something went wrong.' }
+  const paidAmount = pay && pay.status === 'paid' ? pay.amount : 0
+  const hoursBefore = (start - nowMs) / HOUR
+  const inCoolingOff = pay?.paid_at ? nowMs - new Date(pay.paid_at).getTime() < 7 * 24 * HOUR : false
+  let percent
+  let rule
+  if (by === 'lawyer') {
+    percent = 100
+    rule = 'The practitioner cancelled, so the client receives a full refund.'
+  } else if (reason === 'death-hospitalisation') {
+    percent = 100
+    rule = 'No cancellation charge applies for death or hospitalisation (Consumer Protection Act, section 17).'
+  } else if (inCoolingOff) {
+    percent = 100
+    rule = 'You are within the 7-day cooling-off period and the consultation has not started (ECTA, section 44).'
+  } else if (hoursBefore >= 24) {
+    percent = 100
+    rule = 'You are cancelling 24 hours or more before the consultation.'
+  } else if (hoursBefore >= 2) {
+    percent = 50
+    rule = 'You are cancelling between 2 and 24 hours before the consultation.'
+  } else {
+    percent = 0
+    rule = 'You are cancelling less than 2 hours before the consultation.'
+  }
+  return {
+    allowed: true,
+    percent,
+    refundAmount: Math.round((paidAmount * percent) / 100),
+    paidAmount,
+    rule,
+    hoursBefore: Math.round(hoursBefore * 10) / 10,
+    inCoolingOff,
+    canReschedule: by === 'lawyer' || hoursBefore >= 24,
+  }
+}
+
+router.get('/matters/:id/consultation/cancel-quote', requireAuth, (req, res) => {
+  const m = loadMatterFor(req, res)
+  if (!m) return
+  const by = req.user.id === m.lawyer_id ? 'lawyer' : req.user.id === m.client_id ? 'client' : null
+  if (!by) return fail(res, 403, 'Only the client or practitioner can cancel this consultation.')
+  const q = cancellationQuote(checkoutState(m), by, req.query.reason === 'death-hospitalisation' ? 'death-hospitalisation' : 'personal')
+  if (!q) return fail(res, 404, 'There is no booked consultation to cancel.')
+  res.json({ ok: true, quote: q })
+})
+
+router.post('/matters/:id/consultation/cancel', requireAuth, (req, res) => {
+  const m = loadMatterFor(req, res)
+  if (!m) return
+  const by = req.user.id === m.lawyer_id ? 'lawyer' : req.user.id === m.client_id ? 'client' : null
+  if (!by) return fail(res, 403, 'Only the client or practitioner can cancel this consultation.')
+  if (m.status !== 'assigned') return fail(res, 409, 'This matter is not active.')
+  const reason = req.body.reason === 'death-hospitalisation' ? 'death-hospitalisation' : 'personal'
+  const note = text(req.body.note, 500)
+  if (by === 'lawyer' && note.length < 5) return fail(res, 400, 'Tell the client briefly why you are cancelling.')
+  const state = checkoutState(m)
+  const q = cancellationQuote(state, by, reason)
+  if (!q) return fail(res, 404, 'There is no booked consultation to cancel.')
+  if (!q.allowed) return fail(res, 409, q.message)
+  const t = now()
+  const refundStatus = q.refundAmount > 0 ? (paymentMode === 'test' ? 'paid' : 'pending') : null
+  tx(() => {
+    db.prepare(`UPDATE consultations SET status = 'cancelled', cancelled_by = ?, cancel_reason = ? WHERE id = ?`).run(req.user.id, note || reason, state.booking.id)
+    if (q.refundAmount > 0) {
+      db.prepare(`UPDATE payments SET status = 'refunded', refund_amount = ?, refund_reason = ?, refund_status = ?, refunded_at = ? WHERE id = ?`).run(
+        q.refundAmount,
+        q.rule,
+        refundStatus,
+        refundStatus === 'paid' ? t : null,
+        state.consult.id,
+      )
+    }
+    db.prepare(`UPDATE matters SET status = 'closed', updated_at = ? WHERE id = ?`).run(t, m.id)
+    const who = by === 'lawyer' ? 'the practitioner' : 'the client'
+    logEvent.run(
+      m.id,
+      req.user.id,
+      'milestone',
+      'Consultation cancelled',
+      `Cancelled by ${who}${note ? `: ${note}` : ''}. Refund: ${q.percent}% (R ${(q.refundAmount / 100).toFixed(2)}). ${q.rule}`,
+      t,
+    )
+  })()
+  const other = by === 'lawyer' ? m.client_id : m.lawyer_id
+  notify(other, {
+    title: 'Consultation cancelled',
+    message: `${req.user.name} cancelled the consultation for “${m.title}”.${q.refundAmount ? ` A refund of R ${(q.refundAmount / 100).toFixed(2)} is being processed.` : ''}`,
+    link: `/matters/${m.id}/workspace`,
+    matterId: m.id,
+  })
+  if (refundStatus === 'pending')
+    for (const admin of db.prepare(`SELECT id FROM users WHERE role = 'admin'`).all())
+      notify(admin.id, { title: 'Refund to process', message: `${m.reference}: R ${(q.refundAmount / 100).toFixed(2)}`, link: '/admin?tab=payments' })
+  res.json({ ok: true, refundAmount: q.refundAmount, percent: q.percent, refundStatus })
+})
+
+router.post('/matters/:id/consultation/reschedule', requireAuth, (req, res) => {
+  const m = loadMatterFor(req, res)
+  if (!m) return
+  const by = req.user.id === m.lawyer_id ? 'lawyer' : req.user.id === m.client_id ? 'client' : null
+  if (!by) return fail(res, 403, 'Only the client or practitioner can reschedule.')
+  const state = checkoutState(m)
+  const q = cancellationQuote(state, by)
+  if (!q) return fail(res, 404, 'There is no booked consultation to reschedule.')
+  if (!q.allowed) return fail(res, 409, q.message)
+  if (!q.canReschedule) return fail(res, 409, 'Free rescheduling closes 24 hours before the consultation. You can still cancel, or message your practitioner.')
+  db.prepare(`UPDATE consultations SET status = 'cancelled', cancelled_by = ?, cancel_reason = 'rescheduled' WHERE id = ?`).run(req.user.id, state.booking.id)
+  logEvent.run(m.id, req.user.id, 'milestone', 'Consultation rescheduled', `${by === 'lawyer' ? 'The practitioner' : 'The client'} asked for a new time.`, now())
+  notify(by === 'lawyer' ? m.client_id : m.lawyer_id, {
+    title: 'Consultation time released',
+    message: by === 'lawyer' ? `${req.user.name} asked you to choose a new consultation time.` : `${req.user.name} is choosing a new consultation time.`,
+    link: by === 'lawyer' ? `/matters/${m.id}/checkout` : `/matters/${m.id}/workspace`,
+    matterId: m.id,
+  })
+  res.json({ ok: true })
 })
 
 // ---------- checkout: pay → schedule → sign ----------
@@ -914,7 +1050,13 @@ router.get('/payments', requireAuth, (req, res) => {
       WHERE ${field} = ? ORDER BY p.created_at DESC`)
     .all(req.user.id)
   const sum = (s) => rows.filter((p) => p.status === s).reduce((a, p) => a + p.amount, 0)
-  res.json({ ok: true, paymentMode, payments: rows.map(paymentOut), totals: { paid: sum('paid'), pending: sum('pending') + sum('processing'), disputed: sum('disputed') } })
+  const refunded = rows.reduce((a, p) => a + (p.refund_amount || 0), 0)
+  res.json({
+    ok: true,
+    paymentMode,
+    payments: rows.map(paymentOut),
+    totals: { paid: sum('paid') + sum('refunded') - refunded, pending: sum('pending') + sum('processing'), disputed: sum('disputed'), refunded },
+  })
 })
 
 router.post('/payments/:id/dispute', requireRole('client'), (req, res) => {

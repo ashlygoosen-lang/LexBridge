@@ -369,6 +369,9 @@ export function Workspace() {
               ) : (
                 <p className="mt-3 text-xs text-[#65767b]">No upcoming hearings, consultations or deadlines.</p>
               )}
+              {data.cancellation?.allowed && (
+                <ConsultationActions matterId={id} quote={data.cancellation} isLawyer={isLawyer} reload={reload} flash={flash} navigate={navigate} />
+              )}
             </div>
             <div className="panel fee-snapshot">
               <span className="eyebrow">FEE SNAPSHOT</span>
@@ -402,6 +405,119 @@ export function Workspace() {
         </div>
       )}
     </PortalLayout>
+  )
+}
+
+const rands = (c) => `R ${(c / 100).toLocaleString('en-ZA', { minimumFractionDigits: 2 })}`
+
+// Cancel or reschedule a booked consultation. Shows the refund the policy allows before anything happens.
+function ConsultationActions({ matterId, quote, isLawyer, reload, flash, navigate }) {
+  const [mode, setMode] = useState('')
+  const [reason, setReason] = useState('personal')
+  const [note, setNote] = useState('')
+  const [q, setQ] = useState(quote)
+  const [busy, setBusy] = useState(false)
+
+  useEffect(() => {
+    if (mode !== 'cancel' || isLawyer) return
+    api.get(`/matters/${matterId}/consultation/cancel-quote?reason=${reason}`).then((r) => r.ok && setQ(r.quote))
+  }, [mode, reason, matterId, isLawyer])
+
+  const cancel = async () => {
+    setBusy(true)
+    const r = await api.post(`/matters/${matterId}/consultation/cancel`, { reason, note })
+    setBusy(false)
+    if (!r.ok) return flash('error', r.error)
+    flash(
+      'success',
+      r.refundAmount
+        ? `Consultation cancelled. Refund of ${rands(r.refundAmount)} ${r.refundStatus === 'paid' ? 'issued' : 'requested — it will reach the original payment method within 30 days'}.`
+        : 'Consultation cancelled. No refund applies under the policy.',
+    )
+    setMode('')
+    reload()
+  }
+  const reschedule = async () => {
+    setBusy(true)
+    const r = await api.post(`/matters/${matterId}/consultation/reschedule`, {})
+    setBusy(false)
+    if (!r.ok) return flash('error', r.error)
+    if (isLawyer) {
+      flash('success', 'The time was released. The client has been asked to choose a new time.')
+      setMode('')
+      return reload()
+    }
+    navigate(`/matters/${matterId}/checkout`)
+  }
+
+  if (!mode)
+    return (
+      <div className="consult-actions">
+        {quote.canReschedule && (
+          <button type="button" className="btn btn-outline btn-sm" onClick={() => setMode('reschedule')}>
+            Reschedule
+          </button>
+        )}
+        <button type="button" className="btn btn-ghost btn-sm" onClick={() => setMode('cancel')}>
+          Cancel consultation
+        </button>
+      </div>
+    )
+
+  if (mode === 'reschedule')
+    return (
+      <div className="consult-confirm" role="dialog" aria-label="Reschedule consultation">
+        <b>Reschedule this consultation?</b>
+        <p>{isLawyer ? 'The time is released and the client is asked to pick a new slot. Their payment stays in place.' : 'Your current time is released and you choose a new one. There is no charge.'}</p>
+        <div className="consult-actions">
+          <button type="button" className="btn btn-primary btn-sm" disabled={busy} onClick={reschedule}>
+            {busy ? 'Working…' : 'Yes, reschedule'}
+          </button>
+          <button type="button" className="btn btn-ghost btn-sm" onClick={() => setMode('')}>
+            Keep it
+          </button>
+        </div>
+      </div>
+    )
+
+  return (
+    <div className="consult-confirm consult-confirm-warn" role="dialog" aria-label="Cancel consultation">
+      <b>Cancel this consultation?</b>
+      {!isLawyer && (
+        <label className="consult-reason">
+          <input type="checkbox" checked={reason === 'death-hospitalisation'} onChange={(e) => setReason(e.target.checked ? 'death-hospitalisation' : 'personal')} />
+          I am cancelling because of a death in the family or hospitalisation
+        </label>
+      )}
+      <p>
+        {q.rule}{' '}
+        {q.paidAmount > 0 && (
+          <>
+            {isLawyer ? 'The client will be refunded' : 'You will be refunded'} <b>{rands(q.refundAmount)}</b> ({q.percent}% of {rands(q.paidAmount)}).
+          </>
+        )}
+      </p>
+      <p className="text-xs">Cancelling closes this matter. You can post a new matter at any time.</p>
+      <textarea
+        className="consult-note"
+        rows={2}
+        maxLength={500}
+        placeholder={isLawyer ? 'Tell the client why (required)' : 'Optional note to your practitioner'}
+        value={note}
+        onChange={(e) => setNote(e.target.value)}
+      />
+      <div className="consult-actions">
+        <button type="button" className="btn btn-danger btn-sm" disabled={busy || (isLawyer && note.trim().length < 5)} onClick={cancel}>
+          {busy ? 'Cancelling…' : 'Confirm cancellation'}
+        </button>
+        <button type="button" className="btn btn-ghost btn-sm" onClick={() => setMode('')}>
+          Keep it
+        </button>
+      </div>
+      <Link to="/legal/refunds" target="_blank" className="text-xs">
+        Read the Refund & Cancellation Policy
+      </Link>
+    </div>
   )
 }
 
@@ -473,9 +589,10 @@ function FeesTab({ data, isLawyer, reload, flash }) {
               <small>
                 {p.kind === 'consultation' ? 'Consultation' : 'Invoice'} · {date(p.createdAt)} · VAT {rand(p.vat)}
                 {p.provider === 'test' ? ' · test payment' : ''}
+                {p.refundAmount ? ` · refund ${rand(p.refundAmount)} ${p.refundStatus === 'pending' ? '(processing)' : 'issued'}` : ''}
               </small>
             </div>
-            <Status tone={p.status === 'paid' ? 'teal' : p.status === 'disputed' ? 'red' : 'gold'}>{p.status.toUpperCase()}</Status>
+            <Status tone={p.status === 'paid' ? 'teal' : p.status === 'disputed' ? 'red' : 'gold'}>{p.status === 'refunded' && p.refundAmount && p.refundAmount < p.amount ? 'PART REFUNDED' : p.status.toUpperCase()}</Status>
             <b className="text-xs">{rand(p.amount)}</b>
             {!isLawyer && p.status === 'pending' && (
               <button className="doc-download" onClick={() => pay(p)}>
@@ -620,6 +737,17 @@ export function Checkout() {
               <Icon name="lock" size={15} /> You’ll complete payment on our payment provider’s secure page. LexBridge never sees or stores your card or
               bank details.
             </p>
+            <div className="refund-box">
+              <b>Your cancellation rights</b>
+              <ul>
+                <li>Cancel within 7 days of paying, before the consultation, for a full refund.</li>
+                <li>After that: full refund if you cancel 24+ hours before, 50% if 2–24 hours before.</li>
+                <li>Full refund if the practitioner cancels. Free rescheduling 24+ hours ahead.</li>
+              </ul>
+              <a href="/legal/refunds" target="_blank" rel="noreferrer">
+                Read the Refund &amp; Cancellation Policy
+              </a>
+            </div>
           </section>
         )}
         {data.step === 'schedule' && (
@@ -739,6 +867,19 @@ export function Checkout() {
           <p className="secure-note">
             <Icon name="lock" size={15} /> {p.status === 'paid' ? `Paid ${date(p.paidAt)}.` : 'Secure encrypted payment.'} This covers the consultation only.
           </p>
+          {data.step === 'payment' && (
+            <p className="checkout-terms">
+              Please check the details above before paying. By paying you agree to the{' '}
+              <a href="/legal/terms" target="_blank" rel="noreferrer">
+                Terms of Use
+              </a>{' '}
+              and{' '}
+              <a href="/legal/refunds" target="_blank" rel="noreferrer">
+                Refund Policy
+              </a>
+              .
+            </p>
+          )}
           <Notice>{err}</Notice>
           <button className="btn btn-gold" onClick={primary} disabled={busy || (data.step === 'mandate' && (!agree || name.trim().length < 3))}>
             {busy
@@ -831,9 +972,10 @@ export function Payments() {
                   <small>
                     <Link to={`/matters/${p.matterId}/workspace?tab=Fees+%26+invoices`}>{p.matterReference}</Link> · {date(p.createdAt)}
                     {p.paidAt ? ` · paid ${date(p.paidAt)}` : ''}
+                    {p.refundAmount ? ` · refund ${rand(p.refundAmount)} ${p.refundStatus === 'pending' ? '(processing, within 30 days)' : `issued${p.refundedAt ? ` ${date(p.refundedAt)}` : ''}`}` : ''}
                   </small>
                 </div>
-                <Status tone={p.status === 'paid' ? 'teal' : p.status === 'disputed' || p.status === 'failed' ? 'red' : 'gold'}>{p.status.toUpperCase()}</Status>
+                <Status tone={p.status === 'paid' ? 'teal' : p.status === 'disputed' || p.status === 'failed' ? 'red' : 'gold'}>{p.status === 'refunded' && p.refundAmount && p.refundAmount < p.amount ? 'PART REFUNDED' : p.status.toUpperCase()}</Status>
                 <b className="text-xs">{rand(p.amount)}</b>
                 {!isLawyer && p.status === 'pending' && (
                   <button className="doc-download" onClick={() => pay(p)}>

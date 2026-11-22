@@ -276,6 +276,14 @@ function PaymentsAdmin({ setFlash }) {
     setFlash({ kind: 'success', text: 'Dispute resolved.' })
     reload()
   }
+  const refundPaid = async (p) => {
+    const reference = window.prompt('PayFast refund reference (optional):') ?? null
+    if (reference === null) return
+    const r = await api.post(`/admin/payments/${p.id}/refund-paid`, { reference })
+    if (!r.ok) return setFlash({ kind: 'error', text: r.error })
+    setFlash({ kind: 'success', text: 'Refund marked as paid. The client has been notified.' })
+    reload()
+  }
   if (loading && !data) return <Loading />
   return (
     <section className="panel document-panel">
@@ -289,9 +297,19 @@ function PaymentsAdmin({ setFlash }) {
               {p.matterReference} · {p.clientName} → {p.lawyerName} · {date(p.createdAt)} · {p.provider || 'no provider'}
             </small>
             {p.disputeNote && <small className="block whitespace-pre-wrap text-[#a34a40]">{p.disputeNote}</small>}
+            {p.refundAmount > 0 && (
+              <small className="block text-[#1f6e6a]">
+                Refund {rand(p.refundAmount)} · {p.refundStatus === 'pending' ? 'to process' : 'paid'} · {p.refundReason}
+              </small>
+            )}
           </div>
           <Status tone={p.status === 'paid' ? 'teal' : p.status === 'disputed' ? 'red' : 'gold'}>{p.status.toUpperCase()}</Status>
           <b className="text-xs">{rand(p.amount)}</b>
+          {p.refundStatus === 'pending' && (
+            <button className="doc-download" onClick={() => refundPaid(p)}>
+              Mark refund paid
+            </button>
+          )}
           {p.status === 'disputed' && (
             <span className="flex gap-2">
               <button className="doc-download" onClick={() => resolve(p, 'uphold')}>

@@ -6,6 +6,7 @@ import { useAuth } from '../lib/auth'
 import { homeFor, responseLabel } from '../lib/format'
 import { Counter } from '../motion/Counter'
 import { courts } from '../data/courts'
+import { FAQ } from '../data/faq'
 
 const categories = [
   { key: 'criminal', title: 'Criminal matters', text: 'Bail, arrests, assault, fraud, theft and criminal appeals.', accent: 'CR' },
@@ -40,14 +41,16 @@ export function SiteFooter() {
         <div>
           <b>For lawyers</b>
           <Link to="/login?mode=signup&role=lawyer">Join the platform</Link>
-          <Link to="/help#matching">How matching works</Link>
+          <Link to="/help#lawyers">How it works for lawyers</Link>
+          <Link to="/legal/practitioners">Practitioner terms</Link>
           <Link to="/fees">Fee schedule tools</Link>
           <Link to="/login">Lawyer sign in</Link>
         </div>
         <div>
           <b>Support</b>
-          <Link to="/help#trust">Trust & safety</Link>
-          <Link to="/help">Help centre</Link>
+          <Link to="/help">Help centre & FAQ</Link>
+          <Link to="/help#police">Police report guide</Link>
+          <Link to="/legal/refunds">Refunds & cancellations</Link>
           <Link to="/help#contact">Contact us</Link>
           <Link to="/help#complaints">Complaints</Link>
         </div>
@@ -62,14 +65,64 @@ export function SiteFooter() {
       <div className="shell footer-bottom">
         <span>© {new Date().getFullYear()} LexBridge · VINK Group (Pty) Ltd · Cape Town</span>
         <div>
-          <Link to="/legal/terms">Terms</Link>
+          <Link to="/legal/terms">Terms of Use</Link>
+          <Link to="/legal/refunds">Refunds</Link>
           <Link to="/legal/privacy">Privacy & POPIA</Link>
-          <Link to="/legal/disclaimer">Disclaimer</Link>
+          <Link to="/legal/paia">PAIA</Link>
           <Link to="/legal/cookies">Cookies</Link>
+          <Link to="/legal/company">Company info</Link>
         </div>
         <span>South Africa · English</span>
       </div>
     </footer>
+  )
+}
+
+const HOME_FAQ = [
+  'Is LexBridge a law firm?',
+  'Does it cost anything to post a matter?',
+  'Can lawyers see who I am?',
+  'How do you verify lawyers?',
+  'Can I get a refund?',
+  'Does a LexBridge report open a case with SAPS?',
+]
+
+function HomeFaq() {
+  const [open, setOpen] = useState(HOME_FAQ[0])
+  const items = HOME_FAQ.map((q) => FAQ.find(([, question]) => question === q)).filter(Boolean)
+  return (
+    <section className="section home-faq" id="faq">
+      <div className="shell home-faq-grid">
+        <div className="section-heading compact">
+          <div>
+            <span className="eyebrow">QUESTIONS, ANSWERED</span>
+            <h2>Before you start.</h2>
+            <p className="mt-4 max-w-sm text-sm leading-7 text-[#607078]">
+              Everything about fees, privacy, refunds and police reports is explained in plain language in our Help Centre.
+            </p>
+            <Link className="text-link dark mt-6" to="/help#faq">
+              All questions <Icon name="arrow" size={17} />
+            </Link>
+          </div>
+        </div>
+        <div className="faq-list">
+          {items.map(([t, question, a]) => (
+            <div key={question} className={`faq-item ${open === question ? 'open' : ''}`}>
+              <button aria-expanded={open === question} onClick={() => setOpen(open === question ? null : question)}>
+                <span>
+                  <small>{t}</small>
+                  {question}
+                </span>
+                <i aria-hidden="true">+</i>
+              </button>
+              <div className="faq-answer">
+                <p>{a}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   )
 }
 
@@ -408,6 +461,8 @@ export default function Landing() {
             </div>
           </div>
         </section>
+
+        <HomeFaq />
 
         <section className="urgent shell" id="urgent">
           <div className="urgent-icon">!</div>

@@ -28,6 +28,8 @@ const REVEAL = [
   ['.document-row', 'up'],
   ['.timeline-list > div', 'left'],
   ['main article.rounded-xl, main section.rounded-xl, main section.rounded-2xl', 'up'],
+  ['.help-steps li, .help-contact-card, .faq-list .faq-item', 'up'],
+  ['.legal-summary', 'blur'],
 ]
 const SPOTLIGHT = '.category-card, .lawyer-card, .hero-panel, .feed-card, .offer-card, .court-card'
 const TILT = '.lawyer-card, .category-card, .hero-panel'
