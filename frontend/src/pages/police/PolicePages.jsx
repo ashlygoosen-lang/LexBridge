@@ -21,7 +21,7 @@ function SignInGate({ next }) {
   return (
     <main className="grid min-h-screen place-items-center bg-[#f3f6f4] px-5">
       <section className="max-w-xl rounded-2xl border border-[#dce3df] bg-white p-9 text-center shadow-[0_24px_70px_rgba(8,34,47,.1)]">
-        <span className="text-[11px] font-bold tracking-[.15em] text-[#a67722]">PRIVATE CASE RECORDS</span>
+        <span className="text-[14px] font-bold tracking-[.15em] text-[#a67722]">PRIVATE CASE RECORDS</span>
         <h1 className="mt-4 font-serif text-4xl text-[#0b2635]">Sign in before recording a police matter.</h1>
         <p className="mt-4 text-sm leading-6 text-[#65767b]">
           Your statement, evidence and case timeline contain sensitive personal information and must be tied to a secure account.
@@ -115,7 +115,7 @@ function PoliceReportForm() {
       <main className="mx-auto max-w-7xl px-4 py-10 lg:px-8">
         <div className="flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
           <div>
-            <span className="text-[11px] font-bold tracking-[.16em] text-[#a67722]">POLICE REPORT & LEGAL SUPPORT</span>
+            <span className="text-[14px] font-bold tracking-[.16em] text-[#a67722]">POLICE REPORT & LEGAL SUPPORT</span>
             <h1 className="mt-3 font-serif text-5xl tracking-[-.045em] text-[#0b2635]">Report. Preserve. Follow through.</h1>
             <p className="mt-3 max-w-2xl text-sm leading-6 text-[#65767b]">
               Prepare your information for SAPS, preserve every statement version and connect with a lawyer as the matter moves toward court.
@@ -136,14 +136,14 @@ function PoliceReportForm() {
                 className="rounded-xl border border-[#dce3df] bg-white p-5 shadow-[0_8px_25px_rgba(8,34,47,.05)] transition hover:-translate-y-1 hover:shadow-xl"
               >
                 <div className="flex items-center justify-between">
-                  <span className="rounded-full bg-[#e8f2ef] px-2 py-1 text-[10px] font-bold text-[#1f6e6a]">
+                  <span className="rounded-full bg-[#e8f2ef] px-2 py-1 text-[14px] font-bold text-[#1f6e6a]">
                     {report.officialStatus.replaceAll('-', ' ').toUpperCase()}
                   </span>
-                  <span className="text-[11px] text-[#829095]">{date(report.updatedAt)}</span>
+                  <span className="text-[14px] text-[#829095]">{date(report.updatedAt)}</span>
                 </div>
                 <h2 className="mt-4 font-serif text-xl text-[#0b2635]">{report.title}</h2>
-                <p className="mt-2 font-mono text-[11px] text-[#65767b]">{report.casNumber || report.platformReference}</p>
-                <span className="mt-5 inline-block text-[11px] font-bold text-[#1f6e6a]">Open case tracker →</span>
+                <p className="mt-2 font-mono text-[14px] text-[#65767b]">{report.casNumber || report.platformReference}</p>
+                <span className="mt-5 inline-block text-[14px] font-bold text-[#1f6e6a]">Open case tracker →</span>
               </Link>
             ))}
           </section>
@@ -156,7 +156,7 @@ function PoliceReportForm() {
                 key={label}
                 type="button"
                 onClick={() => !success && setStep(index + 1)}
-                className={`min-h-16 border-r border-[#e1e6e3] px-2 text-[11px] font-bold last:border-r-0 ${step === index + 1 ? 'bg-[#0b2635] text-white' : 'text-[#718085]'}`}
+                className={`min-h-16 border-r border-[#e1e6e3] px-2 text-[14px] font-bold last:border-r-0 ${step === index + 1 ? 'bg-[#0b2635] text-white' : 'text-[#718085]'}`}
               >
                 <span
                   className={`mr-2 inline-grid h-6 w-6 place-items-center rounded-full ${step === index + 1 ? 'bg-[#d9b45f] text-[#0b2635]' : stepValid[index] && index !== 1 ? 'bg-[#e2f0ec] text-[#1f6e6a]' : 'border border-[#bdc8c4]'}`}
@@ -188,14 +188,14 @@ function PoliceReportForm() {
             <form onSubmit={submit} className="p-6 lg:p-9">
               <div className={step === 1 ? 'grid gap-5 lg:grid-cols-2' : 'hidden'}>
                 <div className="lg:col-span-2">
-                  <span className="text-[11px] font-bold tracking-[.12em] text-[#a67722]">STEP 1</span>
+                  <span className="text-[14px] font-bold tracking-[.12em] text-[#a67722]">STEP 1</span>
                   <h2 className="mt-2 font-serif text-3xl text-[#0b2635]">What happened?</h2>
                 </div>
-                <label className="text-[11px] font-bold text-[#0b2635]">
+                <label className="text-[14px] font-bold text-[#0b2635]">
                   REPORT TITLE
                   <input value={f.title} onChange={set('title')} maxLength={140} placeholder="A short, private title for your records" className={input} />
                 </label>
-                <label className="text-[11px] font-bold text-[#0b2635]">
+                <label className="text-[14px] font-bold text-[#0b2635]">
                   INCIDENT TYPE
                   <select value={f.incidentType} onChange={set('incidentType')} className={input}>
                     <option value="">Choose a category</option>
@@ -204,15 +204,15 @@ function PoliceReportForm() {
                     ))}
                   </select>
                 </label>
-                <label className="text-[11px] font-bold text-[#0b2635]">
+                <label className="text-[14px] font-bold text-[#0b2635]">
                   DATE AND TIME
                   <input type="datetime-local" value={f.incidentDate} max={new Date().toISOString().slice(0, 16)} onChange={set('incidentDate')} className={input} />
                 </label>
-                <label className="text-[11px] font-bold text-[#0b2635]">
+                <label className="text-[14px] font-bold text-[#0b2635]">
                   LOCATION
                   <input value={f.incidentLocation} onChange={set('incidentLocation')} maxLength={240} placeholder="Where did this happen?" className={input} />
                 </label>
-                <label className="text-[11px] font-bold text-[#0b2635] lg:col-span-2">
+                <label className="text-[14px] font-bold text-[#0b2635] lg:col-span-2">
                   BRIEF SUMMARY
                   <textarea
                     value={f.summary}
@@ -232,10 +232,10 @@ function PoliceReportForm() {
               </div>
 
               <div className={step === 2 ? 'block' : 'hidden'}>
-                <span className="text-[11px] font-bold tracking-[.12em] text-[#a67722]">STEP 2</span>
+                <span className="text-[14px] font-bold tracking-[.12em] text-[#a67722]">STEP 2</span>
                 <h2 className="mt-2 font-serif text-3xl text-[#0b2635]">Choose a SAPS station.</h2>
                 <p className="mt-2 text-sm text-[#65767b]">The closest station may help confirm where the matter should be reported.</p>
-                <label className="mt-6 block text-[11px] font-bold text-[#0b2635]">
+                <label className="mt-6 block text-[14px] font-bold text-[#0b2635]">
                   WESTERN CAPE POLICE STATION
                   <select value={f.policeStation} onChange={set('policeStation')} className="mt-2 h-14 w-full rounded-lg border border-[#cdd6d2] bg-white px-4 text-sm">
                     <option value="">Choose later</option>
@@ -246,19 +246,19 @@ function PoliceReportForm() {
                     ))}
                   </select>
                 </label>
-                <Link to="/police-stations" target="_blank" className="mt-4 inline-block text-[11px] font-bold text-[#1f6e6a]">
+                <Link to="/police-stations" target="_blank" className="mt-4 inline-block text-[14px] font-bold text-[#1f6e6a]">
                   Search all {stations?.stations.length ?? ''} stations and contact details →
                 </Link>
               </div>
 
               <div className={step === 3 ? 'block' : 'hidden'}>
-                <span className="text-[11px] font-bold tracking-[.12em] text-[#a67722]">STEP 3</span>
+                <span className="text-[14px] font-bold tracking-[.12em] text-[#a67722]">STEP 3</span>
                 <h2 className="mt-2 font-serif text-3xl text-[#0b2635]">Record your original statement.</h2>
                 <div className="mt-4 rounded-lg border border-[#c9ded8] bg-[#edf5f2] p-4 text-xs leading-5 text-[#496b67]">
                   <b>Your original is preserved.</b> Later corrections create a new numbered version. The original text, timestamp and SHA-256 fingerprint remain
                   visible and cannot be overwritten.
                 </div>
-                <label className="mt-6 block text-[11px] font-bold text-[#0b2635]">
+                <label className="mt-6 block text-[14px] font-bold text-[#0b2635]">
                   FULL STATEMENT
                   <textarea
                     value={f.statement}
@@ -273,7 +273,7 @@ function PoliceReportForm() {
               </div>
 
               <div className={step === 4 ? 'block' : 'hidden'}>
-                <span className="text-[11px] font-bold tracking-[.12em] text-[#a67722]">STEP 4</span>
+                <span className="text-[14px] font-bold tracking-[.12em] text-[#a67722]">STEP 4</span>
                 <h2 className="mt-2 font-serif text-3xl text-[#0b2635]">Review the legal status.</h2>
                 <div className="mt-5 grid gap-3 lg:grid-cols-3">
                   {[
@@ -282,7 +282,7 @@ function PoliceReportForm() {
                     ['3', 'Lawyer & court', 'Connect counsel and follow dates and filings.'],
                   ].map(([n, t, c]) => (
                     <div key={n} className="rounded-xl border border-[#dce3df] p-4">
-                      <span className="text-[11px] font-bold text-[#a67722]">0{n}</span>
+                      <span className="text-[14px] font-bold text-[#a67722]">0{n}</span>
                       <b className="mt-3 block font-serif text-lg text-[#0b2635]">{t}</b>
                       <p className="mt-1 text-xs leading-5 text-[#65767b]">{c}</p>
                     </div>
@@ -405,7 +405,7 @@ export function CaseTracker() {
         <div className="rounded-2xl bg-[#0b2635] p-6 text-white lg:p-8">
           <div className="flex flex-col justify-between gap-5 lg:flex-row lg:items-start">
             <div>
-              <span className="rounded-full bg-[#d7a84a] px-3 py-1 text-[10px] font-bold text-[#0b2635]">
+              <span className="rounded-full bg-[#d7a84a] px-3 py-1 text-[14px] font-bold text-[#0b2635]">
                 {report.officialStatus.replaceAll('-', ' ').toUpperCase()}
               </span>
               <h1 className="mt-4 font-serif text-4xl">{report.title}</h1>
@@ -424,7 +424,7 @@ export function CaseTracker() {
             {['Report prepared', 'SAPS reference', 'Investigation', 'Court', 'Closed'].map((label, index) => (
               <div key={label}>
                 <div className={`h-1 rounded-full ${index <= activeStep ? 'bg-[#d7a84a]' : 'bg-white/15'}`} />
-                <p className={`mt-2 text-[10px] font-bold ${index <= activeStep ? 'text-white' : 'text-[#668187]'}`}>{label.toUpperCase()}</p>
+                <p className={`mt-2 text-[14px] font-bold ${index <= activeStep ? 'text-white' : 'text-[#668187]'}`}>{label.toUpperCase()}</p>
               </div>
             ))}
           </div>
@@ -455,20 +455,20 @@ export function CaseTracker() {
           <div className="mt-5 grid gap-5 lg:grid-cols-[1fr_380px]">
             <section className="space-y-5">
               <div className="rounded-xl border border-[#dce3df] bg-white p-6">
-                <span className="text-[10px] font-bold text-[#a67722]">INCIDENT</span>
+                <span className="text-[14px] font-bold text-[#a67722]">INCIDENT</span>
                 <h2 className="mt-2 font-serif text-2xl text-[#0b2635]">{report.incidentType}</h2>
                 <dl className="mt-5 grid gap-4 text-sm sm:grid-cols-2">
                   <div>
-                    <dt className="text-[10px] font-bold text-[#829095]">DATE</dt>
+                    <dt className="text-[14px] font-bold text-[#829095]">DATE</dt>
                     <dd className="mt-1">{dateTime(report.incidentDate)}</dd>
                   </div>
                   <div>
-                    <dt className="text-[10px] font-bold text-[#829095]">LOCATION</dt>
+                    <dt className="text-[14px] font-bold text-[#829095]">LOCATION</dt>
                     <dd className="mt-1">{report.incidentLocation}</dd>
                   </div>
                   {report.investigatingOfficer && (
                     <div>
-                      <dt className="text-[10px] font-bold text-[#829095]">INVESTIGATING OFFICER</dt>
+                      <dt className="text-[14px] font-bold text-[#829095]">INVESTIGATING OFFICER</dt>
                       <dd className="mt-1">
                         {[report.investigatingOfficer.rank, report.investigatingOfficer.name].filter(Boolean).join(' ')}
                         {report.investigatingOfficer.contactNumber && ` · ${report.investigatingOfficer.contactNumber}`}
@@ -480,7 +480,7 @@ export function CaseTracker() {
               </div>
               {isOwner && (
                 <div className="rounded-xl border border-[#dce3df] bg-white p-6">
-                  <span className="text-[10px] font-bold text-[#a67722]">DIGITAL JUSTICE</span>
+                  <span className="text-[14px] font-bold text-[#a67722]">DIGITAL JUSTICE</span>
                   <h2 className="mt-2 font-serif text-xl text-[#0b2635]">{data.linkedCase ? 'Linked justice case' : 'Follow this matter to court'}</h2>
                   <p className="mt-2 text-xs leading-5 text-[#65767b]">
                     {data.linkedCase
@@ -502,7 +502,7 @@ export function CaseTracker() {
             <aside className="space-y-5">
               {report.policeStation && (
                 <section className="rounded-xl border border-[#dce3df] bg-white p-5">
-                  <span className="text-[10px] font-bold text-[#a67722]">SELECTED SAPS STATION</span>
+                  <span className="text-[14px] font-bold text-[#a67722]">SELECTED SAPS STATION</span>
                   <h2 className="mt-2 font-serif text-xl text-[#0b2635]">{report.policeStation.name} SAPS</h2>
                   <p className="mt-2 text-xs leading-5 text-[#65767b]">{report.policeStation.address}</p>
                   <div className="mt-3 flex flex-wrap gap-3">
@@ -523,7 +523,7 @@ export function CaseTracker() {
                   }}
                   className="rounded-xl border border-[#e3cba0] bg-[#fff8ea] p-5"
                 >
-                  <span className="text-[10px] font-bold text-[#a67722]">AFTER VISITING SAPS</span>
+                  <span className="text-[14px] font-bold text-[#a67722]">AFTER VISITING SAPS</span>
                   <h2 className="mt-2 font-serif text-xl text-[#0b2635]">Record the official reference</h2>
                   <p className="mt-2 text-xs leading-5 text-[#77591e]">Enter only a CAS or occurrence-book number supplied by SAPS.</p>
                   <input name="reference" required placeholder="e.g. CAS 123/06/2025" className="mt-4 h-11 w-full rounded-lg border border-[#dcc591] bg-white px-3 text-sm" />
@@ -556,7 +556,7 @@ export function CaseTracker() {
                   }}
                   className="rounded-xl border border-[#dce3df] bg-white p-5"
                 >
-                  <span className="text-[10px] font-bold text-[#a67722]">COURT TRACKING</span>
+                  <span className="text-[14px] font-bold text-[#a67722]">COURT TRACKING</span>
                   <h2 className="mt-2 font-serif text-xl text-[#0b2635]">{report.linkedCourt || 'Add a court milestone'}</h2>
                   {report.nextCourtDate && <p className="mt-2 text-sm font-bold text-[#1f6e6a]">{dateTime(report.nextCourtDate)}</p>}
                   <input name="court" required placeholder="Court name" className="mt-4 h-10 w-full rounded-lg border border-[#cdd6d2] px-3 text-sm" />
@@ -582,7 +582,7 @@ export function CaseTracker() {
           <section className="mt-5 rounded-xl border border-[#dce3df] bg-white p-5 lg:p-7">
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
-                <span className="text-[10px] font-bold text-[#a67722]">APPEND-ONLY AUDIT RECORD</span>
+                <span className="text-[14px] font-bold text-[#a67722]">APPEND-ONLY AUDIT RECORD</span>
                 <h2 className="mt-2 font-serif text-3xl text-[#0b2635]">Every version, preserved.</h2>
                 <p className="mt-2 text-xs text-[#65767b]">The original cannot be edited or deleted. Amendments create a new fingerprinted version.</p>
               </div>
@@ -601,11 +601,11 @@ export function CaseTracker() {
                 }}
                 className="mt-6 rounded-xl bg-[#f3f6f4] p-5"
               >
-                <label className="text-[11px] font-bold text-[#0b2635]">
+                <label className="text-[14px] font-bold text-[#0b2635]">
                   WHY ARE YOU CHANGING THE STATEMENT?
                   <input name="summary" required minLength={5} placeholder="Describe the correction or new information" className="mt-2 h-11 w-full rounded-lg border border-[#cdd6d2] px-3 text-sm font-normal" />
                 </label>
-                <label className="mt-4 block text-[11px] font-bold text-[#0b2635]">
+                <label className="mt-4 block text-[14px] font-bold text-[#0b2635]">
                   COMPLETE REVISED STATEMENT
                   <textarea name="content" required minLength={40} defaultValue={current.content} rows={12} className="mt-2 w-full rounded-lg border border-[#cdd6d2] p-4 text-sm font-normal leading-6" />
                 </label>
@@ -621,29 +621,29 @@ export function CaseTracker() {
                 return (
                   <article key={revision.id} className={`rounded-xl border p-5 ${revision.versionNumber === 1 ? 'border-[#c9ded8] bg-[#f0f7f4]' : 'border-[#dce3df]'}`}>
                     <div className="flex flex-wrap items-center gap-3">
-                      <span className="rounded-full bg-[#0b2635] px-3 py-1 text-[10px] font-bold text-white">VERSION {revision.versionNumber}</span>
-                      {revision.versionNumber === 1 && <span className="text-[10px] font-bold text-[#1f6e6a]">LOCKED ORIGINAL</span>}
-                      <span className={`text-[10px] font-bold ${revision.integrity ? 'text-[#1f6e6a]' : 'text-[#a34a40]'}`}>
+                      <span className="rounded-full bg-[#0b2635] px-3 py-1 text-[14px] font-bold text-white">VERSION {revision.versionNumber}</span>
+                      {revision.versionNumber === 1 && <span className="text-[14px] font-bold text-[#1f6e6a]">LOCKED ORIGINAL</span>}
+                      <span className={`text-[14px] font-bold ${revision.integrity ? 'text-[#1f6e6a]' : 'text-[#a34a40]'}`}>
                         {revision.integrity ? '✓ FINGERPRINT VERIFIED' : '⚠ FINGERPRINT MISMATCH'}
                       </span>
-                      <time className="ml-auto text-[11px] text-[#829095]">{dateTime(revision.createdAt)}</time>
+                      <time className="ml-auto text-[14px] text-[#829095]">{dateTime(revision.createdAt)}</time>
                     </div>
                     <p className="mt-3 text-xs font-bold text-[#a67722]">{revision.changeSummary || 'No change summary supplied'}</p>
                     <pre className="mt-4 whitespace-pre-wrap font-sans text-sm leading-6 text-[#3f5056]">{revision.content}</pre>
-                    <div className="mt-4 break-all border-t border-[#dde5e1] pt-3 font-mono text-[10px] text-[#879397]">SHA-256 · {revision.contentHash}</div>
+                    <div className="mt-4 break-all border-t border-[#dde5e1] pt-3 font-mono text-[14px] text-[#879397]">SHA-256 · {revision.contentHash}</div>
                     {previous && (
-                      <button onClick={() => setCompare(compare === revision.versionNumber ? null : revision.versionNumber)} className="mt-3 text-[11px] font-bold text-[#1f6e6a]">
+                      <button onClick={() => setCompare(compare === revision.versionNumber ? null : revision.versionNumber)} className="mt-3 text-[14px] font-bold text-[#1f6e6a]">
                         {compare === revision.versionNumber ? 'Hide comparison' : `Compare with version ${previous.versionNumber}`}
                       </button>
                     )}
                     {compare === revision.versionNumber && previous && (
                       <div className="mt-4 grid gap-3 border-t border-[#dde5e1] pt-4 lg:grid-cols-2">
                         <div className="rounded-lg bg-[#f9ece9] p-4">
-                          <b className="text-[10px] text-[#9a4f47]">BEFORE · VERSION {previous.versionNumber}</b>
+                          <b className="text-[14px] text-[#9a4f47]">BEFORE · VERSION {previous.versionNumber}</b>
                           <p className="mt-2 whitespace-pre-wrap text-xs leading-5">{previous.content}</p>
                         </div>
                         <div className="rounded-lg bg-[#e9f4ef] p-4">
-                          <b className="text-[10px] text-[#277267]">AFTER · VERSION {revision.versionNumber}</b>
+                          <b className="text-[14px] text-[#277267]">AFTER · VERSION {revision.versionNumber}</b>
                           <p className="mt-2 whitespace-pre-wrap text-xs leading-5">{revision.content}</p>
                         </div>
                       </div>
@@ -664,14 +664,14 @@ export function CaseTracker() {
                 {evidence.length === 0 && <p className="text-sm text-[#7b898d]">No evidence attached yet.</p>}
                 {evidence.map((e) => (
                   <article key={e.id} className="flex flex-wrap items-center gap-4 rounded-lg border border-[#e1e6e3] p-4">
-                    <span className="grid h-10 w-10 place-items-center rounded-lg bg-[#edf3f1] text-[10px] font-bold text-[#1d6e68]">{e.category.slice(0, 3).toUpperCase()}</span>
+                    <span className="grid h-10 w-10 place-items-center rounded-lg bg-[#edf3f1] text-[14px] font-bold text-[#1d6e68]">{e.category.slice(0, 3).toUpperCase()}</span>
                     <div className="min-w-0 flex-1">
                       <b className="text-sm">{e.title}</b>
-                      <p className="mt-1 text-[11px] text-[#7f8c90]">
+                      <p className="mt-1 text-[14px] text-[#7f8c90]">
                         {e.originalName} · {(e.size / 1024).toFixed(0)} KB · added {date(e.createdAt)}
                         {e.capturedAt ? ` · captured ${date(e.capturedAt)}` : ''}
                       </p>
-                      <p className="mt-1 truncate font-mono text-[10px] text-[#879397]">SHA-256 {e.sha256}</p>
+                      <p className="mt-1 truncate font-mono text-[14px] text-[#879397]">SHA-256 {e.sha256}</p>
                     </div>
                     <a href={`/api/evidence/${e.id}/download`} className="text-xs font-bold text-[#1f6e6a]">
                       Download
@@ -697,7 +697,7 @@ export function CaseTracker() {
                 }}
                 className="h-max space-y-3 rounded-xl border border-[#dce3df] bg-white p-5"
               >
-                <span className="text-[10px] font-bold text-[#a67722]">ADD EVIDENCE</span>
+                <span className="text-[14px] font-bold text-[#a67722]">ADD EVIDENCE</span>
                 <input name="title" required placeholder="What is this?" className="h-11 w-full rounded-lg border border-[#cdd6d2] px-3 text-sm" />
                 <select name="category" required className="h-11 w-full rounded-lg border border-[#cdd6d2] bg-white px-3 text-sm">
                   <option value="">Category</option>
@@ -708,12 +708,12 @@ export function CaseTracker() {
                   ))}
                 </select>
                 <textarea name="description" rows={3} placeholder="Description (optional)" className="w-full rounded-lg border border-[#cdd6d2] p-3 text-sm" />
-                <label className="block text-[11px] font-bold text-[#0b2635]">
+                <label className="block text-[14px] font-bold text-[#0b2635]">
                   DATE CAPTURED (OPTIONAL)
                   <input name="capturedAt" type="datetime-local" className="mt-2 h-10 w-full rounded-lg border border-[#cdd6d2] px-3 text-sm font-normal" />
                 </label>
                 <input name="file" type="file" required accept=".pdf,.txt,.doc,.docx,image/*" className="block w-full text-xs" />
-                <p className="text-[11px] text-[#7d8b8f]">PDF, Word, image or text · max 15 MB.</p>
+                <p className="text-[14px] text-[#7d8b8f]">PDF, Word, image or text · max 15 MB.</p>
                 <button disabled={busy} className="w-full rounded-lg bg-[#0b2635] py-3 text-xs font-bold text-white">
                   {busy ? 'Uploading…' : 'Attach evidence'}
                 </button>
@@ -731,8 +731,8 @@ export function CaseTracker() {
                   <span className="absolute -left-1.5 top-0 h-3 w-3 rounded-full bg-[#d7a84a] ring-4 ring-[#fff8ea]" />
                   <div className="flex flex-wrap gap-3">
                     <b className="text-sm text-[#0b2635]">{event.title}</b>
-                    <span className="text-[10px] font-bold text-[#a67722]">{event.source.toUpperCase()}</span>
-                    <time className="ml-auto text-[11px] text-[#829095]">{dateTime(event.eventDate)}</time>
+                    <span className="text-[14px] font-bold text-[#a67722]">{event.source.toUpperCase()}</span>
+                    <time className="ml-auto text-[14px] text-[#829095]">{dateTime(event.eventDate)}</time>
                   </div>
                   {event.details && <p className="mt-2 text-xs leading-5 text-[#65767b]">{event.details}</p>}
                 </article>
@@ -744,7 +744,7 @@ export function CaseTracker() {
         {tab === 'lawyer' && (
           <section className="mt-5 grid gap-5 rounded-xl border border-[#dce3df] bg-white p-6 lg:grid-cols-[1fr_360px]">
             <div>
-              <span className="text-[10px] font-bold text-[#a67722]">LEGAL SUPPORT</span>
+              <span className="text-[14px] font-bold text-[#a67722]">LEGAL SUPPORT</span>
               <h2 className="mt-2 font-serif text-3xl text-[#0b2635]">Find a lawyer for the next step.</h2>
               <p className="mt-3 max-w-xl text-sm leading-6 text-[#65767b]">
                 Browse verified South African legal practitioners, or post your matter anonymously and compare fee estimates. Share case details only after
@@ -801,7 +801,7 @@ export function StationDirectory() {
       <main className="mx-auto max-w-7xl px-4 py-10 lg:px-8">
         <div className="grid gap-8 lg:grid-cols-[1fr_360px] lg:items-end">
           <div>
-            <span className="text-[11px] font-bold tracking-[.16em] text-[#a67722]">PROVINCIAL DIRECTORY · {data?.source?.toUpperCase() ?? ''}</span>
+            <span className="text-[14px] font-bold tracking-[.16em] text-[#a67722]">PROVINCIAL DIRECTORY · {data?.source?.toUpperCase() ?? ''}</span>
             <h1 className="mt-3 font-serif text-5xl tracking-[-.045em] text-[#0b2635]">Find a Western Cape police station.</h1>
             <p className="mt-4 max-w-2xl text-sm leading-6 text-[#65767b]">
               Search {stations.length || ''} SAPS stations by place, cluster, commander or address. Commanders and numbers change — phone the station before
@@ -830,20 +830,20 @@ export function StationDirectory() {
           </select>
         </div>
         <div className="mt-5 flex flex-wrap items-center justify-between gap-2">
-          <p className="text-[11px] font-bold text-[#65767b]">{visible.length} STATIONS SHOWN</p>
-          <p className="text-[11px] text-[#829095]">Source: Department of Police Oversight and Community Safety, Western Cape</p>
+          <p className="text-[14px] font-bold text-[#65767b]">{visible.length} STATIONS SHOWN</p>
+          <p className="text-[14px] text-[#829095]">Source: Department of Police Oversight and Community Safety, Western Cape</p>
         </div>
         {!data && <Loading />}
         <div className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {visible.map((s) => (
             <article key={s.id} className="flex flex-col rounded-xl border border-[#dce3df] bg-white p-5 shadow-[0_8px_25px_rgba(8,34,47,.04)]">
-              <span className="text-[10px] font-bold text-[#a67722]">{s.district.toUpperCase()}</span>
+              <span className="text-[14px] font-bold text-[#a67722]">{s.district.toUpperCase()}</span>
               <h2 className="mt-2 font-serif text-2xl text-[#0b2635]">{s.name} SAPS</h2>
               {s.commander && <p className="mt-2 text-xs text-[#65767b]">Station commander · {s.commander}</p>}
               <address className="mt-4 border-t border-[#e7ebe9] pt-4 text-xs not-italic leading-5 text-[#52646a]">{s.address}</address>
               <div className="mt-auto flex flex-wrap gap-2 pt-5">
                 {s.phoneNumbers?.map((phone) => (
-                  <a key={phone.number} href={`tel:${phone.number.replace(/\s/g, '')}`} className="rounded-lg bg-[#e9f2ef] px-3 py-2 text-[11px] font-bold text-[#1f6e6a]">
+                  <a key={phone.number} href={`tel:${phone.number.replace(/\s/g, '')}`} className="rounded-lg bg-[#e9f2ef] px-3 py-2 text-[14px] font-bold text-[#1f6e6a]">
                     {phone.number}
                   </a>
                 ))}
@@ -851,7 +851,7 @@ export function StationDirectory() {
                   href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${s.name} Police Station, ${s.address}`)}`}
                   target="_blank"
                   rel="noreferrer"
-                  className="rounded-lg border border-[#dce3df] px-3 py-2 text-[11px] font-bold text-[#52646a]"
+                  className="rounded-lg border border-[#dce3df] px-3 py-2 text-[14px] font-bold text-[#52646a]"
                 >
                   Directions
                 </a>

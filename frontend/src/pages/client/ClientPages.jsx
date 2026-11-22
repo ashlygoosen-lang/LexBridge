@@ -576,7 +576,7 @@ function OffersView({ id }) {
           <div className="overflow-x-auto">
             <table className="w-full min-w-[520px] text-left text-xs">
               <thead>
-                <tr className="border-b border-[#dce3df] text-[10px] text-[#7f8d91]">
+                <tr className="border-b border-[#dce3df] text-[14px] text-[#7f8d91]">
                   <th className="py-2" />
                   {offers
                     .filter((o) => compare.includes(o.id))

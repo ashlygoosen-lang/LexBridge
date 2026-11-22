@@ -251,7 +251,7 @@ export function LawyerOfferForm({ matter, onSent }) {
           </div>
         ))}
         {lines.length < 8 && (
-          <button type="button" className="mt-2 text-[11px] font-bold text-[#1f6e6a]" onClick={() => setLines([...lines, { label: '', amount: '' }])}>
+          <button type="button" className="mt-2 text-[14px] font-bold text-[#1f6e6a]" onClick={() => setLines([...lines, { label: '', amount: '' }])}>
             + Add stage
           </button>
         )}
@@ -496,7 +496,7 @@ export function LawyerProfileEdit() {
               FIDELITY FUND CERTIFICATE NUMBER
               <input className={field} value={form.fidelityCert} onChange={set('fidelityCert')} maxLength={60} />
             </label>
-            <p className="text-[11px] leading-5 text-[#65767b]">Changing credentials on a verified profile sends it back for review.</p>
+            <p className="text-[14px] leading-5 text-[#65767b]">Changing credentials on a verified profile sends it back for review.</p>
           </section>
           <section className="panel">
             <span className="eyebrow">VERIFICATION CHECKS</span>

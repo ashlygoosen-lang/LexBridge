@@ -170,16 +170,49 @@ export function useMotion() {
           setTimeout(done, delay)
         }
       },
-      { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
+      { rootMargin: '0px 0px 12% 0px', threshold: 0 },
     )
     const root = document.getElementById('root')
+    const show = (el) => {
+      if (el.classList.contains('is-visible')) return
+      el.classList.add('is-visible')
+      io.unobserve(el)
+      setTimeout(() => {
+        el.removeAttribute('data-reveal')
+        el.classList.remove('is-visible')
+        el.dataset.revealed = '1'
+      }, 1400)
+    }
+    // Fail-safe: never leave content hidden. Runs after tagging, on scroll and on resize.
+    let sweepFrame = 0
+    const sweep = () => {
+      if (sweepFrame) return
+      sweepFrame = requestAnimationFrame(() => {
+        sweepFrame = 0
+        const limit = window.innerHeight * 1.1
+        root.querySelectorAll('[data-reveal]:not(.is-visible)').forEach((el) => {
+          const r = el.getBoundingClientRect()
+          if (r.top < limit || (r.width === 0 && r.height === 0)) show(el)
+        })
+      })
+    }
     tag(root, io)
+    sweep()
+    window.addEventListener('scroll', sweep, { passive: true })
+    window.addEventListener('resize', sweep)
+    // Last resort: reveal everything left after a few seconds (e.g. background tabs, odd browsers).
+    const safety = setInterval(() => {
+      root.querySelectorAll('[data-reveal]:not(.is-visible)').forEach((el) => {
+        if (el.getBoundingClientRect().top < window.innerHeight * 1.5) show(el)
+      })
+    }, 2000)
     let pending = 0
     const mo = new MutationObserver(() => {
       if (pending) return
       pending = requestAnimationFrame(() => {
         pending = 0
         tag(root, io)
+        sweep()
       })
     })
     mo.observe(root, { childList: true, subtree: true })
@@ -187,6 +220,15 @@ export function useMotion() {
       mo.disconnect()
       io.disconnect()
       cancelAnimationFrame(pending)
+      cancelAnimationFrame(sweepFrame)
+      clearInterval(safety)
+      window.removeEventListener('scroll', sweep)
+      window.removeEventListener('resize', sweep)
+      // Leaving the page: make sure nothing stays hidden if the element is reused.
+      root.querySelectorAll('[data-reveal]').forEach((el) => {
+        el.removeAttribute('data-reveal')
+        el.classList.remove('is-visible')
+      })
     }
   }, [pathname])
 }

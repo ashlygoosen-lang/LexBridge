@@ -75,7 +75,7 @@
   justify-content: space-between;
   background: #071b26;
   color: #c9d4d6;
-  font-size: 11px;
+  font-size: 15px;
   letter-spacing: 0.03em;
 }
 .topbar span {
@@ -123,7 +123,7 @@
   gap: 28px;
   align-items: center;
   margin-left: auto;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
 }
 .nav-links > a {
@@ -157,7 +157,7 @@
   border: 0;
   background: none;
   color: var(--ink);
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
 }
 .menu-btn,
@@ -173,7 +173,7 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 700;
   transition:
     transform 0.2s,
@@ -247,7 +247,7 @@
 .eyebrow {
   display: block;
   color: var(--gold-dark);
-  font-size: 11px;
+  font-size: 15px;
   line-height: 1.3;
   font-weight: 700;
   letter-spacing: 0.17em;
@@ -285,7 +285,7 @@
   align-items: center;
   gap: 8px;
   color: white;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 700;
   border-bottom: 1px solid rgba(255, 255, 255, 0.45);
   padding-bottom: 4px;
@@ -300,7 +300,7 @@
   gap: 8px;
   margin-top: 27px;
   color: #aebfc3;
-  font-size: 12px;
+  font-size: 15px;
 }
 .hero-panel {
   padding: 32px;
@@ -309,7 +309,7 @@
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.23);
 }
 .panel-label {
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.16em;
   color: var(--gold-dark);
@@ -346,11 +346,11 @@
   gap: 4px;
 }
 .hero-panel button b {
-  font-size: 14px;
+  font-size: 16px;
 }
 .hero-panel button small {
   color: var(--muted);
-  font-size: 11px;
+  font-size: 15px;
 }
 .panel-icon {
   width: 35px;
@@ -361,7 +361,7 @@
   border: 1px solid #c7cfcd;
   color: var(--teal);
   font:
-    500 12px 'Newsreader',
+    500 15px 'Newsreader',
     serif;
 }
 .hero-panel > p {
@@ -370,7 +370,7 @@
   gap: 7px;
   margin-top: 18px;
   color: var(--muted);
-  font-size: 11px;
+  font-size: 15px;
 }
 
 .trust-strip {
@@ -402,12 +402,12 @@
 }
 .trust-grid b {
   color: var(--ink);
-  font-size: 12px;
+  font-size: 15px;
 }
 .trust-grid small {
   margin-top: 3px;
   color: var(--muted);
-  font-size: 10px;
+  font-size: 14px;
 }
 .rand {
   width: 23px;
@@ -476,7 +476,7 @@
   border-radius: 50%;
   background: var(--navy);
   color: #eed089;
-  font-size: 11px;
+  font-size: 15px;
   font-weight: 700;
   box-shadow: 0 0 0 7px var(--cream);
 }
@@ -489,7 +489,7 @@
 }
 .steps p {
   color: var(--muted);
-  font-size: 12px;
+  font-size: 15px;
   line-height: 1.7;
 }
 .category-section {
@@ -526,7 +526,7 @@
   background: var(--navy);
   color: #e8c475;
   font:
-    500 14px 'Newsreader',
+    500 16px 'Newsreader',
     serif;
 }
 .category-card h3 {
@@ -538,7 +538,7 @@
 .category-card p {
   margin: 8px 0 18px;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 15px;
   line-height: 1.6;
 }
 .category-card i {
@@ -546,7 +546,7 @@
   align-items: center;
   gap: 7px;
   color: var(--teal);
-  font-size: 11px;
+  font-size: 15px;
   font-style: normal;
   font-weight: 700;
 }
@@ -590,7 +590,7 @@
   border-radius: 2px;
   background: white;
   color: var(--teal);
-  font-size: 9px;
+  font-size: 14px;
   font-weight: 800;
   letter-spacing: 0.08em;
 }
@@ -612,7 +612,7 @@
 .role {
   margin: 5px 0 14px;
   color: var(--muted);
-  font-size: 11px;
+  font-size: 15px;
 }
 .tags {
   display: flex;
@@ -623,7 +623,7 @@
   padding: 5px 8px;
   background: #edf3f1;
   color: #3a615f;
-  font-size: 9px;
+  font-size: 14px;
   font-weight: 700;
 }
 .lawyer-meta {
@@ -634,7 +634,7 @@
   gap: 8px;
   border-block: 1px solid #e7eae8;
   color: var(--muted);
-  font-size: 10px;
+  font-size: 14px;
 }
 .lawyer-meta span {
   display: flex;
@@ -649,7 +649,7 @@
   align-items: center;
   gap: 7px;
   color: var(--teal);
-  font-size: 11px;
+  font-size: 15px;
   font-weight: 700;
 }
 .center {
@@ -688,7 +688,7 @@
 }
 .urgent p {
   color: #b9c8cb;
-  font-size: 11px;
+  font-size: 15px;
   line-height: 1.6;
 }
 .urgent-actions {
@@ -699,7 +699,7 @@
 }
 .urgent-actions a {
   color: #d4dee0;
-  font-size: 10px;
+  font-size: 14px;
   text-decoration: underline;
 }
 
@@ -725,7 +725,7 @@ footer .logo-mark {
   max-width: 280px;
   margin: 20px 0;
   font:
-    400 15px/1.6 'Newsreader',
+    400 16px/1.6 'Newsreader',
     serif;
 }
 .footer-brand > span {
@@ -733,18 +733,18 @@ footer .logo-mark {
   align-items: center;
   gap: 7px;
   color: #d8bd78;
-  font-size: 10px;
+  font-size: 14px;
 }
 .footer-main > div:not(:first-child) {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  font-size: 11px;
+  font-size: 15px;
 }
 .footer-main > div > b {
   margin-bottom: 6px;
   color: white;
-  font-size: 11px;
+  font-size: 15px;
 }
 .footer-main a:hover {
   color: white;
@@ -752,7 +752,7 @@ footer .logo-mark {
 .disclaimer {
   padding-block: 19px;
   border-block: 1px solid #1d3540;
-  font-size: 9px;
+  font-size: 14px;
   line-height: 1.6;
 }
 .footer-bottom {
@@ -760,7 +760,7 @@ footer .logo-mark {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 9px;
+  font-size: 14px;
 }
 .footer-bottom div {
   display: flex;
@@ -826,7 +826,7 @@ footer .logo-mark {
 .step-copy {
   padding: 15px 32px;
   color: var(--muted);
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 700;
   border-bottom: 1px solid var(--line);
 }
@@ -864,11 +864,11 @@ footer .logo-mark {
   gap: 4px;
 }
 .matter-option b {
-  font-size: 12px;
+  font-size: 15px;
 }
 .matter-option small {
   color: var(--muted);
-  font-size: 10px;
+  font-size: 14px;
 }
 .radio {
   width: 18px;
@@ -893,7 +893,7 @@ footer .logo-mark {
   padding: 12px;
   background: #e8f0ee;
   color: #49615f;
-  font-size: 10px;
+  font-size: 14px;
   line-height: 1.5;
 }
 .aid-note a {
@@ -909,7 +909,7 @@ footer .logo-mark {
 .form-stack label,
 .form-stack legend {
   color: var(--navy);
-  font-size: 11px;
+  font-size: 15px;
   font-weight: 700;
 }
 .form-stack textarea,
@@ -921,7 +921,7 @@ footer .logo-mark {
   border-radius: 0;
   background: white;
   color: var(--ink);
-  font-size: 12px;
+  font-size: 15px;
   resize: vertical;
 }
 .form-stack fieldset {
@@ -939,7 +939,7 @@ footer .logo-mark {
   border: 1px solid #bdc6c3;
   background: white;
   color: var(--muted);
-  font-size: 10px;
+  font-size: 14px;
 }
 .choice-row button.active {
   border-color: var(--teal);
@@ -957,7 +957,7 @@ footer .logo-mark {
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid var(--line);
-  font-size: 11px;
+  font-size: 15px;
 }
 .review-card > div span {
   color: var(--muted);
@@ -969,14 +969,14 @@ footer .logo-mark {
   padding: 13px;
   background: #e9f1ef;
   color: #45615f;
-  font-size: 10px;
+  font-size: 14px;
 }
 .consent {
   display: flex;
   align-items: flex-start;
   gap: 9px;
   color: var(--muted);
-  font-size: 10px;
+  font-size: 14px;
   line-height: 1.5;
 }
 .modal-actions {
@@ -1000,7 +1000,7 @@ footer button {
   align-items: center;
   gap: 7px;
   color: var(--teal);
-  font-size: 11px;
+  font-size: 15px;
   font-weight: 700;
 }
 
@@ -1051,7 +1051,7 @@ footer button {
   outline: 0;
   background: transparent;
   color: var(--ink);
-  font-size: 11px;
+  font-size: 15px;
 }
 
 .product-actions {
@@ -1102,13 +1102,13 @@ footer button {
 }
 
 .account-menu b {
-  font-size: 10px;
+  font-size: 14px;
 }
 
 .account-menu small {
   margin-top: 2px;
   color: var(--muted);
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .avatar-initials {
@@ -1121,7 +1121,7 @@ footer button {
   background: var(--navy);
   color: #edcc83;
   font:
-    500 10px 'Newsreader',
+    500 14px 'Newsreader',
     serif;
 }
 
@@ -1150,7 +1150,7 @@ footer button {
   background: none;
   text-align: left;
   color: var(--ink);
-  font-size: 10px;
+  font-size: 14px;
 }
 
 .account-popover button:hover {
@@ -1182,7 +1182,7 @@ footer button {
 
 .side-role span {
   color: #d5b66e;
-  font-size: 8px;
+  font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.15em;
 }
@@ -1213,14 +1213,14 @@ footer button {
   background: transparent;
   color: #acbcc0;
   text-align: left;
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 600;
 }
 
 .side-nav nav :is(button, a) > span {
   color: #6e878f;
   font:
-    500 9px 'Newsreader',
+    500 14px 'Newsreader',
     serif;
 }
 
@@ -1251,14 +1251,14 @@ footer button {
   margin-top: 10px;
   color: white;
   font:
-    500 14px 'Newsreader',
+    500 16px 'Newsreader',
     serif;
 }
 
 .side-help p {
   margin-block: 6px 12px;
   color: #8fa4a9;
-  font-size: 8px;
+  font-size: 14px;
   line-height: 1.6;
 }
 
@@ -1268,7 +1268,7 @@ footer button {
   border-bottom: 1px solid #788e92;
   background: none;
   color: #d3dee0;
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .product-main {
@@ -1292,7 +1292,7 @@ footer button {
 .workspace-title > div > span:first-child {
   display: block;
   color: var(--gold-dark);
-  font-size: 8px;
+  font-size: 14px;
   font-weight: 800;
   letter-spacing: 0.15em;
 }
@@ -1311,7 +1311,7 @@ footer button {
 .workspace-title p {
   margin-top: 8px;
   color: var(--muted);
-  font-size: 11px;
+  font-size: 15px;
 }
 
 .status {
@@ -1322,7 +1322,7 @@ footer button {
   border-radius: 2px;
   background: #e5f0ed;
   color: #32716c;
-  font-size: 7px;
+  font-size: 14px;
   font-weight: 800;
   letter-spacing: 0.08em;
   white-space: nowrap;
@@ -1372,7 +1372,7 @@ footer button {
 
 .alert-card p {
   color: #aebfc4;
-  font-size: 10px;
+  font-size: 14px;
 }
 
 .metric-grid {
@@ -1398,7 +1398,7 @@ footer button {
 .metric-grid span,
 .order-summary > .eyebrow {
   color: var(--muted);
-  font-size: 8px;
+  font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.1em;
 }
@@ -1417,7 +1417,7 @@ footer button {
 
 .metric-grid small {
   color: var(--muted);
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .dashboard-grid {
@@ -1453,7 +1453,7 @@ footer button {
   border-bottom: 1px solid #77878a;
   background: none;
   color: var(--teal);
-  font-size: 9px;
+  font-size: 14px;
   font-weight: 700;
 }
 
@@ -1481,7 +1481,7 @@ footer button {
   background: #dceae6;
   color: var(--teal);
   font:
-    500 10px 'Newsreader',
+    500 14px 'Newsreader',
     serif;
 }
 
@@ -1494,14 +1494,14 @@ footer button {
   margin-block: 5px 3px;
   color: var(--navy);
   font:
-    500 15px 'Newsreader',
+    500 16px 'Newsreader',
     serif;
 }
 
 .matter-row p,
 .matter-row small {
   color: var(--muted);
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .matter-count {
@@ -1541,7 +1541,7 @@ footer button {
   background: #edf0ed;
   color: var(--navy);
   font:
-    500 15px 'Newsreader',
+    500 16px 'Newsreader',
     serif;
 }
 
@@ -1552,21 +1552,21 @@ footer button {
 
 .timeline-list small {
   font:
-    700 6px 'DM Sans',
+    700 12px 'DM Sans',
     sans-serif;
 }
 
 .timeline-list b {
   color: var(--navy);
   font:
-    500 13px 'Newsreader',
+    500 15px 'Newsreader',
     serif;
 }
 
 .timeline-list p {
   margin-top: 4px;
   color: var(--muted);
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .privacy-banner {
@@ -1586,13 +1586,13 @@ footer button {
 
 .privacy-banner b {
   color: var(--ink);
-  font-size: 9px;
+  font-size: 14px;
 }
 
 .privacy-banner p {
   margin-top: 3px;
   color: var(--muted);
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .privacy-banner button {
@@ -1600,7 +1600,7 @@ footer button {
   border-bottom: 1px solid var(--teal);
   background: none;
   color: var(--teal);
-  font-size: 8px;
+  font-size: 14px;
   font-weight: 700;
 }
 
@@ -1612,7 +1612,7 @@ footer button {
   border: 1px solid #bed5cf;
   background: #edf5f2;
   color: var(--teal);
-  font-size: 9px;
+  font-size: 14px;
   font-weight: 700;
 }
 
@@ -1653,7 +1653,7 @@ footer button {
   border: 1px solid var(--line);
   background: white;
   color: var(--ink);
-  font-size: 8px;
+  font-size: 14px;
 }
 
 :is(.feed-toolbar > button, .feed-toolbar > div > button) svg {
@@ -1674,7 +1674,7 @@ footer button {
   border-radius: 50%;
   background: var(--teal);
   color: white;
-  font-size: 7px;
+  font-size: 14px;
 }
 
 .feed-summary {
@@ -1682,7 +1682,7 @@ footer button {
   display: flex;
   justify-content: space-between;
   color: var(--muted);
-  font-size: 9px;
+  font-size: 14px;
 }
 
 .feed-summary b {
@@ -1732,7 +1732,7 @@ footer button {
   border: 1px solid var(--line);
   background: none;
   color: var(--muted);
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .feed-card-top > button.saved {
@@ -1743,7 +1743,7 @@ footer button {
 
 .match-score {
   color: var(--teal);
-  font-size: 8px;
+  font-size: 14px;
   font-weight: 700;
 }
 
@@ -1757,7 +1757,7 @@ footer button {
 
 .feed-card > p {
   color: var(--muted);
-  font-size: 9px;
+  font-size: 14px;
 }
 
 .feed-details {
@@ -1784,7 +1784,7 @@ footer button {
 
 .feed-details small {
   color: var(--muted);
-  font-size: 7px;
+  font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.08em;
 }
@@ -1792,7 +1792,7 @@ footer button {
 .feed-details b {
   margin-top: 5px;
   color: var(--ink);
-  font-size: 9px;
+  font-size: 14px;
 }
 
 .feed-card-bottom {
@@ -1801,7 +1801,7 @@ footer button {
   align-items: center;
   gap: 17px;
   color: var(--muted);
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .feed-card-bottom span {
@@ -1818,7 +1818,7 @@ footer button {
   border: 0;
   background: none;
   color: var(--teal);
-  font-size: 8px;
+  font-size: 14px;
   font-weight: 700;
 }
 
@@ -1846,7 +1846,7 @@ footer button {
   padding-block: 7px;
   border-bottom: 1px solid #e6e9e6;
   color: var(--muted);
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .feed-aside p b {
@@ -1864,7 +1864,7 @@ footer button {
   border-bottom: 1px solid var(--teal);
   background: none;
   color: var(--teal);
-  font-size: 8px;
+  font-size: 14px;
   font-weight: 700;
 }
 
@@ -1873,7 +1873,7 @@ footer button {
   display: flex;
   gap: 8px;
   color: var(--muted);
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .breadcrumb button {
@@ -1902,13 +1902,13 @@ footer button {
 .matter-summary-bar b {
   color: var(--navy);
   font:
-    500 14px 'Newsreader',
+    500 16px 'Newsreader',
     serif;
 }
 
 .matter-summary-bar span:last-child {
   color: var(--muted);
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .matter-summary-bar > button {
@@ -1916,7 +1916,7 @@ footer button {
   border-bottom: 1px solid var(--teal);
   background: none;
   color: var(--teal);
-  font-size: 8px;
+  font-size: 14px;
   font-weight: 700;
 }
 
@@ -1942,7 +1942,7 @@ footer button {
   border: 1px solid var(--line);
   background: white;
   color: var(--muted);
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .compare-head button {
@@ -1950,7 +1950,7 @@ footer button {
   border: 0;
   background: var(--teal);
   color: white;
-  font-size: 8px;
+  font-size: 14px;
   font-weight: 700;
 }
 
@@ -1979,7 +1979,7 @@ footer button {
   align-items: center;
   gap: 5px;
   color: var(--muted);
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .offer-person {
@@ -2002,7 +2002,7 @@ footer button {
   align-items: center;
   gap: 4px;
   color: var(--teal);
-  font-size: 7px;
+  font-size: 14px;
   font-weight: 800;
   letter-spacing: 0.08em;
 }
@@ -2018,7 +2018,7 @@ footer button {
 .offer-person p,
 .offer-person div > span:last-child {
   color: var(--muted);
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .offer-person div > span:last-child {
@@ -2039,7 +2039,7 @@ footer button {
   background: #f4f6f3;
   color: #526468;
   font:
-    400 11px/1.5 'Newsreader',
+    400 15px/1.5 'Newsreader',
     serif;
 }
 
@@ -2067,13 +2067,13 @@ footer button {
 
 .offer-fees small {
   color: var(--muted);
-  font-size: 7px;
+  font-size: 14px;
 }
 
 .offer-fees b {
   margin-top: 5px;
   color: var(--ink);
-  font-size: 10px;
+  font-size: 14px;
 }
 
 .offer-actions {
@@ -2085,7 +2085,7 @@ footer button {
 
 .offer-actions .btn {
   min-height: 36px;
-  font-size: 9px;
+  font-size: 14px;
 }
 
 .offer-detail {
@@ -2110,7 +2110,7 @@ footer button {
   justify-content: space-between;
   border-bottom: 1px solid #e6e9e6;
   color: var(--muted);
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .fee-lines b {
@@ -2127,7 +2127,7 @@ footer button {
 
 .fee-total span {
   color: var(--muted);
-  font-size: 7px;
+  font-size: 14px;
 }
 
 .fee-total b {
@@ -2140,21 +2140,21 @@ footer button {
 
 .fee-total small {
   color: var(--muted);
-  font-size: 7px;
+  font-size: 14px;
   line-height: 1.5;
 }
 
 .offer-detail h3 {
   color: var(--navy);
   font:
-    500 14px 'Newsreader',
+    500 16px 'Newsreader',
     serif;
 }
 
 .offer-detail ul {
   padding-left: 16px;
   color: var(--muted);
-  font-size: 8px;
+  font-size: 14px;
   line-height: 2;
 }
 
@@ -2182,13 +2182,13 @@ footer button {
 .workspace-title > div:last-child small {
   grid-column: 1/-1;
   color: var(--muted);
-  font-size: 7px;
+  font-size: 14px;
 }
 
 .workspace-title > div:last-child b {
   color: var(--navy);
   font:
-    500 13px 'Newsreader',
+    500 15px 'Newsreader',
     serif;
 }
 
@@ -2197,7 +2197,7 @@ footer button {
   border-bottom: 1px solid var(--teal);
   background: none;
   color: var(--teal);
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .workspace-tabs {
@@ -2214,7 +2214,7 @@ footer button {
   border-bottom: 2px solid transparent;
   background: none;
   color: var(--muted);
-  font-size: 9px;
+  font-size: 14px;
 }
 
 .workspace-tabs button.active {
@@ -2277,7 +2277,7 @@ footer button {
   border-radius: 50%;
   background: white;
   color: var(--muted);
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .progress-track .done span {
@@ -2295,13 +2295,13 @@ footer button {
 .progress-track b {
   margin-top: 10px;
   color: var(--navy);
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .progress-track small {
   margin-top: 3px;
   color: var(--muted);
-  font-size: 7px;
+  font-size: 14px;
 }
 
 .workspace-note {
@@ -2315,19 +2315,19 @@ footer button {
 
 .workspace-note b {
   color: var(--ink);
-  font-size: 9px;
+  font-size: 14px;
 }
 
 .workspace-note p {
   margin-block: 5px;
   color: var(--muted);
-  font-size: 8px;
+  font-size: 14px;
   line-height: 1.5;
 }
 
 .workspace-note small {
   color: #899699;
-  font-size: 7px;
+  font-size: 14px;
 }
 
 .next-event,
@@ -2347,14 +2347,14 @@ footer button {
 .next-event h3 {
   color: var(--navy);
   font:
-    500 15px 'Newsreader',
+    500 16px 'Newsreader',
     serif;
 }
 
 .next-event p {
   margin-block: 10px 14px;
   color: var(--muted);
-  font-size: 8px;
+  font-size: 14px;
   line-height: 1.7;
 }
 
@@ -2365,7 +2365,7 @@ footer button {
   border-bottom: 1px solid var(--teal);
   background: none;
   color: var(--teal);
-  font-size: 8px;
+  font-size: 14px;
   font-weight: 700;
 }
 
@@ -2374,7 +2374,7 @@ footer button {
   display: flex;
   justify-content: space-between;
   color: var(--muted);
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .fee-snapshot > p b {
@@ -2432,13 +2432,13 @@ footer button {
 .chat-head b {
   color: var(--navy);
   font:
-    500 14px 'Newsreader',
+    500 16px 'Newsreader',
     serif;
 }
 
 .chat-head small {
   color: var(--muted);
-  font-size: 7px;
+  font-size: 14px;
 }
 
 .chat-body {
@@ -2455,21 +2455,21 @@ footer button {
   gap: 5px;
   background: #e7eeeb;
   color: #607370;
-  font-size: 7px;
+  font-size: 14px;
 }
 
 .chat-bubble {
   width: min(78%, 450px);
   margin-bottom: 16px;
   padding: 12px 14px;
-  font-size: 9px;
+  font-size: 14px;
   line-height: 1.55;
 }
 
 .chat-bubble small {
   display: block;
   margin-top: 6px;
-  font-size: 6px;
+  font-size: 12px;
 }
 
 .lawyer-message {
@@ -2504,7 +2504,7 @@ footer button {
   padding: 9px;
   border: 1px solid var(--line);
   outline: 0;
-  font-size: 9px;
+  font-size: 14px;
 }
 
 .chat-input button {
@@ -2512,7 +2512,7 @@ footer button {
   border: 0;
   background: var(--navy);
   color: white;
-  font-size: 8px;
+  font-size: 14px;
   font-weight: 700;
 }
 
@@ -2550,7 +2550,7 @@ footer button {
 
 .case-contact > p {
   color: var(--teal);
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .case-contact > button {
@@ -2560,7 +2560,7 @@ footer button {
   border-bottom: 1px solid var(--teal);
   background: none;
   color: var(--teal);
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .case-contact > div {
@@ -2571,13 +2571,13 @@ footer button {
 
 .case-contact small {
   color: var(--muted);
-  font-size: 7px;
+  font-size: 14px;
 }
 
 .case-contact div p {
   margin-top: 6px;
   color: var(--ink);
-  font-size: 9px;
+  font-size: 14px;
   line-height: 1.6;
 }
 
@@ -2602,7 +2602,7 @@ footer button {
   place-items: center;
   background: #e4eeeb;
   color: var(--teal);
-  font-size: 7px;
+  font-size: 14px;
   font-weight: 800;
 }
 
@@ -2613,13 +2613,13 @@ footer button {
 
 .document-row b {
   color: var(--navy);
-  font-size: 9px;
+  font-size: 14px;
 }
 
 .document-row small {
   margin-top: 4px;
   color: var(--muted);
-  font-size: 7px;
+  font-size: 14px;
 }
 
 .document-row > :is(button, a) {
@@ -2627,7 +2627,7 @@ footer button {
   border-bottom: 1px solid var(--teal);
   background: none;
   color: var(--teal);
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .checkout-steps {
@@ -2645,7 +2645,7 @@ footer button {
   justify-content: center;
   gap: 8px;
   color: #8a989a;
-  font-size: 9px;
+  font-size: 14px;
 }
 
 .checkout-steps > div::after {
@@ -2668,7 +2668,7 @@ footer button {
   place-items: center;
   border: 1px solid #bbc5c2;
   border-radius: 50%;
-  font-size: 7px;
+  font-size: 14px;
 }
 
 .checkout-steps .active {
@@ -2730,14 +2730,14 @@ footer button {
 }
 
 .payment-methods b {
-  font-size: 9px;
+  font-size: 14px;
 }
 
 .payment-methods small {
   grid-column: 2;
   margin-top: 4px;
   color: var(--muted);
-  font-size: 7px;
+  font-size: 14px;
 }
 
 .card-form {
@@ -2760,7 +2760,7 @@ footer button {
   flex-direction: column;
   gap: 6px;
   color: var(--navy);
-  font-size: 8px;
+  font-size: 14px;
   font-weight: 700;
 }
 
@@ -2773,7 +2773,7 @@ footer button {
   border: 1px solid #c9d0ce;
   outline: 0;
   color: var(--ink);
-  font-size: 9px;
+  font-size: 14px;
 }
 
 .card-form input:focus,
@@ -2809,26 +2809,26 @@ footer button {
 .summary-lawyer b {
   color: var(--navy);
   font:
-    500 14px 'Newsreader',
+    500 16px 'Newsreader',
     serif;
 }
 
 .summary-lawyer small {
   color: var(--teal);
-  font-size: 7px;
+  font-size: 14px;
 }
 
 .order-summary h3 {
   color: var(--navy);
   font:
-    500 14px 'Newsreader',
+    500 16px 'Newsreader',
     serif;
 }
 
 .order-summary > p {
   margin-top: 5px;
   color: var(--muted);
-  font-size: 8px;
+  font-size: 14px;
   line-height: 1.6;
 }
 
@@ -2843,7 +2843,7 @@ footer button {
   display: flex;
   justify-content: space-between;
   color: var(--muted);
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .summary-lines p b {
@@ -2855,7 +2855,7 @@ footer button {
   padding-top: 12px;
   border-top: 1px solid var(--line);
   color: var(--navy);
-  font-size: 11px;
+  font-size: 15px;
   font-weight: 700;
 }
 
@@ -2873,7 +2873,7 @@ footer button {
   padding: 10px;
   background: #eef4f1;
   color: #57706c;
-  font-size: 7px;
+  font-size: 14px;
 }
 
 .order-summary > .btn {
@@ -2888,7 +2888,7 @@ footer button {
   border: 0;
   background: none;
   color: var(--teal);
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .date-pills,
@@ -2907,7 +2907,7 @@ footer button {
   border: 1px solid var(--line);
   background: white;
   color: var(--ink);
-  font-size: 9px;
+  font-size: 14px;
 }
 
 .date-pills button.active,
@@ -2919,14 +2919,14 @@ footer button {
 
 .date-pills small {
   margin-top: 4px;
-  font-size: 6px;
+  font-size: 12px;
 }
 
 .checkout-card > h3 {
   margin-block: 22px 10px;
   color: var(--navy);
   font:
-    500 15px 'Newsreader',
+    500 16px 'Newsreader',
     serif;
 }
 
@@ -2935,7 +2935,7 @@ footer button {
   border: 1px solid var(--line);
   background: white;
   color: var(--ink);
-  font-size: 9px;
+  font-size: 14px;
 }
 
 .format-choice {
@@ -2949,19 +2949,19 @@ footer button {
 
 .format-choice b {
   color: var(--navy);
-  font-size: 9px;
+  font-size: 14px;
 }
 
 .format-choice label {
   display: flex;
   gap: 7px;
   color: var(--muted);
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .legal-intro {
   color: var(--muted);
-  font-size: 9px;
+  font-size: 14px;
   line-height: 1.6;
 }
 
@@ -2978,14 +2978,14 @@ footer button {
   margin-bottom: 4px;
   color: var(--navy);
   font:
-    500 13px 'Newsreader',
+    500 15px 'Newsreader',
     serif;
 }
 
 .mandate-scroll p {
   margin-bottom: 15px;
   color: var(--muted);
-  font-size: 8px;
+  font-size: 14px;
   line-height: 1.65;
 }
 
@@ -3000,13 +3000,13 @@ footer button {
 
 .signature-box span {
   color: var(--muted);
-  font-size: 7px;
+  font-size: 14px;
   font-weight: 700;
 }
 
 .signature-box small {
   color: var(--muted);
-  font-size: 7px;
+  font-size: 14px;
 }
 
 /* Public directory */
@@ -3036,7 +3036,7 @@ footer button {
   border: 0;
   background: none;
   color: var(--muted);
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 600;
 }
 
@@ -3068,7 +3068,7 @@ footer button {
 .directory-hero > p {
   color: #bac9cc;
   font:
-    400 15px 'Newsreader',
+    400 16px 'Newsreader',
     serif;
 }
 
@@ -3093,7 +3093,7 @@ footer button {
   outline: 0;
   background: white;
   color: var(--ink);
-  font-size: 10px;
+  font-size: 14px;
 }
 
 .directory-hero select {
@@ -3105,7 +3105,7 @@ footer button {
   border: 0;
   background: var(--gold);
   color: var(--navy);
-  font-size: 9px;
+  font-size: 14px;
   font-weight: 700;
 }
 
@@ -3128,7 +3128,7 @@ footer button {
   display: flex;
   justify-content: space-between;
   color: var(--navy);
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .directory-filters > div button {
@@ -3136,7 +3136,7 @@ footer button {
   border: 0;
   background: none;
   color: var(--teal);
-  font-size: 7px;
+  font-size: 14px;
 }
 
 .directory-filters > label {
@@ -3145,7 +3145,7 @@ footer button {
   flex-direction: column;
   gap: 7px;
   color: var(--navy);
-  font-size: 8px;
+  font-size: 14px;
   font-weight: 700;
 }
 
@@ -3155,7 +3155,7 @@ footer button {
   border: 1px solid var(--line);
   background: white;
   color: var(--muted);
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .directory-filters > label.check-label {
@@ -3171,7 +3171,7 @@ footer button {
   align-items: center;
   justify-content: space-between;
   color: var(--muted);
-  font-size: 9px;
+  font-size: 14px;
 }
 
 .results-head b {
@@ -3183,7 +3183,7 @@ footer button {
   border: 1px solid var(--line);
   background: white;
   color: var(--ink);
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .directory-lawyer {
@@ -3213,7 +3213,7 @@ footer button {
 
 .directory-lawyer-info > p {
   color: var(--muted);
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .directory-lawyer-info .tags {
@@ -3229,7 +3229,7 @@ footer button {
   display: flex;
   gap: 13px;
   color: var(--muted);
-  font-size: 7px;
+  font-size: 14px;
 }
 
 .directory-lawyer-info > div:last-child span {
@@ -3251,7 +3251,7 @@ footer button {
 
 .directory-cta small {
   color: var(--muted);
-  font-size: 7px;
+  font-size: 14px;
 }
 
 .directory-cta > b {
@@ -3265,14 +3265,14 @@ footer button {
 .directory-cta > span {
   margin-bottom: auto;
   color: var(--teal);
-  font-size: 7px;
+  font-size: 14px;
 }
 
 .directory-cta .btn {
   min-height: 34px;
   margin-top: 7px;
   padding-inline: 10px;
-  font-size: 8px;
+  font-size: 14px;
 }
 
 /* Rules and admin */
@@ -3291,7 +3291,7 @@ footer button {
   height: 100%;
   border: 0;
   outline: 0;
-  font-size: 9px;
+  font-size: 14px;
 }
 
 .rules-search button {
@@ -3299,7 +3299,7 @@ footer button {
   border: 0;
   background: var(--navy);
   color: white;
-  font-size: 8px;
+  font-size: 14px;
   font-weight: 700;
 }
 
@@ -3321,7 +3321,7 @@ footer button {
   background: white;
   color: var(--navy);
   font:
-    500 12px 'Newsreader',
+    500 15px 'Newsreader',
     serif;
 }
 
@@ -3333,7 +3333,7 @@ footer button {
   margin-top: 5px;
   color: var(--muted);
   font:
-    400 7px 'DM Sans',
+    400 14px 'DM Sans',
     sans-serif;
 }
 
@@ -3382,7 +3382,7 @@ footer button {
 .rules-panel > p,
 .guidance-card > p {
   color: var(--muted);
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .milestones {
@@ -3422,19 +3422,19 @@ footer button {
   border-radius: 50%;
   background: var(--navy);
   color: #e8c677;
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .milestones b {
   margin-top: 9px;
   color: var(--navy);
-  font-size: 7px;
+  font-size: 14px;
 }
 
 .milestones small {
   margin-top: 3px;
   color: var(--muted);
-  font-size: 6px;
+  font-size: 12px;
 }
 
 .services-catalogue > button {
@@ -3459,14 +3459,14 @@ footer button {
 .services-catalogue > button b {
   color: var(--navy);
   font:
-    500 13px 'Newsreader',
+    500 15px 'Newsreader',
     serif;
 }
 
 .services-catalogue > button p {
   margin-top: 4px;
   color: var(--muted);
-  font-size: 7px;
+  font-size: 14px;
 }
 
 .guidance-card {
@@ -3488,13 +3488,13 @@ footer button {
 
 .guidance-card li b {
   color: var(--navy);
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .guidance-card li span {
   margin-top: 3px;
   color: var(--muted);
-  font-size: 7px;
+  font-size: 14px;
   line-height: 1.5;
 }
 
@@ -3504,7 +3504,7 @@ footer button {
   border-bottom: 1px solid var(--teal);
   background: none;
   color: var(--teal);
-  font-size: 8px;
+  font-size: 14px;
   font-weight: 700;
 }
 
@@ -3518,13 +3518,13 @@ footer button {
 
 .reviewed-card b {
   color: var(--navy);
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .reviewed-card p {
   margin-top: 3px;
   color: var(--muted);
-  font-size: 7px;
+  font-size: 14px;
 }
 
 .admin-metrics {
@@ -3549,7 +3549,7 @@ footer button {
 
 .admin-metrics span {
   color: var(--muted);
-  font-size: 7px;
+  font-size: 14px;
   font-weight: 700;
 }
 
@@ -3563,7 +3563,7 @@ footer button {
 
 .admin-metrics small {
   color: var(--muted);
-  font-size: 7px;
+  font-size: 14px;
 }
 
 .admin-layout {
@@ -3617,7 +3617,7 @@ footer button {
 .verification-list > button b {
   color: var(--navy);
   font:
-    500 12px 'Newsreader',
+    500 15px 'Newsreader',
     serif;
 }
 
@@ -3625,7 +3625,7 @@ footer button {
 .verification-list > button small {
   margin-top: 2px;
   color: var(--muted);
-  font-size: 7px;
+  font-size: 14px;
 }
 
 .verification-detail {
@@ -3651,7 +3651,7 @@ footer button {
 
 .applicant-head p {
   color: var(--muted);
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .verification-checks {
@@ -3675,7 +3675,7 @@ footer button {
   border-radius: 50%;
   background: #f3e8d5;
   color: #a87722;
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .check-dot.passed {
@@ -3685,13 +3685,13 @@ footer button {
 
 .verification-checks b {
   color: var(--navy);
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .verification-checks p {
   margin-top: 3px;
   color: var(--muted);
-  font-size: 7px;
+  font-size: 14px;
 }
 
 .verification-checks button {
@@ -3700,7 +3700,7 @@ footer button {
   border-bottom: 1px solid var(--teal);
   background: none;
   color: var(--teal);
-  font-size: 7px;
+  font-size: 14px;
 }
 
 .verification-detail textarea {
@@ -3718,7 +3718,7 @@ footer button {
 .admin-actions .btn {
   min-height: 37px;
   padding-inline: 13px;
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .admin-actions .reject {
@@ -3777,7 +3777,7 @@ footer button {
   gap: 15px;
   list-style: none;
   color: #d5e0e2;
-  font-size: 10px;
+  font-size: 14px;
 }
 
 .auth-aside li {
@@ -3792,7 +3792,7 @@ footer button {
 
 .auth-aside > small {
   color: #7f989e;
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .auth-main {
@@ -3815,7 +3815,7 @@ footer button {
 
 .auth-card > p {
   color: var(--muted);
-  font-size: 10px;
+  font-size: 14px;
 }
 
 .role-choice {
@@ -3844,12 +3844,12 @@ footer button {
 
 .role-choice b {
   color: var(--navy);
-  font-size: 9px;
+  font-size: 14px;
 }
 
 .role-choice small {
   grid-column: 2;
-  font-size: 7px;
+  font-size: 14px;
 }
 
 .auth-card form {
@@ -3880,7 +3880,7 @@ footer button {
   border: 0;
   background: none;
   color: var(--teal);
-  font-size: 7px;
+  font-size: 14px;
   font-weight: 700;
 }
 
@@ -3900,7 +3900,7 @@ footer button {
   margin-top: 18px;
   text-align: center;
   color: var(--muted);
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .auth-switch button,
@@ -3910,7 +3910,7 @@ footer button {
   border-bottom: 1px solid var(--teal);
   background: none;
   color: var(--teal);
-  font-size: 8px;
+  font-size: 14px;
   font-weight: 700;
 }
 
@@ -4175,7 +4175,7 @@ footer button {
     justify-content: center;
     gap: 3px;
     text-align: center;
-    font-size: 7px;
+    font-size: 14px;
   }
 
   .dashboard-grid,
@@ -4496,7 +4496,7 @@ footer button {
   }
 
   .checkout-steps > div {
-    font-size: 8px;
+    font-size: 14px;
   }
 
   .checkout-layout {
@@ -4775,7 +4775,7 @@ footer button {
 .nav-links {
   gap: 32px;
   color: #40535b;
-  font-size: 12px;
+  font-size: 15px;
 }
 
 .nav-links > a {
@@ -5019,7 +5019,7 @@ footer button {
 }
 
 .trust-grid b {
-  font-size: 11px;
+  font-size: 15px;
 }
 
 .section {
@@ -5042,7 +5042,7 @@ footer button {
 .section-heading > p {
   color: #69787d;
   font-family: 'Manrope', sans-serif;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .steps {
@@ -5067,7 +5067,7 @@ footer button {
 }
 
 .steps p {
-  font-size: 11px;
+  font-size: 15px;
 }
 
 .category-section {
@@ -5633,7 +5633,7 @@ footer {
 .court-hero-copy > p {
   max-width: 650px;
   color: #b9ccd0;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.75;
 }
 
@@ -5669,7 +5669,7 @@ footer {
 .court-hero-stat span {
   margin-top: 8px;
   color: #9eb3b8;
-  font-size: 7px;
+  font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.12em;
 }
@@ -5682,7 +5682,7 @@ footer {
   gap: 8px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   color: #9eb3b8;
-  font-size: 8px;
+  font-size: 14px;
   line-height: 1.6;
 }
 
@@ -5737,7 +5737,7 @@ footer {
   outline: 0;
   background: transparent;
   color: var(--ink);
-  font-size: 10px;
+  font-size: 14px;
 }
 
 .court-search-panel > label {
@@ -5745,7 +5745,7 @@ footer {
   flex-direction: column;
   gap: 7px;
   color: #66777b;
-  font-size: 7px;
+  font-size: 14px;
   font-weight: 800;
   letter-spacing: 0.1em;
 }
@@ -5758,7 +5758,7 @@ footer {
   outline: 0;
   background: #f8faf8;
   color: var(--ink);
-  font-size: 9px;
+  font-size: 14px;
 }
 
 .court-result-bar {
@@ -5787,7 +5787,7 @@ footer {
   border-bottom: 1px solid var(--teal);
   background: none;
   color: var(--teal);
-  font-size: 8px;
+  font-size: 14px;
   font-weight: 700;
 }
 
@@ -5838,7 +5838,7 @@ footer {
   background: white;
   color: var(--teal);
   font:
-    500 10px 'Newsreader',
+    500 14px 'Newsreader',
     serif;
   box-shadow: 0 6px 16px rgba(8, 34, 47, 0.07);
 }
@@ -5854,7 +5854,7 @@ footer {
 
 .court-card-top p {
   color: var(--muted);
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .registrar-block {
@@ -5869,19 +5869,19 @@ footer {
 .registrar-block > span {
   grid-column: 1/-1;
   color: var(--gold-dark);
-  font-size: 7px;
+  font-size: 14px;
   font-weight: 800;
   letter-spacing: 0.1em;
 }
 
 .registrar-block b {
   color: var(--ink);
-  font-size: 10px;
+  font-size: 14px;
 }
 
 .registrar-block small {
   color: var(--muted);
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .court-addresses {
@@ -5909,14 +5909,14 @@ footer {
 .court-addresses small,
 .court-contact-list small {
   color: var(--muted);
-  font-size: 6px;
+  font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.1em;
 }
 
 .court-addresses b {
   color: #43545a;
-  font-size: 8px;
+  font-size: 14px;
   font-weight: 500;
   line-height: 1.55;
 }
@@ -5944,7 +5944,7 @@ footer {
   display: flex;
   flex-direction: column;
   color: var(--ink);
-  font-size: 8px;
+  font-size: 14px;
   line-height: 1.6;
   overflow-wrap: anywhere;
 }
@@ -5978,7 +5978,7 @@ footer {
   border: 0;
   background: none;
   color: var(--teal);
-  font-size: 8px;
+  font-size: 14px;
   font-weight: 700;
 }
 
@@ -6022,7 +6022,7 @@ footer {
 .court-empty p {
   margin-bottom: 22px;
   color: var(--muted);
-  font-size: 9px;
+  font-size: 14px;
 }
 
 .court-note {
@@ -6041,14 +6041,14 @@ footer {
 
 .court-note b {
   color: var(--navy);
-  font-size: 10px;
+  font-size: 14px;
 }
 
 .court-note p {
   max-width: 760px;
   margin-top: 5px;
   color: var(--muted);
-  font-size: 8px;
+  font-size: 14px;
   line-height: 1.6;
 }
 
@@ -6060,7 +6060,7 @@ footer {
   border-bottom: 1px solid var(--teal);
   background: none;
   color: var(--teal);
-  font-size: 8px;
+  font-size: 14px;
   font-weight: 700;
 }
 
@@ -6156,7 +6156,7 @@ footer {
   border-bottom: 1px solid rgba(144, 219, 209, 0.55);
   background: none;
   color: #9edcd4;
-  font-size: 8px;
+  font-size: 14px;
   font-weight: 700;
 }
 
@@ -6210,7 +6210,7 @@ footer {
 .magistrate-hero > div > p {
   max-width: 660px;
   color: #b8cbd0;
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.7;
 }
 
@@ -6237,7 +6237,7 @@ footer {
 
 .magistrate-hero aside p {
   color: #a8bcc1;
-  font-size: 8px;
+  font-size: 14px;
   line-height: 1.65;
 }
 
@@ -6250,7 +6250,7 @@ footer {
   border-radius: 999px;
   background: rgba(231, 201, 127, 0.08);
   color: #e8ca84;
-  font-size: 7px;
+  font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.04em;
 }
@@ -6265,7 +6265,7 @@ footer {
   border-bottom: 1px solid rgba(142, 216, 207, 0.55);
   background: none;
   color: #9edbd3;
-  font-size: 8px;
+  font-size: 14px;
   font-weight: 700;
 }
 
@@ -6296,7 +6296,7 @@ footer {
   flex-direction: column;
   gap: 7px;
   color: #66777b;
-  font-size: 7px;
+  font-size: 14px;
   font-weight: 800;
   letter-spacing: 0.09em;
 }
@@ -6310,7 +6310,7 @@ footer {
   outline: 0;
   background: #f8faf8;
   color: var(--ink);
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .magistrate-result-head {
@@ -6334,7 +6334,7 @@ footer {
   border-bottom: 1px solid var(--teal);
   background: none;
   color: var(--teal);
-  font-size: 8px;
+  font-size: 14px;
   font-weight: 700;
 }
 
@@ -6361,7 +6361,7 @@ footer {
 
 .magistrate-table-head span {
   padding-inline: 17px;
-  font-size: 7px;
+  font-size: 14px;
   font-weight: 800;
   letter-spacing: 0.08em;
 }
@@ -6398,12 +6398,12 @@ footer {
 
 .magistrate-row b {
   color: var(--navy);
-  font-size: 9px;
+  font-size: 14px;
 }
 
 .magistrate-row > div > span:not(.area-pin, .court-chips) {
   color: #58696e;
-  font-size: 8px;
+  font-size: 14px;
   line-height: 1.5;
 }
 
@@ -6431,7 +6431,7 @@ footer {
   background: #eaf3f0;
   color: var(--teal);
   text-align: left;
-  font-size: 7px;
+  font-size: 14px;
   font-weight: 700;
 }
 
@@ -6450,12 +6450,12 @@ footer {
 
 .load-areas p {
   color: var(--muted);
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .load-areas .btn {
   min-height: 38px;
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .enquiry-card {
@@ -6486,7 +6486,7 @@ footer {
 
 .enquiry-card > div:nth-child(2) span {
   color: var(--gold-dark);
-  font-size: 7px;
+  font-size: 14px;
   font-weight: 800;
   letter-spacing: 0.1em;
 }
@@ -6501,7 +6501,7 @@ footer {
 
 .enquiry-card > div:nth-child(2) p {
   color: var(--muted);
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .enquiry-card > a {
@@ -6514,7 +6514,7 @@ footer {
 
 .enquiry-card > a small {
   color: var(--muted);
-  font-size: 6px;
+  font-size: 12px;
   font-weight: 800;
 }
 
@@ -6536,7 +6536,7 @@ footer {
 
 .enquiry-note p {
   color: var(--muted);
-  font-size: 7px;
+  font-size: 14px;
   line-height: 1.5;
 }
 
@@ -6547,12 +6547,12 @@ footer {
   align-items: center;
   gap: 14px;
   color: var(--muted);
-  font-size: 7px;
+  font-size: 14px;
 }
 
 .court-data-source > span {
   color: var(--gold-dark);
-  font-size: 6px;
+  font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.1em;
 }
@@ -6653,7 +6653,7 @@ footer {
   .magistrate-row > div::before {
     content: attr(data-label);
     color: var(--muted);
-    font-size: 6px;
+    font-size: 12px;
     font-weight: 800;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -6712,7 +6712,7 @@ footer {
   color: #fff;
   padding: 8px 12px;
   font:
-    600 14px/1.2 system-ui,
+    600 16px/1.2 system-ui,
     sans-serif;
   text-decoration: none;
 }

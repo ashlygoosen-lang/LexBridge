@@ -232,7 +232,7 @@ export function LawyerProfilePage() {
                   ['Languages', l.languages],
                 ].map(([t, xs]) => (
                   <div key={t}>
-                    <b className="text-[10px] tracking-[.12em] text-[#a97618]">{t.toUpperCase()}</b>
+                    <b className="text-[14px] tracking-[.12em] text-[#a97618]">{t.toUpperCase()}</b>
                     <div className="tags mt-2">
                       {xs.map((x) => (
                         <span key={x}>{x}</span>
@@ -243,7 +243,7 @@ export function LawyerProfilePage() {
               </div>
             </section>
             <aside className="h-max rounded-2xl bg-[#0b2635] p-6 text-white">
-              <small className="text-[10px] font-bold tracking-[.14em] text-[#e5c477]">CONSULTATION FROM</small>
+              <small className="text-[14px] font-bold tracking-[.14em] text-[#e5c477]">CONSULTATION FROM</small>
               <b className="mt-2 block font-serif text-4xl">{rand(l.consultFee)}</b>
               <p className="mt-3 text-xs leading-6 text-[#b7c9cd]">
                 Post your matter anonymously. Matching verified lawyers — including {l.name.split(' ')[0] === 'Adv.' ? l.name : l.name.split(' ')[0]} if
@@ -252,7 +252,7 @@ export function LawyerProfilePage() {
               <button className="btn btn-gold mt-5 w-full" onClick={() => setModal(true)}>
                 Post my matter <Icon name="arrow" size={16} />
               </button>
-              <p className="mt-4 flex gap-2 text-[11px] text-[#9fb5b8]">
+              <p className="mt-4 flex gap-2 text-[14px] text-[#9fb5b8]">
                 <Icon name="lock" size={15} /> Your identity stays private until you accept an offer.
               </p>
             </aside>

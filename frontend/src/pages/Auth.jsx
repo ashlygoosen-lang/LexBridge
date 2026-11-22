@@ -164,7 +164,7 @@ export default function Auth() {
             <button onClick={toggle}>{signup ? 'Sign in' : 'Create an account'}</button>
           </div>
           {!signup && meta?.demo && (
-            <details className="mt-5 rounded-lg border border-[#dce3df] bg-[#f8faf8] p-3 text-[11px] text-[#52646a]">
+            <details className="mt-5 rounded-lg border border-[#dce3df] bg-[#f8faf8] p-3 text-[14px] text-[#52646a]">
               <summary className="cursor-pointer font-bold text-[#0b2635]">Demo accounts</summary>
               <p className="mt-2">
                 Every demo account uses the password <b>{meta.demo.password || 'set in DEMO_PASSWORD'}</b>.
@@ -178,7 +178,7 @@ export default function Auth() {
                     onClick={() => setForm({ ...form, email: `${key}@${meta.demo.domain}`, password: meta.demo.password || '' })}
                   >
                     <b className="block text-[#0b2635]">{label}</b>
-                    <span className="text-[10px]">{key}@…</span>
+                    <span className="text-[14px]">{key}@…</span>
                   </button>
                 ))}
               </div>

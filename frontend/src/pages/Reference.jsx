@@ -475,7 +475,7 @@ export function Rules() {
           <div className="panel rules-panel">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <span className="eyebrow">PROCESS MAP</span>
-              <div className="flex gap-1 rounded-lg border border-[#d8ddd9] p-1 text-[11px] font-bold">
+              <div className="flex gap-1 rounded-lg border border-[#d8ddd9] p-1 text-[14px] font-bold">
                 {['civil', 'criminal'].map((k) => (
                   <button key={k} onClick={() => setKind(k)} className={`rounded-md px-3 py-1.5 ${kind === k ? 'bg-[#0b2635] text-white' : 'text-[#607078]'}`}>
                     {k === 'civil' ? 'Civil' : 'Criminal'}

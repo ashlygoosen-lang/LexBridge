@@ -67,7 +67,7 @@
 .legal-toc b {
   margin-bottom: 8px;
   color: var(--gold-dark);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
@@ -205,7 +205,7 @@
   padding: 12px 14px;
   background: #f5f7f4;
   color: #5c6d72;
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.08em;
   text-align: left;
   text-transform: uppercase;
@@ -474,7 +474,7 @@
 .help-contact-card small {
   display: block;
   color: var(--gold-dark);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -553,7 +553,7 @@
   display: block;
   margin-bottom: 4px;
   color: var(--gold-dark);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -716,4 +716,93 @@
 .consult-confirm p.text-xs {
   font-size: 12px;
   color: #607078;
+}
+
+/* Readable minimums for Tailwind utility sizes used across the app. */
+.text-xs {
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+.text-sm {
+  font-size: 0.9375rem;
+  line-height: 1.55;
+}
+body {
+  font-size: 16px;
+}
+
+/* Header menus: keep every item on one line now that the text is larger. */
+.nav-links > a,
+.nav-page-link,
+.login,
+.directory-header nav :is(button, a),
+.directory-header > div > :is(button, a),
+.btn {
+  white-space: nowrap;
+}
+.directory-header {
+  gap: 32px;
+}
+.directory-header nav {
+  gap: 22px;
+}
+.nav-links {
+  gap: 22px;
+}
+@media (max-width: 1240px) {
+  .nav-links,
+  .directory-header nav {
+    gap: 16px;
+    font-size: 14px;
+  }
+  .directory-header nav :is(button, a) {
+    font-size: 13.5px;
+  }
+  .directory-header {
+    gap: 22px;
+  }
+}
+
+/* Switch the homepage header to the menu button earlier, so the larger menu text never overflows. */
+@media (max-width: 1180px) {
+  .nav-links {
+    display: none;
+    position: absolute;
+    z-index: 20;
+    top: 116px;
+    left: 0;
+    right: 0;
+    margin: 0;
+    padding: 25px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    background: white;
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 20px 30px rgba(10, 30, 40, 0.12);
+    font-size: 16px;
+  }
+  .nav-links.open {
+    display: flex;
+  }
+  .nav-links > a,
+  .nav-page-link {
+    padding: 13px 0;
+    text-align: left;
+  }
+  .mobile-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+  }
+  .nav-actions {
+    display: none;
+  }
+  .menu-btn {
+    display: grid;
+    place-items: center;
+    border: 0;
+    background: transparent;
+    color: var(--navy);
+  }
 }

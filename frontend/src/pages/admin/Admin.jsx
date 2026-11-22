@@ -188,7 +188,7 @@ function Verification({ setFlash }) {
                 )
               })}
             </div>
-            <p className="mt-3 text-[11px] text-[#65767b]">
+            <p className="mt-3 text-[14px] text-[#65767b]">
               Verify the LPC number on the Legal Practice Council roll and confirm the Fidelity Fund certificate with the LPFF before passing these checks.
             </p>
             <label>
@@ -240,12 +240,12 @@ function Moderation({ setFlash }) {
             <Status tone={m.moderationStatus === 'hidden' ? 'red' : 'teal'}>{m.moderationStatus.toUpperCase()}</Status>
             <Status tone="gold">{m.status.toUpperCase()}</Status>
             <b className="text-sm">{m.title}</b>
-            <span className="ml-auto text-[11px] text-[#829095]">
+            <span className="ml-auto text-[14px] text-[#829095]">
               {m.reference} · {m.clientName} · {ago(m.createdAt)} · {m.offerCount} offers
             </span>
           </div>
           <p className="mt-2 text-xs leading-5 text-[#52646a]">{m.description}</p>
-          <p className="mt-1 text-[11px] text-[#829095]">
+          <p className="mt-1 text-[14px] text-[#829095]">
             {CATEGORY_LABEL[m.category]} · {m.province} · {m.urgency}
             {m.moderationNote ? ` · Note: ${m.moderationNote}` : ''}
           </p>
@@ -361,7 +361,7 @@ function Users({ setFlash }) {
         <div className="overflow-x-auto">
           <table className="w-full min-w-[640px] text-left text-xs">
             <thead>
-              <tr className="border-b border-[#dce3df] text-[10px] text-[#7f8d91]">
+              <tr className="border-b border-[#dce3df] text-[14px] text-[#7f8d91]">
                 <th className="py-2">NAME</th>
                 <th>EMAIL</th>
                 <th>ROLE</th>
@@ -454,13 +454,13 @@ function Cases({ setFlash }) {
               {c.participants.some((p) => p.team !== 'clients') ? 'ASSIGNED' : 'AWAITING ASSIGNMENT'}
             </Status>
             <b className="text-sm">{c.title}</b>
-            <span className="ml-auto font-mono text-[11px] text-[#829095]">
+            <span className="ml-auto font-mono text-[14px] text-[#829095]">
               {c.officialCaseNumber || c.reference} · {c.caseType} · {c.stage} · by {c.creator}
             </span>
           </div>
           <div className="mt-3 flex flex-wrap gap-2">
             {c.participants.map((p) => (
-              <span key={`${p.id}-${p.team}`} className="flex items-center gap-2 rounded-full bg-[#eef3f1] px-3 py-1 text-[11px]">
+              <span key={`${p.id}-${p.team}`} className="flex items-center gap-2 rounded-full bg-[#eef3f1] px-3 py-1 text-[14px]">
                 {p.name} · {ROLE_LABEL[p.role]}
                 {p.team !== 'clients' && (
                   <button className="text-[#a34a40]" onClick={() => remove(c, p)} aria-label={`Remove ${p.name}`}>
@@ -601,7 +601,7 @@ function Stations({ setFlash }) {
         )}
         <section className="panel space-y-3">
           <span className="eyebrow">IMPORT DIRECTORY</span>
-          <p className="text-[11px] leading-5 text-[#65767b]">
+          <p className="text-[14px] leading-5 text-[#65767b]">
             Paste a JSON array: <code>[{'{'}"name","district","commander","phoneNumbers":[],"address"{'}'}]</code>. Existing stations are updated by name.
           </p>
           <input className={field} value={source} onChange={(e) => setSource(e.target.value)} placeholder="Source label, e.g. SAPS Provincial Directory, June 2026" />

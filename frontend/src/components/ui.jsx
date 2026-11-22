@@ -74,4 +74,4 @@ export function Modal({ title, eyebrow, onClose, children, wide = false }) {
 
 export const field = 'mt-2 h-11 w-full rounded-lg border border-[#cdd6d2] bg-white px-3 text-sm font-normal outline-none focus:border-[#1f6e6a]'
 export const area = 'mt-2 w-full rounded-lg border border-[#cdd6d2] bg-white p-3 text-sm font-normal leading-6 outline-none focus:border-[#1f6e6a]'
-export const labelCls = 'block text-[11px] font-bold text-[#0b2635]'
+export const labelCls = 'block text-[14px] font-bold text-[#0b2635]'

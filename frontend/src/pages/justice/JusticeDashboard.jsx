@@ -45,7 +45,7 @@ function Empty({ title, text }) {
 function Panel({ eyebrow, title, children }) {
   return (
     <section className="rounded-xl border border-[#dce3df] bg-white p-5">
-      <span className="text-[10px] font-bold tracking-[.12em] text-[#a87825]">{eyebrow}</span>
+      <span className="text-[14px] font-bold tracking-[.12em] text-[#a87825]">{eyebrow}</span>
       <h2 className="mt-2 font-serif text-2xl text-[#082632]">{title}</h2>
       <div className="mt-5 space-y-3">{children}</div>
     </section>
@@ -111,7 +111,7 @@ export default function JusticeDashboard() {
         <div className="mt-8 rounded-xl border border-white/10 bg-white/5 p-4">
           <div className="grid h-10 w-10 place-items-center rounded-full bg-[#d9b45f] font-serif text-lg text-[#082632]">{user.name.charAt(0)}</div>
           <b className="mt-3 block text-sm">{user.name}</b>
-          <span className="mt-1 block text-[10px] font-bold tracking-[.12em] text-[#8fcac3]">{roleNames[role].toUpperCase()}</span>
+          <span className="mt-1 block text-[14px] font-bold tracking-[.12em] text-[#8fcac3]">{roleNames[role].toUpperCase()}</span>
         </div>
         <nav className="mt-8 flex gap-1 overflow-x-auto lg:block lg:space-y-1">
           {NAV.map((item) => (
@@ -152,11 +152,11 @@ export default function JusticeDashboard() {
       <main className="min-w-0">
         <header className="flex min-h-[72px] flex-wrap items-center gap-3 border-b border-[#dce3df] bg-white px-5 py-3 lg:px-8">
           <div>
-            <span className="text-[10px] font-bold tracking-[.14em] text-[#a87825]">SOUTH AFRICAN DIGITAL JUSTICE WORKSPACE</span>
+            <span className="text-[14px] font-bold tracking-[.14em] text-[#a87825]">SOUTH AFRICAN DIGITAL JUSTICE WORKSPACE</span>
             <h1 className="font-serif text-2xl text-[#082632]">{active}</h1>
           </div>
           <div className="ml-auto flex items-center gap-3">
-            <span className="rounded-full bg-[#e7f1ee] px-3 py-2 text-[10px] font-bold text-[#1d6e68]">
+            <span className="rounded-full bg-[#e7f1ee] px-3 py-2 text-[14px] font-bold text-[#1d6e68]">
               {user.identityStatus === 'verified' ? 'IDENTITY VERIFIED' : user.identityStatus === 'pending' ? 'IDENTITY UNDER REVIEW' : 'IDENTITY REVIEW REQUIRED'}
             </span>
             <button
@@ -164,7 +164,7 @@ export default function JusticeDashboard() {
                 await api.post('/auth/notifications/read')
                 reload()
               }}
-              className="rounded-full bg-[#fff4dc] px-3 py-2 text-[10px] font-bold text-[#8a641d]"
+              className="rounded-full bg-[#fff4dc] px-3 py-2 text-[14px] font-bold text-[#8a641d]"
               title="Mark all as read"
             >
               {unread} NOTICES
@@ -192,7 +192,7 @@ export default function JusticeDashboard() {
                   ['Unread notices', unread, 'In-app delivery queue'],
                 ].map(([label, count, description]) => (
                   <article key={label} className="rounded-xl border border-[#dce3df] bg-white p-5 shadow-[0_8px_30px_rgba(8,38,50,.04)]">
-                    <span className="text-[10px] font-bold text-[#79898e]">{label.toUpperCase()}</span>
+                    <span className="text-[14px] font-bold text-[#79898e]">{label.toUpperCase()}</span>
                     <strong className="mt-3 block font-serif text-4xl text-[#082632]">
                       <Counter value={count} />
                     </strong>
@@ -204,7 +204,7 @@ export default function JusticeDashboard() {
                 <div className="rounded-xl border border-[#dce3df] bg-white p-5">
                   <div className="flex items-center justify-between">
                     <div>
-                      <span className="text-[10px] font-bold text-[#a87825]">CASE PIPELINE</span>
+                      <span className="text-[14px] font-bold text-[#a87825]">CASE PIPELINE</span>
                       <h2 className="mt-1 font-serif text-2xl text-[#082632]">Your active matters</h2>
                     </div>
                     <button onClick={() => setActive('Cases')} className="text-xs font-bold text-[#1d6e68]">
@@ -224,16 +224,16 @@ export default function JusticeDashboard() {
                         <span className={`h-10 w-1 rounded-full ${c.caseType === 'criminal' ? 'bg-[#b95d4d]' : 'bg-[#4c8a82]'}`} />
                         <div className="min-w-0 flex-1">
                           <b className="block truncate text-sm text-[#082632]">{c.title}</b>
-                          <span className="mt-1 block font-mono text-[10px] text-[#829095]">{c.officialCaseNumber || c.platformReference}</span>
+                          <span className="mt-1 block font-mono text-[14px] text-[#829095]">{c.officialCaseNumber || c.platformReference}</span>
                         </div>
-                        <span className="rounded-full bg-[#eef3f1] px-3 py-1 text-[10px] font-bold text-[#52666a]">{(stageLabels[c.stage] || c.stage).toUpperCase()}</span>
+                        <span className="rounded-full bg-[#eef3f1] px-3 py-1 text-[14px] font-bold text-[#52666a]">{(stageLabels[c.stage] || c.stage).toUpperCase()}</span>
                       </button>
                     ))}
                     {cases.length === 0 && <Empty title="No assigned cases yet" text="Create an intake or wait for an authorised case assignment." />}
                   </div>
                 </div>
                 <div className="rounded-xl border border-[#dce3df] bg-white p-5">
-                  <span className="text-[10px] font-bold text-[#a87825]">NEXT ON THE ROLL</span>
+                  <span className="text-[14px] font-bold text-[#a87825]">NEXT ON THE ROLL</span>
                   <h2 className="mt-1 font-serif text-2xl text-[#082632]">Hearings & deadlines</h2>
                   <div className="mt-5 space-y-4">
                     {hearings
@@ -272,14 +272,14 @@ export default function JusticeDashboard() {
                   <article key={c.id} className={`rounded-xl border bg-white p-5 ${String(currentCase?.id) === String(c.id) ? 'border-[#4c8a82] ring-2 ring-[#dceee9]' : 'border-[#dce3df]'}`}>
                     <button onClick={() => setSelected(String(c.id))} className="w-full text-left">
                       <div className="flex flex-wrap items-center gap-3">
-                        <span className="rounded-full bg-[#082632] px-3 py-1 text-[10px] font-bold text-white">{c.caseType.toUpperCase()}</span>
-                        <span className="rounded-full bg-[#edf3f1] px-3 py-1 text-[10px] font-bold text-[#51666a]">{stageLabels[c.stage] ?? c.stage}</span>
-                        <span className="ml-auto font-mono text-[10px] text-[#718287]">{c.officialCaseNumber || c.platformReference}</span>
+                        <span className="rounded-full bg-[#082632] px-3 py-1 text-[14px] font-bold text-white">{c.caseType.toUpperCase()}</span>
+                        <span className="rounded-full bg-[#edf3f1] px-3 py-1 text-[14px] font-bold text-[#51666a]">{stageLabels[c.stage] ?? c.stage}</span>
+                        <span className="ml-auto font-mono text-[14px] text-[#718287]">{c.officialCaseNumber || c.platformReference}</span>
                       </div>
                       <h2 className="mt-4 font-serif text-2xl text-[#082632]">{c.title}</h2>
                       <p className="mt-2 line-clamp-2 text-xs leading-5 text-[#66777b]">{c.summary}</p>
                     </button>
-                    <div className="mt-4 grid grid-cols-2 gap-3 border-t border-[#e5e9e7] pt-4 text-[10px] sm:grid-cols-3">
+                    <div className="mt-4 grid grid-cols-2 gap-3 border-t border-[#e5e9e7] pt-4 text-[14px] sm:grid-cols-3">
                       <div>
                         <b className="text-[#849196]">COURT</b>
                         <span className="mt-1 block text-xs">{c.courtName || 'Not enrolled'}</span>
@@ -318,7 +318,7 @@ export default function JusticeDashboard() {
               <div className="mt-6 overflow-x-auto">
                 <table className="w-full min-w-[760px] text-left text-xs">
                   <thead>
-                    <tr className="border-b border-[#dce3df] text-[10px] text-[#7f8d91]">
+                    <tr className="border-b border-[#dce3df] text-[14px] text-[#7f8d91]">
                       <th className="pb-3">DATE & TIME</th>
                       <th className="pb-3">CASE</th>
                       <th className="pb-3">HEARING</th>
@@ -337,7 +337,7 @@ export default function JusticeDashboard() {
                           <td className="capitalize">{h.hearingType.replaceAll('-', ' ')}</td>
                           <td>{h.courtroom}</td>
                           <td>
-                            <span className="rounded-full bg-[#edf3f1] px-2 py-1 text-[10px] font-bold">{h.status.toUpperCase()}</span>
+                            <span className="rounded-full bg-[#edf3f1] px-2 py-1 text-[14px] font-bold">{h.status.toUpperCase()}</span>
                           </td>
                           {['clerk', 'judicial-officer'].includes(role) && (
                             <td>
@@ -371,15 +371,15 @@ export default function JusticeDashboard() {
                 <div className="mt-5 space-y-3">
                   {filings.map((f) => (
                     <article key={f.id} className="flex flex-wrap items-center gap-4 rounded-lg border border-[#e1e6e3] p-4">
-                      <span className="grid h-10 w-10 place-items-center rounded-lg bg-[#edf3f1] text-[10px] font-bold text-[#1d6e68]">FILE</span>
+                      <span className="grid h-10 w-10 place-items-center rounded-lg bg-[#edf3f1] text-[14px] font-bold text-[#1d6e68]">FILE</span>
                       <div className="min-w-0 flex-1">
                         <b className="text-sm">{f.title}</b>
-                        <p className="mt-1 text-[11px] text-[#7f8c90]">
+                        <p className="mt-1 text-[14px] text-[#7f8c90]">
                           {f.fileType.toUpperCase()} · {f.ownerName} · {date(f.createdAt)} · {cases.find((c) => c.id === f.caseId)?.platformReference}
                         </p>
-                        <p className="mt-1 truncate font-mono text-[10px] text-[#879397]">SHA-256 {f.sha256}</p>
+                        <p className="mt-1 truncate font-mono text-[14px] text-[#879397]">SHA-256 {f.sha256}</p>
                       </div>
-                      <span className="rounded-full bg-[#fff4dc] px-2 py-1 text-[10px] font-bold text-[#8a641d]">{f.filingStatus.toUpperCase()}</span>
+                      <span className="rounded-full bg-[#fff4dc] px-2 py-1 text-[14px] font-bold text-[#8a641d]">{f.filingStatus.toUpperCase()}</span>
                       <a href={`/api/justice/files/${f.id}/download`} className="text-xs font-bold text-[#1d6e68]">
                         Download
                       </a>
@@ -422,9 +422,9 @@ export default function JusticeDashboard() {
                       <article key={m.id} className={`rounded-lg border p-4 ${m.incoming && !m.readAt ? 'border-[#d9b45f] bg-[#fffaf0]' : 'border-[#e1e6e3]'}`}>
                         <div className="flex flex-wrap gap-3">
                           <b className="text-sm">{m.subject}</b>
-                          <span className="ml-auto text-[10px] text-[#829095]">{dateTime(m.createdAt)}</span>
+                          <span className="ml-auto text-[14px] text-[#829095]">{dateTime(m.createdAt)}</span>
                         </div>
-                        <p className="mt-1 text-[11px] font-bold text-[#a87825]">{m.incoming ? `From ${m.senderName}` : `To ${m.recipientName}`}</p>
+                        <p className="mt-1 text-[14px] font-bold text-[#a87825]">{m.incoming ? `From ${m.senderName}` : `To ${m.recipientName}`}</p>
                         <p className="mt-2 whitespace-pre-wrap text-xs leading-5 text-[#65767b]">{m.message}</p>
                       </article>
                     ))}
@@ -438,7 +438,7 @@ export default function JusticeDashboard() {
                       <article key={n.id} className="rounded-lg border border-[#e1e6e3] p-4">
                         <div className="flex gap-3">
                           <b className="text-sm">{n.title}</b>
-                          <span className="ml-auto text-[10px] font-bold text-[#1d6e68]">{n.deliveryStatus.toUpperCase()}</span>
+                          <span className="ml-auto text-[14px] font-bold text-[#1d6e68]">{n.deliveryStatus.toUpperCase()}</span>
                         </div>
                         <p className="mt-2 text-xs leading-5 text-[#65767b]">{n.message}</p>
                       </article>
@@ -460,8 +460,8 @@ export default function JusticeDashboard() {
                     <span className="absolute -left-1.5 top-0 h-3 w-3 rounded-full bg-[#d9b45f] ring-4 ring-[#fff8e9]" />
                     <div className="flex flex-wrap gap-3">
                       <b className="text-sm">{a.action}</b>
-                      <span className="text-[10px] font-bold text-[#a87825]">{a.actor}</span>
-                      <time className="ml-auto text-[10px] text-[#849196]">{dateTime(a.createdAt)}</time>
+                      <span className="text-[14px] font-bold text-[#a87825]">{a.actor}</span>
+                      <time className="ml-auto text-[14px] text-[#849196]">{dateTime(a.createdAt)}</time>
                     </div>
                     {a.details && <p className="mt-2 text-xs text-[#65767b]">{a.details}</p>}
                   </article>
@@ -486,11 +486,11 @@ function CaseRecord({ c, docket, decisions, hearings, role, run, pending }) {
       <p className="whitespace-pre-wrap text-xs leading-6 text-[#52646a]">{c.summary}</p>
       {canSeeDocket && d.length > 0 && (
         <div>
-          <b className="text-[10px] tracking-[.12em] text-[#a87825]">DOCKET ({d.length})</b>
+          <b className="text-[14px] tracking-[.12em] text-[#a87825]">DOCKET ({d.length})</b>
           <ul className="mt-2 space-y-2">
             {d.map((x) => (
               <li key={x.id} className="rounded-lg bg-[#f7f8f6] p-3 text-xs">
-                <b>{x.title}</b> <span className="text-[10px] uppercase text-[#829095]">· {x.entryType.replaceAll('-', ' ')} · {x.ownerName} · {date(x.occurredAt)}</span>
+                <b>{x.title}</b> <span className="text-[14px] uppercase text-[#829095]">· {x.entryType.replaceAll('-', ' ')} · {x.ownerName} · {date(x.occurredAt)}</span>
                 <p className="mt-1 text-[#65767b]">{x.details}</p>
               </li>
             ))}
@@ -499,7 +499,7 @@ function CaseRecord({ c, docket, decisions, hearings, role, run, pending }) {
       )}
       {h.length > 0 && (
         <div>
-          <b className="text-[10px] tracking-[.12em] text-[#a87825]">HEARINGS</b>
+          <b className="text-[14px] tracking-[.12em] text-[#a87825]">HEARINGS</b>
           <ul className="mt-2 space-y-1 text-xs">
             {h.map((x) => (
               <li key={x.id}>
@@ -512,13 +512,13 @@ function CaseRecord({ c, docket, decisions, hearings, role, run, pending }) {
       )}
       {dec.length > 0 && (
         <div>
-          <b className="text-[10px] tracking-[.12em] text-[#a87825]">SEALED DECISIONS</b>
+          <b className="text-[14px] tracking-[.12em] text-[#a87825]">SEALED DECISIONS</b>
           <ul className="mt-2 space-y-2">
             {dec.map((x) => (
               <li key={x.id} className="rounded-lg border border-[#e3cba0] bg-[#fff8ea] p-3 text-xs">
-                <b>{x.title}</b> <span className="text-[10px] uppercase text-[#8a641d]">· {x.decisionType} · {date(x.effectiveAt)}</span>
+                <b>{x.title}</b> <span className="text-[14px] uppercase text-[#8a641d]">· {x.decisionType} · {date(x.effectiveAt)}</span>
                 <p className="mt-1 whitespace-pre-wrap text-[#65767b]">{x.summary}</p>
-                {x.appealable && <p className="mt-1 text-[10px] font-bold text-[#8a641d]">Appealable</p>}
+                {x.appealable && <p className="mt-1 text-[14px] font-bold text-[#8a641d]">Appealable</p>}
               </li>
             ))}
           </ul>
@@ -533,7 +533,7 @@ function CaseRecord({ c, docket, decisions, hearings, role, run, pending }) {
             run(() => api.post(`/justice/cases/${c.id}/deadlines`, { detentionDeadline: toIso(v) }), 'Detention deadline recorded.')
           }}
         >
-          <label className="text-[10px] font-bold text-[#849196]">
+          <label className="text-[14px] font-bold text-[#849196]">
             DETENTION DEADLINE
             <input name="detention" type="datetime-local" className="mt-1 block h-9 rounded-lg border border-[#d7dfdc] px-2 text-xs" />
           </label>
@@ -789,28 +789,28 @@ function LegalAidQueue({ items, run, pending }) {
         <article key={l.id} className="rounded-lg border border-[#e1e6e3] p-4">
           <div className="flex flex-wrap items-center gap-2">
             <b className="text-sm">{l.caseTitle}</b>
-            <span className="ml-auto rounded-full bg-[#fff4dc] px-2 py-1 text-[10px] font-bold text-[#8a641d]">{l.status.toUpperCase()}</span>
+            <span className="ml-auto rounded-full bg-[#fff4dc] px-2 py-1 text-[14px] font-bold text-[#8a641d]">{l.status.toUpperCase()}</span>
           </div>
-          <p className="mt-1 text-[11px] text-[#829095]">
+          <p className="mt-1 text-[14px] text-[#829095]">
             {l.caseReference} · {l.ownerName} · {date(l.createdAt)}
           </p>
           <p className="mt-2 text-xs leading-5 text-[#65767b]">{l.motivation}</p>
           {['requested', 'screening', 'approved'].includes(l.status) && (
             <div className="mt-3 flex flex-wrap gap-2">
               {l.status === 'requested' && (
-                <button disabled={pending} onClick={() => run(() => api.post(`/justice/legal-aid/${l.id}`, { status: 'screening' }), 'Screening started.')} className="rounded-lg border border-[#082632] px-3 py-2 text-[11px] font-bold">
+                <button disabled={pending} onClick={() => run(() => api.post(`/justice/legal-aid/${l.id}`, { status: 'screening' }), 'Screening started.')} className="rounded-lg border border-[#082632] px-3 py-2 text-[14px] font-bold">
                   Start screening
                 </button>
               )}
               {l.status !== 'approved' && (
-                <button disabled={pending} onClick={() => run(() => api.post(`/justice/legal-aid/${l.id}`, { status: 'approved' }), 'Request approved.')} className="rounded-lg border border-[#1d6e68] px-3 py-2 text-[11px] font-bold text-[#1d6e68]">
+                <button disabled={pending} onClick={() => run(() => api.post(`/justice/legal-aid/${l.id}`, { status: 'approved' }), 'Request approved.')} className="rounded-lg border border-[#1d6e68] px-3 py-2 text-[14px] font-bold text-[#1d6e68]">
                   Approve
                 </button>
               )}
               <button
                 disabled={pending}
                 onClick={() => run(() => api.post(`/justice/legal-aid/${l.id}`, { status: 'assigned' }), 'You were assigned to the case.')}
-                className="rounded-lg bg-[#082632] px-3 py-2 text-[11px] font-bold text-white"
+                className="rounded-lg bg-[#082632] px-3 py-2 text-[14px] font-bold text-white"
               >
                 Assign to me
               </button>
@@ -820,7 +820,7 @@ function LegalAidQueue({ items, run, pending }) {
                   const note = window.prompt('Reason for declining (shared with the applicant):')
                   if (note) run(() => api.post(`/justice/legal-aid/${l.id}`, { status: 'declined', note }), 'Request declined.')
                 }}
-                className="rounded-lg border border-[#a14e43] px-3 py-2 text-[11px] font-bold text-[#a14e43]"
+                className="rounded-lg border border-[#a14e43] px-3 py-2 text-[14px] font-bold text-[#a14e43]"
               >
                 Decline
               </button>
@@ -877,7 +877,7 @@ function UploadTool({ caseSelect, run, pending }) {
           <option value="other">Other</option>
         </select>
         <input className="block w-full text-xs" name="file" type="file" accept=".pdf,.txt,.doc,.docx,image/*" required />
-        <p className="text-[11px] leading-4 text-[#7d8b8f]">PDF, Word, image or text · maximum 15 MB · visible only to permitted case participants.</p>
+        <p className="text-[14px] leading-4 text-[#7d8b8f]">PDF, Word, image or text · maximum 15 MB · visible only to permitted case participants.</p>
         <button disabled={pending} className={button}>
           Upload and submit
         </button>

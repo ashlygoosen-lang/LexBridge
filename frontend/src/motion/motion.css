@@ -366,7 +366,7 @@ html.motion-ready .lawyer-card[data-reveal].is-visible .lawyer-photo img {
   transform: translate3d(0, calc(var(--scroll-y, 0) * -0.06px), 0);
 }
 .hero-grid {
-  opacity: calc(1 - var(--scroll-y, 0) / 900);
+  opacity: max(0.35, calc(1 - var(--scroll-y, 0) / 900));
 }
 
 /* ---------- Stats band ---------- */
@@ -403,7 +403,7 @@ html.motion-ready .lawyer-card[data-reveal].is-visible .lawyer-photo img {
   display: block;
   margin-top: 10px;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 600;
   letter-spacing: 0.04em;
 }
@@ -471,7 +471,7 @@ html.is-scrolled .nav {
 }
 
 /* Mobile menu: slide and fade the sheet, stagger the links. */
-@media (max-width: 900px) {
+@media (max-width: 1180px) {
   .nav-links.open {
     animation: lb-sheet 0.5s var(--ease-out) both;
   }
@@ -811,7 +811,7 @@ html.is-scrolled .nav {
 /* Mobile: the header's own backdrop blur stops the menu sheet from blurring the hero
    behind it (nested backdrop roots), letting the hero text bleed through. Use a solid
    header on small screens instead. */
-@media (max-width: 900px) {
+@media (max-width: 1180px) {
   .app > header,
   html.is-scrolled .app > header {
     backdrop-filter: none;

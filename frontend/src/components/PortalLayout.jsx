@@ -77,7 +77,7 @@ function NotificationsButton() {
         <div className="absolute right-0 top-12 z-50 w-[340px] rounded-xl border border-[#d8ddd9] bg-white p-2 shadow-[0_15px_45px_rgba(10,30,40,.15)]">
           <div className="flex items-center justify-between px-2 py-2">
             <b className="text-xs text-[#0b2635]">Notifications</b>
-            <button onClick={markAll} className="text-[10px] font-bold text-[#1f6e6a]">
+            <button onClick={markAll} className="text-[14px] font-bold text-[#1f6e6a]">
               Mark all read
             </button>
           </div>
@@ -89,9 +89,9 @@ function NotificationsButton() {
                 onClick={() => openItem(n)}
                 className={`block w-full rounded-lg px-3 py-3 text-left hover:bg-[#f1f3f0] ${n.readAt ? '' : 'bg-[#fff8ea]'}`}
               >
-                <b className="block text-[11px] text-[#0b2635]">{n.title}</b>
-                <span className="mt-1 block text-[11px] leading-4 text-[#52646a]">{n.message}</span>
-                <small className="mt-1 block text-[10px] text-[#8a979b]">{ago(n.createdAt)}</small>
+                <b className="block text-[14px] text-[#0b2635]">{n.title}</b>
+                <span className="mt-1 block text-[14px] leading-4 text-[#52646a]">{n.message}</span>
+                <small className="mt-1 block text-[14px] text-[#8a979b]">{ago(n.createdAt)}</small>
               </button>
             ))}
           </div>

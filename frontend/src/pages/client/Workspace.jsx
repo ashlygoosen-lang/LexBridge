@@ -282,8 +282,8 @@ export function Workspace() {
                 <span className="absolute -left-1.5 top-0 h-3 w-3 rounded-full bg-[#d7a84a] ring-4 ring-[#fff8ea]" />
                 <div className="flex flex-wrap gap-3">
                   <b className="text-xs text-[#0b2635]">{e.title}</b>
-                  <span className="text-[10px] font-bold text-[#a67722]">{e.kind.toUpperCase()}</span>
-                  <time className="ml-auto text-[10px] text-[#829095]">{dateTime(e.eventDate)}</time>
+                  <span className="text-[14px] font-bold text-[#a67722]">{e.kind.toUpperCase()}</span>
+                  <time className="ml-auto text-[14px] text-[#829095]">{dateTime(e.eventDate)}</time>
                 </div>
                 {e.details && <p className="mt-2 text-xs leading-5 text-[#65767b]">{e.details}</p>}
               </article>
@@ -304,7 +304,7 @@ export function Workspace() {
               <pre className="mt-5 max-h-[420px] overflow-y-auto whitespace-pre-wrap rounded-xl bg-[#f7f8f6] p-5 font-sans text-xs leading-6 text-[#3f5056]">
                 {data.mandate.content}
               </pre>
-              <p className="mt-3 break-all font-mono text-[10px] text-[#879397]">Audit fingerprint · SHA-256 {data.mandate.contentHash}</p>
+              <p className="mt-3 break-all font-mono text-[14px] text-[#879397]">Audit fingerprint · SHA-256 {data.mandate.contentHash}</p>
             </>
           ) : (
             <Empty
@@ -534,7 +534,7 @@ function LawyerUpdateForm({ matterId, reload, flash }) {
   }
   return (
     <form onSubmit={submit} className="mt-5 space-y-3 rounded-xl bg-[#f3f6f4] p-4">
-      <div className="flex flex-wrap gap-2 text-[11px] font-bold">
+      <div className="flex flex-wrap gap-2 text-[14px] font-bold">
         {[
           ['update', 'Post update'],
           ['hearing', 'Add hearing'],
@@ -614,7 +614,7 @@ function FeesTab({ data, isLawyer, reload, flash }) {
             <b>{rand(data.fees.paid)}</b>
           </p>
           {data.offer && (
-            <ul className="mt-3 space-y-1 text-[11px] text-[#52646a]">
+            <ul className="mt-3 space-y-1 text-[14px] text-[#52646a]">
               <li>Consultation · {rand(data.offer.consultFee)}</li>
               {data.offer.breakdown.map((b) => (
                 <li key={b.label}>
