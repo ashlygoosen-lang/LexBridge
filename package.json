@@ -1,0 +1,16 @@
+{
+  "name": "call-my-lawyer",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Call My Lawyer — South African legal marketplace, police report tracker and digital justice workspace",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "install:all": "npm --prefix backend ci && npm --prefix frontend ci",
+    "build": "npm --prefix frontend ci && npm --prefix frontend run build && npm --prefix backend ci --omit=dev",
+    "start": "npm --prefix backend start",
+    "dev:api": "npm --prefix backend run dev",
+    "dev:web": "npm --prefix frontend run dev"
+  }
+}

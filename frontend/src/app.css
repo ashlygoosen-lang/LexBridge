@@ -1,0 +1,70 @@
+/* Additions for the routed React app (kept separate from the Figma export styles). */
+
+.document-row {
+  grid-template-columns: 38px 1fr;
+  grid-auto-flow: column;
+  grid-auto-columns: auto;
+}
+@media (max-width: 720px) {
+  .document-row {
+    grid-auto-flow: row;
+    grid-template-columns: 38px 1fr;
+  }
+}
+
+.doc-download {
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.product-logo .logo,
+.product-logo {
+  text-decoration: none;
+}
+
+.side-nav nav a {
+  text-decoration: none;
+}
+
+.services-catalogue > div > button {
+  width: 100%;
+}
+
+/* Keyboard focus visibility across custom controls */
+:where(button, a, input, select, textarea, [role='button']):focus-visible {
+  outline: 2px solid #d7a84a;
+  outline-offset: 2px;
+}
+
+.matter-row[role='button'] {
+  cursor: pointer;
+}
+
+.time-grid button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.progress-track {
+  grid-template-columns: repeat(5, 1fr);
+}
+@media (max-width: 720px) {
+  .progress-track {
+    grid-template-columns: 1fr;
+  }
+}
+.feed-toolbar > div {
+  display: flex;
+}
+
+.nav-links > a,
+.nav-links > .nav-page-link,
+.nav-actions .login {
+  white-space: nowrap;
+}

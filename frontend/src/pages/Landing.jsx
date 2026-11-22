@@ -1,0 +1,381 @@
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { Icon, Logo } from '../components/Icon'
+import { MatterModal } from '../components/MatterModal'
+import { useAuth } from '../lib/auth'
+import { homeFor, responseLabel } from '../lib/format'
+
+const categories = [
+  { key: 'criminal', title: 'Criminal matters', text: 'Bail, arrests, assault, fraud, theft and criminal appeals.', accent: 'CR' },
+  { key: 'civil', title: 'Civil disputes', text: 'Contracts, debt recovery, property, damages and interdicts.', accent: 'CV' },
+  { key: 'family', title: 'Family matters', text: 'Divorce, maintenance, custody and protection orders.', accent: 'FM' },
+  { key: 'appeal', title: 'Appeals & reviews', text: 'High Court, Supreme Court of Appeal and Constitutional Court.', accent: 'AR' },
+]
+
+export function SiteFooter() {
+  return (
+    <footer>
+      <div className="shell footer-main">
+        <div className="footer-brand">
+          <Logo />
+          <p>Helping South Africans find verified legal help with clarity and confidence.</p>
+          <span>
+            <Icon name="shield" size={16} /> Privacy-first marketplace
+          </span>
+        </div>
+        <div>
+          <b>For clients</b>
+          <Link to="/#process">How it works</Link>
+          <Link to="/#categories">Matter types</Link>
+          <Link to="/lawyers">Find a lawyer</Link>
+          <Link to="/fees">Fees guide</Link>
+          <Link to="/courts">Court directory</Link>
+          <Link to="/magistrates">Magistrate court finder</Link>
+          <Link to="/police-stations">Police station directory</Link>
+          <Link to="/police-report">Police report & case tracker</Link>
+          <Link to="/dashboard">Digital justice dashboard</Link>
+        </div>
+        <div>
+          <b>For lawyers</b>
+          <Link to="/login?mode=signup&role=lawyer">Join the platform</Link>
+          <Link to="/help#matching">How matching works</Link>
+          <Link to="/fees">Fee schedule tools</Link>
+          <Link to="/login">Lawyer sign in</Link>
+        </div>
+        <div>
+          <b>Support</b>
+          <Link to="/help#trust">Trust & safety</Link>
+          <Link to="/help">Help centre</Link>
+          <Link to="/help#contact">Contact us</Link>
+          <Link to="/help#complaints">Complaints</Link>
+        </div>
+      </div>
+      <div className="shell disclaimer">
+        <p>
+          Call My Lawyer is an independent legal marketplace, not a law firm, and does not provide legal advice. Lawyer information
+          and fee estimates should be confirmed in a signed mandate.
+        </p>
+      </div>
+      <div className="shell footer-bottom">
+        <span>© {new Date().getFullYear()} Call My Lawyer (Pty) Ltd</span>
+        <div>
+          <Link to="/legal/terms">Terms</Link>
+          <Link to="/legal/privacy">Privacy & POPIA</Link>
+          <Link to="/legal/disclaimer">Disclaimer</Link>
+          <Link to="/legal/cookies">Cookies</Link>
+        </div>
+        <span>South Africa · English</span>
+      </div>
+    </footer>
+  )
+}
+
+export default function Landing() {
+  const { user, meta } = useAuth()
+  const navigate = useNavigate()
+  const [modal, setModal] = useState(null)
+  const [mobileNav, setMobileNav] = useState(false)
+  const openMatter = (category) => {
+    setModal({ category })
+    setMobileNav(false)
+  }
+  const lawyers = meta?.featured ?? []
+
+  return (
+    <div className="app">
+      <header>
+        <div className="topbar">
+          <span>
+            <Icon name="shield" size={15} /> South Africa’s legal marketplace
+          </span>
+          <span>
+            Need urgent help? <a href="#urgent">View emergency options</a>
+          </span>
+        </div>
+        <nav className="nav shell">
+          <Logo />
+          <div className={`nav-links ${mobileNav ? 'open' : ''}`}>
+            <a href="#process">How it works</a>
+            <Link to="/lawyers">Find a lawyer</Link>
+            <a href="#categories">Legal matters</a>
+            <Link to="/police-stations">Police stations</Link>
+            <Link to="/dashboard">Justice dashboard</Link>
+            <Link className="nav-page-link" to="/courts">
+              Court directory
+            </Link>
+            <div className="mobile-actions">
+              <Link className="btn btn-gold" to="/police-report">
+                Report a police matter
+              </Link>
+              {user ? (
+                <Link className="btn btn-ghost" to={homeFor(user)}>
+                  My dashboard
+                </Link>
+              ) : (
+                <Link className="btn btn-ghost" to="/login">
+                  Log in
+                </Link>
+              )}
+              <button className="btn btn-primary" onClick={() => openMatter()}>
+                Post my matter
+              </button>
+            </div>
+          </div>
+          <div className="nav-actions">
+            {user ? (
+              <button className="login" onClick={() => navigate(homeFor(user))}>
+                <Icon name="user" size={18} /> {user.name.split(' ')[0]}
+              </button>
+            ) : (
+              <button className="login" onClick={() => navigate('/login')}>
+                <Icon name="user" size={18} /> Log in
+              </button>
+            )}
+            <button className="btn btn-primary" onClick={() => openMatter()}>
+              Post my matter
+            </button>
+          </div>
+          <button className="menu-btn" onClick={() => setMobileNav(!mobileNav)} aria-label="Toggle menu">
+            <Icon name={mobileNav ? 'close' : 'menu'} />
+          </button>
+        </nav>
+      </header>
+
+      <main>
+        <section className="hero">
+          <div className="shell hero-grid">
+            <div className="hero-copy">
+              <span className="eyebrow light">CONFIDENTIAL · VERIFIED · SOUTH AFRICAN</span>
+              <h1>
+                Legal help,
+                <br />
+                <em>when it matters.</em>
+              </h1>
+              <p>
+                Tell us what happened. Compare responses from verified South African lawyers and choose who feels right for you.
+              </p>
+              <div className="hero-actions">
+                <Link className="btn btn-gold btn-large" to="/police-report">
+                  Report a police matter <Icon name="arrow" />
+                </Link>
+                <Link className="text-link link-button" to="/lawyers">
+                  Browse lawyers <Icon name="arrow" size={17} />
+                </Link>
+              </div>
+              <div className="privacy-line">
+                <Icon name="lock" size={17} /> Your identity stays private until you choose a lawyer.
+              </div>
+            </div>
+            <div className="hero-panel">
+              <span className="panel-label">GET STARTED</span>
+              <h2>What kind of help do you need?</h2>
+              <button onClick={() => openMatter('criminal')}>
+                <span className="panel-icon">01</span>
+                <span>
+                  <b>Criminal matter</b>
+                  <small>Arrest, bail, charge or appeal</small>
+                </span>
+                <Icon name="chevron" />
+              </button>
+              <button onClick={() => openMatter('civil')}>
+                <span className="panel-icon">02</span>
+                <span>
+                  <b>Civil matter</b>
+                  <small>Dispute, summons, debt or property</small>
+                </span>
+                <Icon name="chevron" />
+              </button>
+              <button onClick={() => openMatter('unsure')}>
+                <span className="panel-icon">03</span>
+                <span>
+                  <b>I'm not sure</b>
+                  <small>We’ll help you choose the right path</small>
+                </span>
+                <Icon name="chevron" />
+              </button>
+              <p>
+                <Icon name="clock" size={17} /> Takes about 5 minutes · Save and return anytime
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="trust-strip" id="trust">
+          <div className="shell trust-grid">
+            <div>
+              <Icon name="shield" />
+              <span>
+                <b>LPC-verified</b>
+                <small>Legal practitioners</small>
+              </span>
+            </div>
+            <div>
+              <Icon name="lock" />
+              <span>
+                <b>Confidential by design</b>
+                <small>Your details stay protected</small>
+              </span>
+            </div>
+            <div>
+              <span className="rand">R</span>
+              <span>
+                <b>Clear fee estimates</b>
+                <small>No surprise consultation fees</small>
+              </span>
+            </div>
+            <div>
+              <Icon name="document" />
+              <span>
+                <b>Secure mandates</b>
+                <small>Review before you sign</small>
+              </span>
+            </div>
+          </div>
+        </section>
+
+        <section className="section process" id="process">
+          <div className="shell">
+            <div className="section-heading">
+              <div>
+                <span className="eyebrow">HOW IT WORKS</span>
+                <h2>A clear path forward.</h2>
+              </div>
+              <p>Finding the right lawyer shouldn’t add to your stress. We make each step understandable and keep you in control.</p>
+            </div>
+            <div className="steps">
+              {[
+                ['01', 'Tell us what happened', 'Share the essentials in plain language. Your post is anonymised by default.'],
+                ['02', 'Receive lawyer responses', 'Matched, verified lawyers can accept your budget or send a clear fee estimate.'],
+                ['03', 'Compare with confidence', 'Review experience, fees, ratings and what each lawyer includes.'],
+                ['04', 'Choose and get started', 'Pay securely, book your consultation and sign the mandate online.'],
+              ].map(([num, title, text]) => (
+                <article key={num}>
+                  <span>{num}</span>
+                  <h3>{title}</h3>
+                  <p>{text}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="section category-section" id="categories">
+          <div className="shell">
+            <div className="section-heading compact">
+              <div>
+                <span className="eyebrow">FIND THE RIGHT EXPERTISE</span>
+                <h2>Help for life’s difficult moments.</h2>
+              </div>
+              <Link className="text-link dark" to="/fees">
+                View all matter types <Icon name="arrow" size={17} />
+              </Link>
+            </div>
+            <div className="category-grid">
+              {categories.map((item) => (
+                <button key={item.title} onClick={() => openMatter(item.key)} className="category-card">
+                  <span className="category-monogram">{item.accent}</span>
+                  <span>
+                    <h3>{item.title}</h3>
+                    <p>{item.text}</p>
+                    <i>
+                      Explore this area <Icon name="arrow" size={16} />
+                    </i>
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="section lawyer-section" id="lawyers">
+          <div className="shell">
+            <div className="section-heading compact">
+              <div>
+                <span className="eyebrow">VERIFIED PROFESSIONALS</span>
+                <h2>Lawyers you can trust.</h2>
+              </div>
+              <p>Every listed practitioner is checked against professional registration details.</p>
+            </div>
+            {meta && lawyers.length === 0 && (
+              <div className="rounded-2xl border border-dashed border-[#c8d2ce] bg-white p-10 text-center">
+                <b className="font-serif text-2xl text-[#0b2635]">Verified practitioners are joining now.</b>
+                <p className="mt-2 text-sm text-[#607078]">Post your matter and we’ll notify matching lawyers as soon as they’re verified.</p>
+                <Link className="btn btn-outline mt-5" to="/login?mode=signup&role=lawyer">
+                  Are you a legal practitioner? Join the platform
+                </Link>
+              </div>
+            )}
+            <div className="lawyer-grid">
+              {lawyers.map((lawyer) => (
+                <article className="lawyer-card" key={lawyer.id}>
+                  <div className="lawyer-photo">
+                    {lawyer.photoUrl ? (
+                      <img src={lawyer.photoUrl} alt={`Portrait of ${lawyer.name}`} />
+                    ) : (
+                      <div className="grid h-full w-full place-items-center bg-[#12394b] font-serif text-5xl text-[#d7a84a]">
+                        {lawyer.name[0]}
+                      </div>
+                    )}
+                    <span className="verified">
+                      <Icon name="check" size={13} /> VERIFIED
+                    </span>
+                  </div>
+                  <div className="lawyer-body">
+                    <h3>{lawyer.name}</h3>
+                    <p className="role">
+                      {lawyer.practitionerType} · {lawyer.city}
+                    </p>
+                    <div className="tags">
+                      {lawyer.areas.slice(0, 2).map((area) => (
+                        <span key={area}>{area}</span>
+                      ))}
+                    </div>
+                    <div className="lawyer-meta">
+                      <span>
+                        <Icon name="star" size={16} /> <b>{lawyer.rating.toFixed(1)}</b> · {lawyer.reviewCount} reviews
+                      </span>
+                      <span>
+                        <Icon name="clock" size={16} /> {responseLabel(lawyer.responseMinutes)}
+                      </span>
+                    </div>
+                    <button className="profile-link" onClick={() => navigate(`/lawyers/${lawyer.id}`)}>
+                      View profile <Icon name="arrow" size={16} />
+                    </button>
+                  </div>
+                </article>
+              ))}
+            </div>
+            <div className="center">
+              <button className="btn btn-outline" onClick={() => navigate('/lawyers')}>
+                <Icon name="search" size={18} /> Browse all {meta?.lawyers ? `${meta.lawyers} ` : ''}lawyers
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section className="urgent shell" id="urgent">
+          <div className="urgent-icon">!</div>
+          <div>
+            <span className="eyebrow light">URGENT LEGAL HELP</span>
+            <h2>Arrested or due in court soon?</h2>
+            <p>
+              You have the right to choose a legal practitioner. If you cannot afford one, Legal Aid South Africa may be available
+              (Advice Line 0800 110 110). In an emergency, call SAPS on 10111.
+            </p>
+          </div>
+          <div className="urgent-actions">
+            <button className="btn btn-gold" onClick={() => openMatter('criminal')}>
+              Get urgent help <Icon name="arrow" size={18} />
+            </button>
+            <a href="https://legal-aid.co.za/" target="_blank" rel="noreferrer">
+              Legal Aid information
+            </a>
+          </div>
+        </section>
+      </main>
+
+      <SiteFooter />
+      {modal && <MatterModal initialCategory={modal.category} onClose={() => setModal(null)} />}
+    </div>
+  )
+}
