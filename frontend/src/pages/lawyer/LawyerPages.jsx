@@ -5,7 +5,7 @@ import { PortalLayout } from '../../components/PortalLayout'
 import { Empty, Loading, Notice, PageTitle, Status, area, field, labelCls } from '../../components/ui'
 import { api } from '../../lib/api'
 import { useApi, useAuth } from '../../lib/auth'
-import { CATEGORY_LABEL, ago, date, rand, toCents } from '../../lib/format'
+import { CATEGORY_LABEL, ago, date, dateTime, rand, toCents } from '../../lib/format'
 
 const FILTERS = {
   category: ['Matter type', [['criminal', 'Criminal'], ['civil', 'Civil'], ['family', 'Family'], ['appeal', 'Appeals'], ['unsure', 'Not sure']]],
@@ -45,6 +45,7 @@ export function LawyerFeed() {
   const [openFilter, setOpenFilter] = useState(null)
   const qs = params.toString()
   const [data, { loading, reload }] = useApi(`/lawyer/feed?${qs}`)
+  const [summary] = useApi('/lawyer/summary')
   const active = Object.keys(FILTERS).filter((k) => params.get(k)).length + (params.get('saved') ? 1 : 0)
   const setFilter = (k, v) => {
     const p = new URLSearchParams(params)
@@ -175,6 +176,59 @@ export function LawyerFeed() {
             ))}
           </div>
           <aside className="feed-aside">
+            {summary?.ok && (
+              <div className="practice-today">
+                <span className="eyebrow">TODAY</span>
+                <h3>Practice at a glance</h3>
+                <div className="practice-stats">
+                  <Link to="/matters">
+                    <b>{summary.activeMatters}</b>
+                    <small>active matters</small>
+                  </Link>
+                  <Link to="/lawyer/offers">
+                    <b>{summary.offers.pending}</b>
+                    <small>offers awaiting reply</small>
+                  </Link>
+                  <Link to="/workspace">
+                    <b>{summary.unreadMessages}</b>
+                    <small>unread messages</small>
+                  </Link>
+                  <Link to="/lawyer/offers">
+                    <b>{summary.offers.winRate === null ? '—' : `${summary.offers.winRate}%`}</b>
+                    <small>offer win rate</small>
+                  </Link>
+                </div>
+                <div className="practice-money">
+                  <p>
+                    <span>Earned this month</span>
+                    <b>{rand(summary.money.month)}</b>
+                  </p>
+                  <p>
+                    <span>Invoiced, awaiting payment</span>
+                    <b>{rand(summary.money.invoiced)}</b>
+                  </p>
+                  <Link to="/payments">Earnings & payouts →</Link>
+                </div>
+                <span className="eyebrow mt-4 block">UPCOMING CONSULTATIONS</span>
+                {summary.consultations.length === 0 ? (
+                  <p className="practice-empty">Nothing booked yet. Booked consultations appear here.</p>
+                ) : (
+                  <ul className="practice-consults">
+                    {summary.consultations.map((c) => (
+                      <li key={c.id}>
+                        <Link to={`/matters/${c.matterId}/workspace`}>
+                          <b>{dateTime(c.startsAt)}</b>
+                          <span>{c.title}</span>
+                          <small>
+                            {c.clientName} · {c.format === 'video' ? 'Video call' : c.format === 'phone' ? 'Phone call' : 'In person'}
+                          </small>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            )}
             <div>
               <span className="eyebrow">YOUR WEEK</span>
               <h3>Practice snapshot</h3>

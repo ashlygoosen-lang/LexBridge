@@ -24,6 +24,15 @@ export function statusTone(m) {
   return ['red', m.status.toUpperCase()]
 }
 
+const REPORT_STATUS = {
+  'platform-draft': 'Draft on LexBridge',
+  'ready-for-saps': 'Ready to take to SAPS',
+  'reported-to-saps': 'Reported to SAPS',
+  'under-investigation': 'Under investigation',
+  'court-enrolled': 'Enrolled at court',
+  closed: 'Closed',
+}
+
 export function ClientDashboard() {
   const { user } = useAuth()
   const navigate = useNavigate()
@@ -168,6 +177,109 @@ export function ClientDashboard() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+      <section className="dash-row">
+        <div className="panel">
+          <div className="panel-head">
+            <div>
+              <span>QUICK ACTIONS</span>
+              <h2>What would you like to do?</h2>
+            </div>
+          </div>
+          <div className="quick-actions">
+            <button onClick={() => setModal(true)}>
+              <Icon name="document" />
+              <b>Post a matter</b>
+              <small>Get offers from verified lawyers</small>
+            </button>
+            <button onClick={() => navigate('/police-report')}>
+              <Icon name="shield" />
+              <b>Police report</b>
+              <small>Prepare a statement and track your case</small>
+            </button>
+            <button onClick={() => navigate('/lawyers')}>
+              <Icon name="search" />
+              <b>Find a lawyer</b>
+              <small>Browse by area, court and language</small>
+            </button>
+            <button onClick={() => navigate('/workspace')}>
+              <Icon name="bell" />
+              <b>Messages{data.unreadMessages ? ` (${data.unreadMessages})` : ''}</b>
+              <small>{data.unreadMessages ? `${data.unreadMessages} unread from your lawyer` : 'Talk to your lawyer securely'}</small>
+            </button>
+          </div>
+        </div>
+        <div className="panel">
+          <div className="panel-head">
+            <div>
+              <span>RECENT ACTIVITY</span>
+              <h2>Latest updates</h2>
+            </div>
+          </div>
+          <ul className="activity-feed client-activity">
+            {(data.activity || []).length === 0 && <li className="text-sm text-[#65767b]">Updates on offers, payments and your cases will appear here.</li>}
+            {(data.activity || []).map((a) => (
+              <li key={a.id} className={a.unread ? 'is-unread' : ''}>
+                <span className="activity-dot">
+                  <Icon name="bell" size={14} />
+                </span>
+                <div>
+                  {a.link ? <Link to={a.link}>{a.title}</Link> : <p>{a.title}</p>}
+                  <small>
+                    {a.message} · {ago(a.createdAt)}
+                  </small>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="panel">
+          <div className="panel-head">
+            <div>
+              <span>MONEY & RECORDS</span>
+              <h2>At a glance</h2>
+            </div>
+          </div>
+          <dl className="glance">
+            <div>
+              <dt>Paid to date</dt>
+              <dd>{rand(data.money?.paid || 0)}</dd>
+            </div>
+            <div>
+              <dt>Refunded</dt>
+              <dd>
+                {rand(data.money?.refunded || 0)}
+                {data.money?.refundPending ? <small> · {rand(data.money.refundPending)} on its way</small> : null}
+              </dd>
+            </div>
+            <div>
+              <dt>Closed matters</dt>
+              <dd>{data.closedMatters || 0}</dd>
+            </div>
+          </dl>
+          <Link to="/payments" className="glance-link">
+            Payments & invoices <Icon name="arrow" size={14} />
+          </Link>
+          <h3 className="glance-sub">Police reports</h3>
+          {(data.reports || []).length === 0 ? (
+            <p className="text-sm text-[#65767b]">
+              No reports yet. <Link to="/police-report">Start one</Link>
+            </p>
+          ) : (
+            <ul className="glance-reports">
+              {data.reports.map((r) => (
+                <li key={r.id}>
+                  <Link to={`/police-report/${r.id}`}>
+                    <b>{r.title}</b>
+                    <small>
+                      {r.reference} · {REPORT_STATUS[r.status] || r.status}
+                    </small>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </section>
       <section className="privacy-banner">

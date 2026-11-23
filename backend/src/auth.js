@@ -22,11 +22,12 @@ export const publicUser = (u) =>
     identityStatus: u.identity_status,
     idNumberLast4: u.id_last4,
     accountStatus: u.account_status,
+    notifyEmail: u.notify_email !== 0,
     createdAt: u.created_at,
   }
 
 export function setSession(res, user) {
-  const token = jwt.sign({ sub: user.id }, secret, { expiresIn: '7d' })
+  const token = jwt.sign({ sub: user.id, v: user.session_version || 0 }, secret, { expiresIn: '7d' })
   res.cookie(SESSION_COOKIE, token, {
     httpOnly: true,
     sameSite: 'lax',
@@ -46,9 +47,9 @@ export function loadUser(req, _res, next) {
   const token = req.cookies?.[SESSION_COOKIE]
   if (token) {
     try {
-      const { sub } = jwt.verify(token, secret)
+      const { sub, v = 0 } = jwt.verify(token, secret)
       const user = findUser.get(sub)
-      if (user && user.account_status === 'active') req.user = user
+      if (user && user.account_status === 'active' && (user.session_version || 0) === v) req.user = user
     } catch {
       /* expired or tampered token — treat as signed out */
     }

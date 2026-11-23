@@ -83,8 +83,15 @@ the UI says no money was charged. Set `PAYFAST_MERCHANT_ID`, `PAYFAST_MERCHANT_K
 `PAYFAST_PASSPHRASE` (with `PAYFAST_SANDBOX=true` first) to redirect to PayFast. Payments are confirmed
 by the signed ITN callback at `/api/payments/payfast/notify`. Card details never touch this server.
 
+## Email
+Set `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS` and `MAIL_FROM` (see `.env.example`) to send
+password-reset links and email copies of notifications. People can switch email copies off under
+Account settings; in-app notifications always stay on. Without SMTP, emails are written to the server
+log only, so **set SMTP before launch** or users cannot reset forgotten passwords.
+
 ## Security notes
 - Sessions: httpOnly, SameSite=Lax JWT cookie (secure in production). bcrypt password hashing. Rate-limited auth
+- Password reset: single-use, hashed tokens valid for 1 hour; resetting or changing a password signs out every other device
 - Same-origin check on all state-changing API calls. Helmet security headers and CSP
 - Roles cannot be self-assigned: sign-up allows client or lawyer only. Officials are created by an admin
 - Uploads: 15 MB limit, PDF/Word/image/text only, stored outside the web root, served only to authorised parties

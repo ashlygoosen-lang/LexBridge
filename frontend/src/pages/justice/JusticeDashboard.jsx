@@ -261,6 +261,18 @@ export default function JusticeDashboard() {
                   </div>
                 </div>
               </section>
+              <JusticeInsights
+                role={role}
+                cases={cases}
+                hearings={hearings}
+                audit={audit}
+                messages={messages}
+                decisions={decisions}
+                go={(tab, caseId) => {
+                  if (caseId) setSelected(String(caseId))
+                  setActive(tab)
+                }}
+              />
               {role === 'legal-aid' && <LegalAidQueue items={legalAid} {...tools} />}
             </>
           )}
@@ -918,5 +930,148 @@ function MessageTool({ currentCase, caseSelect, submit, pending }) {
         </Panel>
       )}
     </>
+  )
+}
+
+// Role-aware shortcuts, case stage breakdown, latest activity and inbox for the overview.
+const ROLE_ACTIONS = {
+  saps: [
+    ['Open docket entry', 'Record statements, exhibits and investigation steps', 'Cases'],
+    ['Upload evidence', 'Attach files to a case record', 'Documents'],
+    ['Message prosecutor', 'Send a secure note to an assigned participant', 'Messages'],
+  ],
+  prosecutor: [
+    ['Review dockets', 'Decide to prosecute, decline or request more', 'Cases'],
+    ['Court roll', 'See upcoming appearances', 'Court roll'],
+    ['Case documents', 'Charge sheets and filings', 'Documents'],
+  ],
+  clerk: [
+    ['Schedule a hearing', 'Add a case to the court roll', 'Cases'],
+    ['Manage the roll', 'Update hearing status and outcomes', 'Court roll'],
+    ['Accept filings', 'Review and seal documents', 'Documents'],
+  ],
+  'judicial-officer': [
+    ['Record a decision', 'Orders, judgments and sentences', 'Cases'],
+    ['Today’s roll', 'Hearings before you', 'Court roll'],
+    ['Case record', 'Filed documents and evidence', 'Documents'],
+  ],
+  'legal-aid': [
+    ['Screen requests', 'Approve or decline Legal Aid applications', 'Overview'],
+    ['Log time', 'Record work on assigned cases', 'Cases'],
+    ['Message client', 'Secure case messages', 'Messages'],
+  ],
+  lawyer: [
+    ['Case workspace', 'Filings, time records and case notes', 'Cases'],
+    ['File a document', 'Upload to the case record', 'Documents'],
+    ['Messages', 'Talk to case participants', 'Messages'],
+  ],
+  client: [
+    ['Follow my case', 'Stage, hearings and decisions', 'Cases'],
+    ['My documents', 'Statements and uploads', 'Documents'],
+    ['Messages', 'Contact your case team', 'Messages'],
+  ],
+  admin: [
+    ['All cases', 'Review stages and participants', 'Cases'],
+    ['Court roll', 'Every scheduled hearing', 'Court roll'],
+    ['Audit trail', 'Who did what, and when', 'Activity'],
+  ],
+}
+
+function JusticeInsights({ role, cases, hearings, audit, messages, decisions, go }) {
+  const actions = ROLE_ACTIONS[role] || ROLE_ACTIONS.client
+  const byStage = Object.keys(stageLabels)
+    .map((k) => [k, cases.filter((c) => c.stage === k).length])
+    .filter(([, n]) => n > 0)
+  const max = Math.max(1, ...byStage.map(([, n]) => n))
+  const inbox = messages.filter((m) => m.incoming).slice(0, 3)
+  const unreadInbox = messages.filter((m) => m.incoming && !m.readAt).length
+  const overdue = hearings.filter((h) => h.status === 'scheduled' && new Date(h.startsAt) < new Date(Date.now() - 864e5)).length
+  const recentDecision = decisions[0]
+  return (
+    <section className="mt-5 grid gap-5 xl:grid-cols-3">
+      <div className="rounded-xl border border-[#dce3df] bg-white p-5">
+        <span className="text-[14px] font-bold text-[#a87825]">QUICK ACTIONS</span>
+        <h2 className="mt-1 font-serif text-2xl text-[#082632]">Your tools</h2>
+        <div className="mt-4 grid gap-2">
+          {actions.map(([title, text, tab]) => (
+            <button key={title} onClick={() => go(tab)} className="justice-action">
+              <b>{title}</b>
+              <small>{text}</small>
+              <span aria-hidden="true">→</span>
+            </button>
+          ))}
+        </div>
+        {overdue > 0 && (
+          <p className="mt-4 rounded-lg bg-[#f8e6e2] px-3 py-2 text-[14px] text-[#9c453e]">
+            {overdue} hearing{overdue > 1 ? 's are' : ' is'} past its date but still marked scheduled. Update the outcome on the court roll.
+          </p>
+        )}
+      </div>
+      <div className="rounded-xl border border-[#dce3df] bg-white p-5">
+        <span className="text-[14px] font-bold text-[#a87825]">CASE STAGES</span>
+        <h2 className="mt-1 font-serif text-2xl text-[#082632]">Where your cases are</h2>
+        {byStage.length === 0 ? (
+          <p className="mt-4 text-[14px] text-[#7b898d]">No cases yet.</p>
+        ) : (
+          <ul className="mt-4 space-y-3">
+            {byStage.map(([k, n]) => (
+              <li key={k}>
+                <button className="stage-bar" onClick={() => go('Cases', cases.find((c) => c.stage === k)?.id)}>
+                  <span>{stageLabels[k]}</span>
+                  <b>{n}</b>
+                  <i style={{ width: `${(n / max) * 100}%` }} />
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+        {recentDecision && (
+          <div className="mt-5 rounded-lg bg-[#f4f6f5] p-3 text-[14px]">
+            <span className="font-bold text-[#a87825]">LATEST DECISION</span>
+            <b className="mt-1 block text-[#082632]">{recentDecision.title}</b>
+            <span className="text-[#65767b]">
+              {recentDecision.decisionType} · {dateTime(recentDecision.effectiveAt)}
+            </span>
+          </div>
+        )}
+      </div>
+      <div className="rounded-xl border border-[#dce3df] bg-white p-5">
+        <div className="flex items-center justify-between">
+          <div>
+            <span className="text-[14px] font-bold text-[#a87825]">INBOX{unreadInbox ? ` · ${unreadInbox} UNREAD` : ''}</span>
+            <h2 className="mt-1 font-serif text-2xl text-[#082632]">Recent messages</h2>
+          </div>
+          <button onClick={() => go('Messages')} className="text-[14px] font-bold text-[#1d6e68]">
+            Open →
+          </button>
+        </div>
+        <ul className="mt-4 space-y-3">
+          {inbox.length === 0 && <li className="text-[14px] text-[#7b898d]">No messages yet.</li>}
+          {inbox.map((m) => (
+            <li key={m.id} className={`rounded-lg border p-3 text-[14px] ${m.readAt ? 'border-[#e2e7e4]' : 'border-[#e3cba0] bg-[#fffaf0]'}`}>
+              <b className="block text-[#082632]">{m.subject}</b>
+              <span className="text-[#65767b]">
+                {m.senderName} · {dateTime(m.createdAt)}
+              </span>
+            </li>
+          ))}
+        </ul>
+        <span className="mt-5 block text-[14px] font-bold text-[#a87825]">LATEST ACTIVITY</span>
+        <ul className="mt-2 space-y-2">
+          {audit.slice(0, 4).map((a) => (
+            <li key={a.id} className="text-[14px] leading-5">
+              <b className="text-[#082632]">{a.actor}</b> <span className="text-[#52646a]">{a.action.replaceAll('-', ' ')}</span>
+              <small className="block text-[13px] text-[#829095]">{dateTime(a.createdAt)}</small>
+            </li>
+          ))}
+          {audit.length === 0 && <li className="text-[14px] text-[#7b898d]">No activity recorded yet.</li>}
+        </ul>
+        {audit.length > 4 && (
+          <button onClick={() => go('Activity')} className="mt-3 text-[14px] font-bold text-[#1d6e68]">
+            Full audit trail →
+          </button>
+        )}
+      </div>
+    </section>
   )
 }

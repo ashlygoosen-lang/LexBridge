@@ -449,6 +449,17 @@ addColumn('payments', 'refund_status', 'TEXT') // null | 'pending' | 'paid'
 addColumn('payments', 'refunded_at', 'TEXT')
 addColumn('consultations', 'cancelled_by', 'INTEGER')
 addColumn('consultations', 'cancel_reason', 'TEXT')
+addColumn('users', 'notify_email', 'INTEGER NOT NULL DEFAULT 1')
+addColumn('users', 'session_version', 'INTEGER NOT NULL DEFAULT 0')
+addColumn('users', 'last_login_at', 'TEXT')
+db.exec(`CREATE TABLE IF NOT EXISTS password_resets (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  token_hash TEXT NOT NULL UNIQUE,
+  expires_at TEXT NOT NULL,
+  used_at TEXT,
+  created_at TEXT NOT NULL
+)`)
 
 export const now = () => new Date().toISOString()
 export const json = (value, fallback = []) => {

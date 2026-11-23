@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
+import { WeekBars } from '../../components/WeekBars'
 import { Icon } from '../../components/Icon'
 import { PortalLayout } from '../../components/PortalLayout'
 import { Empty, Loading, Notice, PageTitle, Status, area, field, labelCls } from '../../components/ui'
@@ -9,6 +10,7 @@ import { Counter } from '../../motion/Counter'
 import { CATEGORY_LABEL, ROLE_LABEL, ago, date, initials, rand } from '../../lib/format'
 
 const TITLES = {
+  overview: ['OPERATIONS CENTRE', 'Platform overview.', 'What needs attention today, how the marketplace is growing and the latest activity.'],
   verification: ['VERIFICATION OPERATIONS', 'Lawyer verification queue.', 'Review practitioner credentials, documents and practising status.'],
   moderation: ['POST MODERATION', 'Matter moderation.', 'Pause matters that include personal details, abuse or content that breaks the rules.'],
   payments: ['PAYMENTS & DISPUTES', 'Payments and disputes.', 'Review transactions and resolve client disputes.'],
@@ -28,7 +30,7 @@ const ROLES = ['client', 'lawyer', 'legal-aid', 'saps', 'prosecutor', 'clerk', '
 
 export default function Admin() {
   const [params] = useSearchParams()
-  const tab = TITLES[params.get('tab')] ? params.get('tab') : 'verification'
+  const tab = TITLES[params.get('tab')] ? params.get('tab') : 'overview'
   const [flash, setFlash] = useState({ kind: '', text: '' })
   useEffect(() => {
     setFlash({ kind: '', text: '' })
@@ -41,6 +43,7 @@ export default function Admin() {
       <Notice kind={flash.kind || 'error'} className="mb-4">
         {flash.text}
       </Notice>
+      {tab === 'overview' && <Overview />}
       {tab === 'verification' && <Verification {...props} />}
       {tab === 'moderation' && <Moderation {...props} />}
       {tab === 'payments' && <PaymentsAdmin {...props} />}
@@ -49,6 +52,136 @@ export default function Admin() {
       {tab === 'identity' && <Identity {...props} />}
       {tab === 'stations' && <Stations {...props} />}
     </PortalLayout>
+  )
+}
+
+const ACTIVITY_ICON = { signup: 'user', matter: 'document', payment: 'check', refund: 'clock', report: 'shield', verification: 'shield' }
+
+function Overview() {
+  const [data, { loading, reload }] = useApi('/admin/overview')
+  if (loading && !data) return <Loading />
+  if (!data?.ok) return <Empty title="Overview unavailable" text="Try again in a moment." />
+  const { metrics: m, platform: p } = data
+  const t = p.totals
+  const queue = [
+    ['Practitioners to verify', m.pending, '/admin?tab=verification', m.submittedToday ? `${m.submittedToday} submitted today` : 'Check LPC and Fidelity Fund details'],
+    ['Waiting on more information', m.moreInfo, '/admin?tab=verification', m.moreInfo ? `Average ${m.moreInfoAgeDays} days waiting` : 'None waiting'],
+    ['Payment disputes', m.disputes, '/admin?tab=payments', 'Resolve within 10 business days'],
+    ['Refunds to pay out', m.refundsPending, '/admin?tab=payments', 'PayFast refunds, due within 30 days'],
+    ['Identity reviews', m.identityPending, '/admin?tab=identity', 'Manual SA ID checks'],
+    ['Justice cases to assign', m.unassignedCases, '/admin?tab=cases', 'Intakes without an official'],
+    ['Hidden matters', m.hiddenPosts, '/admin?tab=moderation', 'Paused by moderation'],
+    ['Certificates expiring', m.expiringSoon, '/admin?tab=verification', 'Within 60 days'],
+  ]
+  const open = queue.filter((q) => q[1] > 0).length
+  const weeks = (key) => p.weeks.map((w) => ({ week: w.week, value: w[key] }))
+  const rands = (c) => `R ${Math.round(c / 100).toLocaleString('en-ZA')}`
+  return (
+    <div className="admin-overview">
+      <div className="metric-grid">
+        <article>
+          <span>REVENUE (NET OF REFUNDS)</span>
+          <b>{rands(t.revenue)}</b>
+          <small>{rands(t.outstanding)} invoiced, not yet paid</small>
+        </article>
+        <article>
+          <span>MATTERS</span>
+          <b>
+            <Counter value={t.matters} />
+          </b>
+          <small>
+            {m.openMatters} open · {t.assigned} with a lawyer · {t.offerRate}% got an offer
+          </small>
+        </article>
+        <article>
+          <span>PEOPLE</span>
+          <b>
+            <Counter value={m.users} />
+          </b>
+          <small>
+            {t.clients} clients · {t.verifiedLawyers}/{t.lawyers} lawyers verified · {t.officials} officials
+          </small>
+        </article>
+        <article>
+          <span>JUSTICE & POLICE</span>
+          <b>
+            <Counter value={t.cases + t.reports} />
+          </b>
+          <small>
+            {t.cases} justice cases · {t.reports} police reports
+          </small>
+        </article>
+      </div>
+
+      <div className="admin-overview-grid">
+        <section className="panel">
+          <div className="panel-head">
+            <div>
+              <span>ACTION QUEUE</span>
+              <h2>{open ? `${open} area${open > 1 ? 's' : ''} need attention` : 'All clear'}</h2>
+            </div>
+            <button className="text-sm font-bold text-[#1f6e6a]" onClick={reload}>
+              Refresh
+            </button>
+          </div>
+          <ul className="action-queue">
+            {queue.map(([label, n, to, hint]) => (
+              <li key={label} className={n ? 'has-items' : ''}>
+                <Link to={to}>
+                  <b>{n}</b>
+                  <span>
+                    {label}
+                    <small>{hint}</small>
+                  </span>
+                  <Icon name="arrow" size={16} />
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section className="panel">
+          <div className="panel-head">
+            <div>
+              <span>LATEST ACTIVITY</span>
+              <h2>What just happened</h2>
+            </div>
+          </div>
+          <ul className="activity-feed">
+            {p.activity.length === 0 && <li className="text-sm text-[#65767b]">No activity yet.</li>}
+            {p.activity.map((a, i) => (
+              <li key={i}>
+                <span className={`activity-dot activity-${a.kind}`}>
+                  <Icon name={ACTIVITY_ICON[a.kind] || 'document'} size={14} />
+                </span>
+                <div>
+                  {a.link ? <Link to={a.link}>{a.detail}</Link> : <p>{a.detail}</p>}
+                  <small>{ago(a.at)}</small>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </section>
+      </div>
+
+      <section className="panel mt-5">
+        <div className="panel-head">
+          <div>
+            <span>GROWTH</span>
+            <h2>The last 8 weeks</h2>
+          </div>
+          <a className="btn btn-outline" href="/api/admin/payments.csv">
+            Export payments (CSV)
+          </a>
+        </div>
+        <div className="weekbars-grid">
+          <WeekBars title="New matters" data={weeks('matters')} />
+          <WeekBars title="Revenue" data={weeks('revenue')} format={rands} unit="net of refunds" />
+          <WeekBars title="New accounts" data={weeks('signups')} />
+          <WeekBars title="Police reports" data={weeks('reports')} />
+        </div>
+      </section>
+    </div>
   )
 }
 

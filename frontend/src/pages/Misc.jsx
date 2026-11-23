@@ -15,7 +15,8 @@ export function Account() {
   const [msg, setMsg] = useState({ kind: '', text: '' })
   const save = async (e) => {
     e.preventDefault()
-    const r = await api.patch('/auth/me', Object.fromEntries(new FormData(e.currentTarget)))
+    const fd = Object.fromEntries(new FormData(e.currentTarget))
+    const r = await api.patch('/auth/me', { ...fd, notifyEmail: fd.notifyEmail === 'on' })
     setMsg(r.ok ? { kind: 'success', text: 'Profile updated.' } : { kind: 'error', text: r.error })
     refresh()
   }
@@ -23,7 +24,7 @@ export function Account() {
     e.preventDefault()
     const el = e.currentTarget
     const r = await api.post('/auth/me/password', Object.fromEntries(new FormData(el)))
-    setMsg(r.ok ? { kind: 'success', text: 'Password changed.' } : { kind: 'error', text: r.error })
+    setMsg(r.ok ? { kind: 'success', text: 'Password changed. Other devices have been signed out.' } : { kind: 'error', text: r.error })
     if (r.ok) el.reset()
   }
   return (
@@ -52,6 +53,13 @@ export function Account() {
               <option value="zu">isiZulu</option>
               <option value="st">Sesotho</option>
             </select>
+          </label>
+          <label className="flex items-start gap-3 rounded-lg bg-[#f3f6f4] p-3 text-[15px] leading-6 text-[#33454c]">
+            <input type="checkbox" name="notifyEmail" defaultChecked={user.notifyEmail !== false} className="mt-1" />
+            <span>
+              <b className="block text-[#0b2635]">Email me updates</b>
+              New offers, messages, payments, consultation changes and case updates. In-app notifications always stay on.
+            </span>
           </label>
           <button className="btn btn-primary">Save details</button>
         </form>

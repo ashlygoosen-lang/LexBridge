@@ -37,8 +37,105 @@ router.get('/admin/overview', (_req, res) => {
       unassignedCases: count(`SELECT COUNT(*) n FROM justice_cases c WHERE NOT EXISTS (SELECT 1 FROM case_participants p WHERE p.case_id = c.id AND p.team != 'clients')`),
       users: count('SELECT COUNT(*) n FROM users'),
       openMatters: count(`SELECT COUNT(*) n FROM matters WHERE status = 'open'`),
+      hiddenPosts: count(`SELECT COUNT(*) n FROM matters WHERE moderation_status = 'hidden'`),
     },
+    platform: platformStats(),
   })
+})
+
+// Platform-wide numbers for the admin overview: totals, 8-week trend and latest activity.
+function platformStats() {
+  const one = (sql, ...a) => db.prepare(sql).get(...a)
+  const weeks = []
+  const start = new Date()
+  start.setHours(0, 0, 0, 0)
+  start.setDate(start.getDate() - start.getDay() - 7 * 7) // Sunday, 8 weeks back
+  for (let i = 0; i < 8; i++) {
+    const from = new Date(start.getTime() + i * 7 * 864e5)
+    const to = new Date(from.getTime() + 7 * 864e5)
+    const [f, t] = [from.toISOString(), to.toISOString()]
+    weeks.push({
+      week: f.slice(0, 10),
+      matters: one(`SELECT COUNT(*) n FROM matters WHERE created_at >= ? AND created_at < ?`, f, t).n,
+      signups: one(`SELECT COUNT(*) n FROM users WHERE created_at >= ? AND created_at < ?`, f, t).n,
+      revenue: one(
+        `SELECT COALESCE(SUM(amount - refund_amount), 0) n FROM payments WHERE status IN ('paid','refunded','disputed') AND paid_at >= ? AND paid_at < ?`,
+        f,
+        t,
+      ).n,
+      reports: one(`SELECT COUNT(*) n FROM police_reports WHERE created_at >= ? AND created_at < ?`, f, t).n,
+    })
+  }
+  const totals = {
+    clients: one(`SELECT COUNT(*) n FROM users WHERE role = 'client'`).n,
+    lawyers: one(`SELECT COUNT(*) n FROM users WHERE role = 'lawyer'`).n,
+    verifiedLawyers: one(`SELECT COUNT(*) n FROM lawyer_profiles WHERE verification_status = 'approved'`).n,
+    officials: one(`SELECT COUNT(*) n FROM users WHERE role IN ('legal-aid','saps','prosecutor','clerk','judicial-officer')`).n,
+    matters: one(`SELECT COUNT(*) n FROM matters`).n,
+    assigned: one(`SELECT COUNT(*) n FROM matters WHERE status = 'assigned'`).n,
+    reports: one(`SELECT COUNT(*) n FROM police_reports`).n,
+    cases: one(`SELECT COUNT(*) n FROM justice_cases`).n,
+    revenue: one(`SELECT COALESCE(SUM(amount - refund_amount), 0) n FROM payments WHERE status IN ('paid','refunded','disputed')`).n,
+    refunded: one(`SELECT COALESCE(SUM(refund_amount), 0) n FROM payments`).n,
+    outstanding: one(`SELECT COALESCE(SUM(amount), 0) n FROM payments WHERE status IN ('pending','processing')`).n,
+  }
+  const offered = one(`SELECT COUNT(DISTINCT matter_id) n FROM offers`).n
+  totals.offerRate = totals.matters ? Math.round((offered / totals.matters) * 100) : 0
+  const activity = db
+    .prepare(
+      `SELECT * FROM (
+        SELECT 'signup' kind, u.created_at at, u.name || ' joined as ' || CASE u.role
+          WHEN 'client' THEN 'a client' WHEN 'lawyer' THEN 'a legal practitioner' WHEN 'legal-aid' THEN 'a Legal Aid officer'
+          WHEN 'saps' THEN 'a SAPS official' WHEN 'prosecutor' THEN 'a prosecutor' WHEN 'clerk' THEN 'a court clerk'
+          WHEN 'judicial-officer' THEN 'a judicial officer' ELSE 'an administrator' END detail, '/admin?tab=users' link FROM users u
+        UNION ALL SELECT 'matter', m.created_at, 'New matter ' || m.reference || ': ' || m.title, '/admin?tab=moderation' FROM matters m
+        UNION ALL SELECT 'payment', p.paid_at, 'Payment received: ' || p.description, '/admin?tab=payments' FROM payments p WHERE p.paid_at IS NOT NULL
+        UNION ALL SELECT 'refund', p.refunded_at, 'Refund issued: ' || p.description, '/admin?tab=payments' FROM payments p WHERE p.refunded_at IS NOT NULL
+        UNION ALL SELECT 'report', r.created_at, 'Police report ' || r.reference || ': ' || r.title, NULL FROM police_reports r
+        UNION ALL SELECT 'verification', l.submitted_at, 'Verification submitted by ' || u.name, '/admin' FROM lawyer_profiles l JOIN users u ON u.id = l.user_id WHERE l.submitted_at IS NOT NULL
+      ) WHERE at IS NOT NULL ORDER BY at DESC LIMIT 12`,
+    )
+    .all()
+  return { weeks, totals, activity }
+}
+
+// CSV export of payments for finance and reconciliation.
+router.get('/admin/payments.csv', (_req, res) => {
+  const rows = db
+    .prepare(`SELECT p.*, m.reference AS matter_reference, c.name AS client_name, c.email AS client_email, l.name AS lawyer_name
+      FROM payments p JOIN matters m ON m.id = p.matter_id JOIN users c ON c.id = p.client_id JOIN users l ON l.id = p.lawyer_id
+      ORDER BY p.created_at DESC`)
+    .all()
+  const cell = (v) => {
+    const s = v == null ? '' : String(v)
+    // Neutralise spreadsheet formula injection and quote every field.
+    return `"${(/^[=+\-@\t\r]/.test(s) ? `'${s}` : s).replace(/"/g, '""')}"`
+  }
+  const head = ['Created', 'Paid', 'Matter', 'Description', 'Kind', 'Client', 'Client email', 'Practitioner', 'Amount (R)', 'VAT (R)', 'Refunded (R)', 'Status', 'Refund status', 'Provider', 'Provider ref']
+  const lines = rows.map((p) =>
+    [
+      p.created_at,
+      p.paid_at,
+      p.matter_reference,
+      p.description,
+      p.kind,
+      p.client_name,
+      p.client_email,
+      p.lawyer_name,
+      (p.amount / 100).toFixed(2),
+      (p.vat / 100).toFixed(2),
+      ((p.refund_amount || 0) / 100).toFixed(2),
+      p.status,
+      p.refund_status,
+      p.provider,
+      p.provider_ref,
+    ]
+      .map(cell)
+      .join(','),
+  )
+  res.setHeader('Content-Type', 'text/csv; charset=utf-8')
+  res.setHeader('Content-Disposition', `attachment; filename="lexbridge-payments-${new Date().toISOString().slice(0, 10)}.csv"`)
+  res.send('\ufeff' + [head.map(cell).join(','), ...lines].join('\r\n'))
 })
 
 // ---------- practitioner verification ----------

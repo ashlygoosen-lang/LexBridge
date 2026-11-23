@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Loading, Notice } from '../../components/ui'
+import { PublicHeader } from '../../components/PublicHeader'
 import { api } from '../../lib/api'
 import { useApi, useAuth } from '../../lib/auth'
 import { dateTime, date, homeFor } from '../../lib/format'
@@ -792,12 +793,7 @@ export function StationDirectory() {
 
   return (
     <div className="min-h-screen bg-[#f3f6f4] text-[#17242b]">
-      <header className="flex h-[72px] items-center border-b border-[#dce3df] bg-white px-5 lg:px-10">
-        <Brand />
-        <Link to="/police-report" className="ml-auto rounded-lg bg-[#0b2635] px-4 py-3 text-xs font-bold text-white">
-          Create police report
-        </Link>
-      </header>
+      <PublicHeader />
       <main className="mx-auto max-w-7xl px-4 py-10 lg:px-8">
         <div className="grid gap-8 lg:grid-cols-[1fr_360px] lg:items-end">
           <div>

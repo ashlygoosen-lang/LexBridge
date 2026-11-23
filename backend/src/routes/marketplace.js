@@ -364,6 +364,80 @@ router.get('/client/overview', requireRole('client'), (req, res) => {
       offerCount: db.prepare(`SELECT COUNT(*) n FROM offers WHERE matter_id = ? AND status IN ('pending','accepted')`).get(m.id).n,
     })),
     timeline: upcoming.map((e) => ({ id: e.id, kind: e.kind, title: e.title, details: e.details, eventDate: e.event_date, matterTitle: e.matter_title, matterId: e.matter_id })),
+    ...clientExtras(uid),
+  })
+})
+
+// Extra dashboard panels: money, unread messages, police reports and recent activity.
+function clientExtras(uid) {
+  const money = db
+    .prepare(`SELECT
+        COALESCE(SUM(CASE WHEN status IN ('paid','refunded','disputed') THEN amount - refund_amount ELSE 0 END), 0) AS paid,
+        COALESCE(SUM(refund_amount), 0) AS refunded,
+        COALESCE(SUM(CASE WHEN refund_status = 'pending' THEN refund_amount ELSE 0 END), 0) AS refundPending
+      FROM payments WHERE client_id = ?`)
+    .get(uid)
+  const unreadMessages = db
+    .prepare(`SELECT COUNT(*) n FROM matter_messages mm JOIN matters m ON m.id = mm.matter_id
+      WHERE m.client_id = ? AND mm.sender_id != ? AND mm.read_at IS NULL`)
+    .get(uid, uid).n
+  const reports = db.prepare(`SELECT id, reference, title, official_status, updated_at FROM police_reports WHERE owner_id = ? ORDER BY updated_at DESC LIMIT 3`).all(uid)
+  const closed = db.prepare(`SELECT COUNT(*) n FROM matters WHERE client_id = ? AND status IN ('closed','cancelled')`).get(uid).n
+  const activity = db.prepare(`SELECT id, title, message, link, read_at, created_at FROM notifications WHERE owner_id = ? ORDER BY created_at DESC LIMIT 6`).all(uid)
+  return {
+    money,
+    unreadMessages,
+    closedMatters: closed,
+    reports: reports.map((r) => ({ id: r.id, reference: r.reference, title: r.title, status: r.official_status, updatedAt: r.updated_at })),
+    activity: activity.map((a) => ({ id: a.id, title: a.title, message: a.message, link: a.link, unread: !a.read_at, createdAt: a.created_at })),
+  }
+}
+
+// ---------- lawyer practice summary (dashboard sidebar + earnings) ----------
+router.get('/lawyer/summary', requireRole('lawyer'), (req, res) => {
+  const uid = req.user.id
+  const nowIso = new Date().toISOString()
+  const monthStart = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString()
+  const consultations = db
+    .prepare(`SELECT c.*, m.title, m.reference, u.name AS client_name FROM consultations c
+      JOIN matters m ON m.id = c.matter_id JOIN users u ON u.id = m.client_id
+      WHERE c.lawyer_id = ? AND c.status = 'booked' AND c.starts_at >= ? ORDER BY c.starts_at LIMIT 6`)
+    .all(uid, new Date(Date.now() - 3600_000).toISOString())
+  const money = db
+    .prepare(`SELECT
+        COALESCE(SUM(CASE WHEN status IN ('paid','refunded','disputed') THEN amount - refund_amount ELSE 0 END), 0) AS earned,
+        COALESCE(SUM(CASE WHEN status IN ('paid','refunded','disputed') AND paid_at >= ? THEN amount - refund_amount ELSE 0 END), 0) AS month,
+        COALESCE(SUM(CASE WHEN status IN ('pending','processing') THEN amount ELSE 0 END), 0) AS invoiced
+      FROM payments WHERE lawyer_id = ?`)
+    .get(monthStart, uid)
+  const offers = db
+    .prepare(`SELECT COUNT(*) total, SUM(status = 'pending') pending, SUM(status = 'accepted') won, SUM(status = 'declined') declined FROM offers WHERE lawyer_id = ?`)
+    .get(uid)
+  const decided = (offers.won || 0) + (offers.declined || 0)
+  const active = db.prepare(`SELECT COUNT(*) n FROM matters WHERE lawyer_id = ? AND status = 'assigned'`).get(uid).n
+  const unreadMessages = db
+    .prepare(`SELECT COUNT(*) n FROM matter_messages mm JOIN matters m ON m.id = mm.matter_id
+      WHERE m.lawyer_id = ? AND mm.sender_id != ? AND mm.read_at IS NULL`)
+    .get(uid, uid).n
+  const rating = db.prepare('SELECT rating, review_count FROM lawyer_profiles WHERE user_id = ?').get(uid)
+  res.json({
+    ok: true,
+    now: nowIso,
+    consultations: consultations.map((c) => ({
+      id: c.id,
+      matterId: c.matter_id,
+      title: c.title,
+      reference: c.reference,
+      clientName: c.client_name,
+      startsAt: c.starts_at,
+      format: c.format,
+    })),
+    money,
+    offers: { total: offers.total || 0, pending: offers.pending || 0, won: offers.won || 0, winRate: decided ? Math.round(((offers.won || 0) / decided) * 100) : null },
+    activeMatters: active,
+    unreadMessages,
+    rating: rating?.rating ?? null,
+    reviewCount: rating?.review_count ?? 0,
   })
 })
 

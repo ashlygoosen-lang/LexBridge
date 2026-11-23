@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { Icon, Logo } from '../components/Icon'
 import { Notice } from '../components/ui'
 import { api } from '../lib/api'
@@ -22,6 +22,8 @@ export default function Auth() {
   const navigate = useNavigate()
   const { setUser, refresh, meta } = useAuth()
   const signup = params.get('mode') === 'signup'
+  const forgot = params.get('mode') === 'forgot'
+  const [sent, setSent] = useState('')
   const [role, setRole] = useState(params.get('role') === 'lawyer' ? 'lawyer' : 'client')
   const [show, setShow] = useState(false)
   const [error, setError] = useState('')
@@ -37,6 +39,16 @@ export default function Auth() {
     else p.set('mode', 'signup')
     setParams(p)
     setError('')
+  }
+
+  const requestReset = async (e) => {
+    e.preventDefault()
+    setError('')
+    setBusy(true)
+    const r = await api.post('/auth/forgot', { email: form.email })
+    setBusy(false)
+    if (!r.ok) return setError(r.error)
+    setSent(r.message)
   }
 
   const submit = async (e) => {
@@ -77,6 +89,33 @@ export default function Auth() {
         <small>LexBridge is a marketplace, not a law firm, and is not SAPS.</small>
       </section>
       <main className="auth-main">
+        {forgot ? (
+          <div className="auth-card">
+            <span className="eyebrow">ACCOUNT RECOVERY</span>
+            <h2>Forgot your password?</h2>
+            <p>Enter the email you signed up with. We’ll send a link to choose a new password. The link works for 1 hour.</p>
+            {sent ? (
+              <div className="auth-success" role="status">
+                <Icon name="check" /> <span>{sent}</span>
+                <small>Check your spam folder if nothing arrives within a few minutes.</small>
+              </div>
+            ) : (
+              <form onSubmit={requestReset}>
+                <label>
+                  Email address
+                  <input type="email" required value={form.email} onChange={set('email')} placeholder="name@example.co.za" autoComplete="email" autoFocus />
+                </label>
+                <Notice>{error}</Notice>
+                <button className="btn btn-primary" type="submit" disabled={busy}>
+                  {busy ? 'Sending…' : 'Send reset link'} <Icon name="arrow" size={16} />
+                </button>
+              </form>
+            )}
+            <div className="auth-switch">
+              Remembered it? <button onClick={() => setParams({})}>Back to sign in</button>
+            </div>
+          </div>
+        ) : (
         <div className="auth-card">
           <span className="eyebrow">{signup ? 'CREATE YOUR ACCOUNT' : 'SECURE SIGN IN'}</span>
           <h2>{signup ? 'Let’s get you started.' : 'Sign in to your account.'}</h2>
@@ -153,6 +192,11 @@ export default function Auth() {
                 </span>
               </label>
             )}
+            {!signup && (
+              <button type="button" className="auth-forgot" onClick={() => setParams({ mode: 'forgot' })}>
+                Forgot password?
+              </button>
+            )}
             <Notice>{error}</Notice>
             <button className="btn btn-primary" type="submit" disabled={busy}>
               {busy ? 'Please wait…' : signup ? (role === 'lawyer' ? 'Start verification' : 'Create client account') : 'Sign in'}
@@ -183,6 +227,79 @@ export default function Auth() {
                 ))}
               </div>
             </details>
+          )}
+        </div>
+        )}
+      </main>
+    </div>
+  )
+}
+
+// Landing page for the emailed reset link: /reset-password?token=…
+export function ResetPassword() {
+  const [params] = useSearchParams()
+  const navigate = useNavigate()
+  const { setUser, refresh } = useAuth()
+  const token = params.get('token') || ''
+  const [pw, setPw] = useState('')
+  const [pw2, setPw2] = useState('')
+  const [error, setError] = useState('')
+  const [busy, setBusy] = useState(false)
+  const submit = async (e) => {
+    e.preventDefault()
+    if (pw !== pw2) return setError('The two passwords don’t match.')
+    setBusy(true)
+    const r = await api.post('/auth/reset', { token, password: pw })
+    setBusy(false)
+    if (!r.ok) return setError(r.error)
+    setUser(r.user)
+    const fresh = await refresh()
+    navigate(homeFor(fresh || r.user))
+  }
+  return (
+    <div className="auth-page">
+      <section className="auth-aside">
+        <button onClick={() => navigate('/')} aria-label="LexBridge home">
+          <Logo as="span" />
+        </button>
+        <div>
+          <span className="eyebrow light">ACCOUNT RECOVERY</span>
+          <h1>Choose a new password.</h1>
+          <p>For your security, every other device signed in to your account will be signed out.</p>
+        </div>
+        <small>LexBridge is a marketplace, not a law firm, and is not SAPS.</small>
+      </section>
+      <main className="auth-main">
+        <div className="auth-card">
+          <span className="eyebrow">NEW PASSWORD</span>
+          <h2>Reset your password</h2>
+          {!token ? (
+            <>
+              <p>This link is incomplete. Request a new reset link.</p>
+              <Link className="btn btn-primary" to="/login?mode=forgot">
+                Request a new link
+              </Link>
+            </>
+          ) : (
+            <form onSubmit={submit}>
+              <label>
+                New password
+                <input type="password" required minLength={8} value={pw} onChange={(e) => setPw(e.target.value)} placeholder="At least 8 characters" autoComplete="new-password" autoFocus />
+              </label>
+              <label>
+                Confirm new password
+                <input type="password" required minLength={8} value={pw2} onChange={(e) => setPw2(e.target.value)} autoComplete="new-password" />
+              </label>
+              <Notice>{error}</Notice>
+              {error && /expired|used/.test(error) && (
+                <Link to="/login?mode=forgot" className="auth-forgot">
+                  Request a new link
+                </Link>
+              )}
+              <button className="btn btn-primary" type="submit" disabled={busy}>
+                {busy ? 'Saving…' : 'Save and sign in'} <Icon name="arrow" size={16} />
+              </button>
+            </form>
           )}
         </div>
       </main>

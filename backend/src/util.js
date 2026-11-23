@@ -3,6 +3,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import multer from 'multer'
 import { UPLOAD_DIR, db, now } from './db.js'
+import { sendMail } from './mail.js'
 
 export const text = (value, max = 2000) => (typeof value === 'string' ? value.trim().slice(0, max) : '')
 export const int = (value) => {
@@ -81,6 +82,11 @@ export function notify(ownerId, { title, message, link = null, matterId = null, 
     link,
     created_at: now(),
   })
+  // Email copy, unless the person switched email notifications off. Fire-and-forget.
+  const user = db.prepare('SELECT email, name, notify_email FROM users WHERE id = ?').get(ownerId)
+  if (user && user.notify_email !== 0 && !user.email.endsWith('@demo.lexbridge.co.za')) {
+    sendMail({ to: user.email, subject: `${title} · LexBridge`, heading: title, text: `Hi ${user.name.split(' ')[0]},\n\n${message}`, link: link || '/', cta: 'View on LexBridge' }).catch(() => {})
+  }
 }
 
 export const VAT_RATE = 0.15

@@ -5,7 +5,7 @@ import { useMotion } from './motion/useMotion'
 import { homeFor } from './lib/format'
 import { Loading } from './components/ui'
 import Landing from './pages/Landing'
-import Auth from './pages/Auth'
+import Auth, { ResetPassword } from './pages/Auth'
 import Directory, { LawyerProfilePage } from './pages/Directory'
 import { ClientDashboard, MatterPage, MattersList, WorkspaceIndex } from './pages/client/ClientPages'
 import { Checkout, Payments, Workspace } from './pages/client/Workspace'
@@ -67,6 +67,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<LoginRoute />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/lawyers" element={<Directory />} />
         <Route path="/lawyers/:id" element={<LawyerProfilePage />} />
         <Route path="/courts" element={<CourtDirectory />} />

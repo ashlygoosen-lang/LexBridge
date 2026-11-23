@@ -29,7 +29,8 @@ const NAV = {
     ['Magistrate finder', '/magistrates'],
   ],
   admin: [
-    ['Verification queue', '/admin'],
+    ['Overview', '/admin'],
+    ['Verification queue', '/admin?tab=verification'],
     ['Post moderation', '/admin?tab=moderation'],
     ['Payments & disputes', '/admin?tab=payments'],
     ['Users & roles', '/admin?tab=users'],
