@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Loading, Notice } from '../../components/ui'
 import { PublicHeader } from '../../components/PublicHeader'
+import { LogoMark } from '../../components/Icon'
 import { api } from '../../lib/api'
 import { useApi, useAuth } from '../../lib/auth'
 import { dateTime, date, homeFor } from '../../lib/format'
@@ -12,8 +13,11 @@ const input = 'mt-2 h-12 w-full rounded-lg border border-[#cdd6d2] bg-white px-4
 
 function Brand() {
   return (
-    <Link to="/" className="font-serif text-2xl text-[#0b2635]">
-      Lex<b>Bridge</b>
+    <Link to="/" className="flex items-center gap-3 font-serif text-2xl text-[#0b2635]" aria-label="LexBridge home">
+      <LogoMark height={36} />
+      <span>
+        Lex<b className="font-medium text-[#b8892f]">Bridge</b>
+      </span>
     </Link>
   )
 }

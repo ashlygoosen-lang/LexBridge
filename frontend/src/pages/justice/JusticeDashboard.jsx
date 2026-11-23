@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { Loading } from '../../components/ui'
+import { LogoMark } from '../../components/Icon'
 import { api } from '../../lib/api'
 import { useApi, useAuth } from '../../lib/auth'
 import { dateTime, date } from '../../lib/format'
@@ -105,8 +106,11 @@ export default function JusticeDashboard() {
   return (
     <div className="min-h-screen bg-[#f4f6f5] text-[#17262d] lg:grid lg:grid-cols-[248px_1fr]">
       <aside className="border-r border-[#dce3df] bg-[#082632] px-5 py-6 text-white">
-        <Link to="/" className="font-serif text-2xl">
-          Lex<b className="text-[#dfbd6e]">Bridge</b> <span className="text-xs font-sans tracking-[.2em] text-[#8fcac3]">JUSTICE</span>
+        <Link to="/" className="flex items-center gap-3 font-serif text-2xl" aria-label="LexBridge Justice home">
+          <LogoMark height={34} />
+          <span>
+            Lex<b className="font-medium text-[#dfbd6e]">Bridge</b> <span className="block font-sans text-[12px] tracking-[.2em] text-[#8fcac3]">JUSTICE</span>
+          </span>
         </Link>
         <div className="mt-8 rounded-xl border border-white/10 bg-white/5 p-4">
           <div className="grid h-10 w-10 place-items-center rounded-full bg-[#d9b45f] font-serif text-lg text-[#082632]">{user.name.charAt(0)}</div>

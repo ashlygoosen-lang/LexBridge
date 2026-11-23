@@ -2,7 +2,13 @@
 <html lang="en-ZA">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/brand/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="preload" as="image" href="/brand/logo-mark-96.webp" type="image/webp" />
+    <meta property="og:title" content="LexBridge · South Africa’s legal marketplace" />
+    <meta property="og:image" content="/brand/logo-full-600.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#0b2635" />
     <title>LexBridge · South Africa’s legal marketplace</title>
@@ -28,17 +34,9 @@
   visibility: hidden;
 }
 #lb-splash .lb-mark {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  color: #d7a84a;
-  font: italic 400 34px 'Newsreader', Georgia, serif;
-  background: linear-gradient(145deg, #12394b, #071e2a);
-  box-shadow:
-    0 0 0 1px rgba(215, 168, 74, 0.25),
-    0 20px 60px rgba(0, 0, 0, 0.4);
+  width: 132px;
+  height: auto;
+  filter: drop-shadow(0 18px 40px rgba(0, 0, 0, 0.45));
   animation: lb-breathe 1.6s cubic-bezier(0.65,0,0.35,1) infinite;
 }
 #lb-splash .lb-line {
@@ -59,10 +57,7 @@
 }
 @keyframes lb-breathe {
   50% {
-    transform: scale(1.06);
-    box-shadow:
-      0 0 0 10px rgba(215, 168, 74, 0.06),
-      0 20px 60px rgba(0, 0, 0, 0.4);
+    transform: scale(1.05);
   }
 }
 @keyframes lb-scan {
@@ -80,7 +75,7 @@
   <body class="min-h-screen bg-white text-zinc-950 antialiased">
     <div id="lb-splash" aria-hidden="true">
       <div style="display:grid;justify-items:center">
-        <div class="lb-mark">L</div>
+        <img class="lb-mark" src="/brand/logo-mark-192.webp" width="132" height="64" alt="" />
         <div class="lb-line"></div>
       </div>
     </div>

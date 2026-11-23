@@ -764,7 +764,7 @@ body {
 }
 
 /* Switch the homepage header to the menu button earlier, so the larger menu text never overflows. */
-@media (max-width: 1180px) {
+@media (max-width: 1200px) {
   .nav-links {
     display: none;
     position: absolute;
@@ -1439,4 +1439,65 @@ body {
 }
 .directory-header nav.public-menu a:last-child {
   border-bottom: 0;
+}
+
+/* ---------- Brand: LB emblem + wordmark ---------- */
+.logo {
+  gap: 10px;
+}
+.logo picture {
+  display: flex;
+  flex: none;
+}
+.logo-img {
+  display: block;
+  width: auto;
+  height: 40px;
+  filter: drop-shadow(0 4px 10px rgba(8, 34, 47, 0.12));
+  transition: transform 0.6s var(--ease-out, ease);
+}
+.logo:hover .logo-img {
+  transform: translateY(-1px) scale(1.04);
+}
+.logo-word b {
+  color: #b8892f; /* gold from the emblem, AA on white for large text */
+  font-weight: 500;
+}
+footer .logo-word b,
+.auth-aside .logo-word b {
+  color: #e2b85c;
+}
+footer .logo-img,
+.auth-aside .logo-img {
+  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.35));
+}
+.auth-aside .logo-img {
+  height: 46px;
+}
+.product-header .logo-img {
+  height: 38px;
+}
+@media (max-width: 760px) {
+  .logo-img {
+    height: 34px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .logo:hover .logo-img {
+    transform: none;
+  }
+}
+/* The emblem is wider than the old round mark: never let the logo shrink under the menu. */
+.nav > .logo,
+.directory-header > button,
+.product-header .logo {
+  flex: none;
+}
+@media (max-width: 1440px) {
+  .nav-links {
+    gap: 18px;
+  }
+  .nav-actions {
+    gap: 14px;
+  }
 }

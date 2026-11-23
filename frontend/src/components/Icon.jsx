@@ -92,11 +92,21 @@ export function Icon({ name, size = 20 }) {
   )
 }
 
+// The LB emblem (scales of justice over a bridge). The wordmark is real text beside it.
+export function LogoMark({ className = 'logo-img', height = 40 }) {
+  return (
+    <picture>
+      <source type="image/webp" srcSet="/brand/logo-mark-96.webp 1x, /brand/logo-mark-192.webp 2x" />
+      <img className={className} src="/brand/logo-mark-96.png" srcSet="/brand/logo-mark-192.png 2x" width={Math.round(height * 2.06)} height={height} alt="" decoding="async" />
+    </picture>
+  )
+}
+
 export function Logo({ as = 'link' }) {
   const inner = (
     <>
-      <span className="logo-mark">L</span>
-      <span>
+      <LogoMark />
+      <span className="logo-word">
         Lex<b>Bridge</b>
       </span>
     </>

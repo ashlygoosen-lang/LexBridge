@@ -1,0 +1,21 @@
+{
+  "name": "LexBridge",
+  "short_name": "LexBridge",
+  "description": "South Africa's legal marketplace",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b2635",
+  "theme_color": "#0b2635",
+  "icons": [
+    {
+      "src": "/brand/favicon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/brand/favicon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

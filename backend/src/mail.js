@@ -32,7 +32,9 @@ function layout({ heading, body, cta, link }) {
   return `<!doctype html><html><body style="margin:0;background:#f3f5f3;font-family:Arial,Helvetica,sans-serif;color:#22343b">
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="padding:32px 12px"><tr><td align="center">
   <table role="presentation" width="560" cellpadding="0" cellspacing="0" style="max-width:560px;background:#fff;border-radius:12px;overflow:hidden">
-  <tr><td style="background:#0b2635;padding:22px 28px;color:#fff;font-family:Georgia,serif;font-size:22px">Lex<b style="color:#e0b253">Bridge</b></td></tr>
+  <tr><td style="background:#0b2635;padding:18px 28px;color:#fff;font-family:Georgia,serif;font-size:22px">
+    <img src="${publicUrl}/brand/logo-mark-192.png" width="72" height="35" alt="" style="vertical-align:middle;margin-right:10px;border:0">
+    <span style="vertical-align:middle">Lex<b style="color:#e0b253;font-weight:normal">Bridge</b></span></td></tr>
   <tr><td style="padding:28px">
     <h1 style="margin:0 0 14px;font-family:Georgia,serif;font-weight:400;font-size:24px;color:#0b2635">${esc(heading)}</h1>
     <div style="font-size:15px;line-height:1.65">${body}</div>

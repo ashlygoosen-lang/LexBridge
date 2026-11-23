@@ -471,7 +471,7 @@ html.is-scrolled .nav {
 }
 
 /* Mobile menu: slide and fade the sheet, stagger the links. */
-@media (max-width: 1180px) {
+@media (max-width: 1200px) {
   .nav-links.open {
     animation: lb-sheet 0.5s var(--ease-out) both;
   }
@@ -811,7 +811,7 @@ html.is-scrolled .nav {
 /* Mobile: the header's own backdrop blur stops the menu sheet from blurring the hero
    behind it (nested backdrop roots), letting the hero text bleed through. Use a solid
    header on small screens instead. */
-@media (max-width: 1180px) {
+@media (max-width: 1200px) {
   .app > header,
   html.is-scrolled .app > header {
     backdrop-filter: none;
